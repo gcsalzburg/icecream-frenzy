@@ -5,6 +5,7 @@ var game = {
 }
 
 var NUM_LANES = 3;
+var LANES_Y = [2,96,191];
 var TRUCK_LANES_Y = [65,171];
 
 var truck = {
@@ -28,6 +29,8 @@ var truck = {
 var road = {
     src: null,
 
+    is_starting_up: true,  // Are we doing the initial acceleration or not
+
     speed: 0,           // current speed in pixels per second
     accel: 100,         // pixels per second^2
     target_speed: 300,  // desired road speed
@@ -47,6 +50,11 @@ var road = {
         }
         if(this.speed > this.target_speed){
             this.speed = this.target_speed;
+            if(this.is_starting_up){
+                // Finished starting up, so trigger something!
+                Customers.add();
+                this.is_starting_up = false;
+            }
         }
 
         // Advance position of road
@@ -57,12 +65,16 @@ var road = {
     }
 }
 
+// Create customers array
+var Customers = new Customers();
+
 // Queue image assets
 var ASS_MANAGER = new AssetManager();
 ASS_MANAGER.setDefaultPath("assets/");
 ASS_MANAGER.queueDownloads(
     'bg.png',
     'truck.png',
+    'car.png',
     'cone-strawberry.png',
     'cone-vanilla.png'
 )
@@ -108,6 +120,10 @@ var reset = function () {
 	monster.y = 32 + (Math.random() * (canvas.height - 64));
 };
 
+var add_customer = function(){
+    customers.push(new Customer());
+}
+
 
 // Update game objects
 var update = function (modifier) {
@@ -120,21 +136,11 @@ var update = function (modifier) {
         truck.lane_change(1);
     }
 
-    road.update(modifier);
+    for (var i = 0; i < customers.length; i++) {
+        customers[i].update(modifier);
+    }
 
-/*
-	if (38 in keysDown) { // Player holding up
-		hero.y -= hero.speed * modifier;
-	}
-	if (40 in keysDown) { // Player holding down
-		hero.y += hero.speed * modifier;
-	}
-	if (37 in keysDown) { // Player holding left
-		hero.x -= hero.speed * modifier;
-	}
-	if (39 in keysDown) { // Player holding right
-		hero.x += hero.speed * modifier;
-	}*/
+    road.update(modifier);
 
 	// Are they touching?
 	if (
@@ -155,6 +161,10 @@ var render = function () {
 
     road.render();
     truck.render();
+    
+    for (var i = 0; i < customers.length; i++) {
+        customers[i].render();
+    }
     
 	// FPS
 	ctx.fillStyle = "rgb(250, 250, 250)";
@@ -198,6 +208,9 @@ ASS_MANAGER.downloadAll(function() {
 
     road.src = ASS_MANAGER.getAsset('bg.png');
     truck.src = ASS_MANAGER.getAsset('truck.png');
+    for (var i = 0; i < customers.length; i++) {
+        customers[i].src = ASS_MANAGER.getAsset('car.png');
+    }
 
     then = Date.now();
     reset();
