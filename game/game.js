@@ -4,6 +4,11 @@ var game = {
     h: 375
 }
 
+
+// Cross-browser support for requestAnimationFrame
+var w = window;
+requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+
 var NUM_LANES = 3;
 var LANES_Y = [2,96,191];
 var TRUCK_LANES_Y = [65,171];
@@ -173,10 +178,6 @@ var main = function () {
 	requestAnimationFrame(main);
 };
 
-// Cross-browser support for requestAnimationFrame
-var w = window;
-requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
-
 var then;
 
 // Let's play this game!
@@ -189,6 +190,5 @@ ASS_MANAGER.downloadAll(function() {
     CUSTOMERS.src_car = ASS_MANAGER.getAsset('car.png');
 
     then = Date.now();
-    reset();
     main();
 });
