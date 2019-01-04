@@ -1,13 +1,13 @@
 
 function Customers(){
-    this.src_truck = null;
+    this.src_car = null;
 
     this.num_customers = 0;
     this.customers = [];
 }
 
 Customers.prototype.add = function(){
-    this.customers.push(new Customer());
+    this.customers.push(new Customer(this.src_car));
     this.num_customers++;
 }
 

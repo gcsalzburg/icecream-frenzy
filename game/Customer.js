@@ -1,9 +1,9 @@
 
-function Customer(){
+function Customer(src_img){
     this.lane = Math.floor((Math.random()*NUM_LANES));
-    this.src = null;
+    this.src = src_img;
 
-    this.pos = 641;
+    this.pos = game.w;
 
     this.speed = 100;
 
