@@ -39,7 +39,24 @@ ASS_MANAGER.queueDownloads(
     'cone-strawberry.png',
     'cone-vanilla.png',
     'cone-chocolate.png',
-    'speech-bubble.png'
+    'speech-bubble.png',
+    'truck-frames/0.png',
+    'truck-frames/1.png',
+    'truck-frames/2.png',
+    'truck-frames/3.png',
+    'truck-frames/4.png',
+    'truck-frames/5.png',
+    'truck-frames/6.png',
+    'truck-frames/7.png',
+    'truck-frames/8.png',
+    'truck-frames/9.png',
+    'truck-frames/10.png',
+    'truck-frames/12.png',
+    'truck-frames/13.png',
+    'truck-frames/14.png',
+    'truck-frames/15.png',
+    'truck-frames/16.png',
+    'truck-frames/17.png'
 );
 ASS_MANAGER.downloadAll(function() {
     ROAD.src =                      ASS_MANAGER.getAsset('bg.png');
