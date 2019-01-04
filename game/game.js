@@ -14,8 +14,8 @@ var game = {
 }
 
 var NUM_LANES = 3;
+var TRUCK_LANES = 2;
 var LANES_Y = [2,96,191];
-var TRUCK_LANES_Y = [65,171];
 
 // Score keeping
 var score = {
@@ -40,27 +40,11 @@ ASS_MANAGER.queueDownloads(
     'cone-vanilla.png',
     'cone-chocolate.png',
     'speech-bubble.png',
-    'truck-frames/0.png',
-    'truck-frames/1.png',
-    'truck-frames/2.png',
-    'truck-frames/3.png',
-    'truck-frames/4.png',
-    'truck-frames/5.png',
-    'truck-frames/6.png',
-    'truck-frames/7.png',
-    'truck-frames/8.png',
-    'truck-frames/9.png',
-    'truck-frames/10.png',
-    'truck-frames/12.png',
-    'truck-frames/13.png',
-    'truck-frames/14.png',
-    'truck-frames/15.png',
-    'truck-frames/16.png',
-    'truck-frames/17.png'
+    'truck-sprites.png',
 );
 ASS_MANAGER.downloadAll(function() {
     ROAD.src =                      ASS_MANAGER.getAsset('bg.png');
-    TRUCK.src =                     ASS_MANAGER.getAsset('truck.png');
+    TRUCK.src =                     ASS_MANAGER.getAsset('truck-sprites.png');
     CUSTOMERS.src_car =             ASS_MANAGER.getAsset('car.png');
     CUSTOMERS.src_speech_bubble =   ASS_MANAGER.getAsset('speech-bubble.png');
 
@@ -158,11 +142,11 @@ var update = function (modifier) {
 // /////////////////////////////////
 // // RENDER                      //
 // /////////////////////////////////
-var render = function () {
+var render = function (modifier) {
 
     ROAD.render();
     CUSTOMERS.render_below(TRUCK.lane);
-    TRUCK.render();
+    TRUCK.render(modifier);
     CUSTOMERS.render_above(TRUCK.lane);
 
     // Scores
@@ -189,7 +173,7 @@ var main = function () {
 	var delta = now - then;
 
 	update(delta / 1000);
-	render();
+	render(delta / 1000);
 
     then = now;
     
