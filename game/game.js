@@ -153,9 +153,13 @@ var render = function (modifier) {
     ctx.font = "22px VT323";
 	ctx.textAlign = "right";
 	ctx.textBaseline = "bottom";
-    ctx.fillText("Orders served: " + score.orders_served + "/" + score.orders_placed, 802, 370);  
- //   ctx.fillText("Ice creams delivered: " + score.icecream_served + "/" + score.icecream_wasted, 802, 349);    
-    ctx.fillText("Ice cream efficiency: " + Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10 + "%" , 802, 349);   
+    ctx.fillText("Orders served: " + score.orders_served + "/" + score.orders_placed, 802, 370);    
+    ctx.fillText("Ice cream efficiency: " + Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10 + "%" , 802, 349);  
+    
+    ctx.font = "50px VT323";
+    ctx.textAlign = "left";
+    var score_disp = score.orders_served - (score.orders_placed-score.orders_served)*2;
+    ctx.fillText(score_disp, 18,374);
 
 	// FPS
 	ctx.font = "8px Helvetica";
