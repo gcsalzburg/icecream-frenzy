@@ -4,7 +4,14 @@ var game = {
     h: 375
 }
 
-
+// Queue image assets
+var ASS_MANAGER = new AssetManager();
+ASS_MANAGER.setDefaultPath("assets/");
+ASS_MANAGER.queueDownloads(
+    'bg.png',
+    'cone-strawberry.png',
+    'cone-vanilla.png'
+)
 
 // Create the canvas
 var canvas = document.createElement("canvas");
@@ -12,30 +19,6 @@ var ctx = canvas.getContext("2d");
 canvas.width = game.w;
 canvas.height = game.h;
 document.body.appendChild(canvas);
-
-// Background image
-var bgReady = false;
-var bgImage = new Image();
-bgImage.onload = function () {
-	bgReady = true;
-};
-bgImage.src = "assets/bg.png";
-
-// Hero image
-var heroReady = false;
-var heroImage = new Image();
-heroImage.onload = function () {
-	heroReady = true;
-};
-heroImage.src = "assets/cone-strawberry.png";
-
-// Monster image
-var monsterReady = false;
-var monsterImage = new Image();
-monsterImage.onload = function () {
-	monsterReady = true;
-};
-monsterImage.src = "assets/cone-vanilla.png";
 
 // Game objects
 var hero = {
@@ -98,17 +81,9 @@ var update = function (modifier) {
 
 // Draw everything
 var render = function () {
-	if (bgReady) {
-		ctx.drawImage(bgImage, 0, 0);
-	}
-
-	if (heroReady) {
-		ctx.drawImage(heroImage, hero.x, hero.y);
-	}
-
-	if (monsterReady) {
-		ctx.drawImage(monsterImage, monster.x, monster.y);
-	}
+    ctx.drawImage(ASS_MANAGER.getAsset('bg.png'), 0, 0);
+    ctx.drawImage(ASS_MANAGER.getAsset('cone-strawberry.png'), hero.x, hero.y);
+    ctx.drawImage(ASS_MANAGER.getAsset('cone-vanilla.png'), monster.x, monster.y);
 
 	// Score
 	ctx.fillStyle = "rgb(250, 250, 250)";
@@ -143,7 +118,6 @@ var main = function () {
     }
     times.push(now);
     fps = times.length;
-    console.log(fps);
 
 	// Request to do this again ASAP
 	requestAnimationFrame(main);
@@ -153,7 +127,12 @@ var main = function () {
 var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 
+var then;
+
 // Let's play this game!
-var then = Date.now();
-reset();
-main();
+// Load in assets
+ASS_MANAGER.downloadAll(function() {
+    then = Date.now();
+    reset();
+    main();
+});
