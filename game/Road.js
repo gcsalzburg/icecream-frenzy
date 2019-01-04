@@ -5,8 +5,8 @@ function Road(){
     this.is_starting_up = true; // Are we doing the initial acceleration or not
 
     this.speed = 200;           // current speed in pixels per second -> TODO: set to 0 for production
-    this.accel = 100;           // pixels per second^2
-    this.target_speed = 300;    // desired road speed
+    this.accel = 200;           // pixels per second^2
+    this.target_speed = 600;    // desired road speed
 
     this.pos = 0;
 }
