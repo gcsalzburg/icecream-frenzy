@@ -93,7 +93,7 @@ var update = function (modifier) {
     }
 
     // Update loops for objects
-    CUSTOMERS.update_all(modifier);
+    CUSTOMERS.update(modifier);
     ROAD.update(modifier);
 
 };
@@ -104,9 +104,11 @@ var update = function (modifier) {
 var render = function () {
 
     ROAD.render();
+    CUSTOMERS.render_below(TRUCK.lane);
     TRUCK.render();
-    CUSTOMERS.render_all();
-    
+    CUSTOMERS.render_above(TRUCK.lane);
+    console.log(TRUCK.lane);
+
 	// FPS
 	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "8px Helvetica";

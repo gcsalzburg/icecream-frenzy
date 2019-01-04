@@ -27,7 +27,7 @@ Road.prototype.update = function(modifier){
         this.speed = this.target_speed;
         if(this.is_starting_up){
             // Finished starting up, so trigger something!
-            CUSTOMERS.add();
+            CUSTOMERS.is_open_for_customers = true;
             this.is_starting_up = false;
         }
     }

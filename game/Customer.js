@@ -4,11 +4,7 @@ function Customer(src_img){
     this.src = src_img;
 
     this.pos = game.w;
-
     this.speed = 100;
-
-    console.log(this.lane);
-
 }
 
 Customer.prototype.render = function(){
