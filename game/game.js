@@ -1,8 +1,16 @@
+// CORE VARS
+var game = {
+    w: 812,
+    h: 375
+}
+
+
+
 // Create the canvas
 var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
-canvas.width = 512;
-canvas.height = 480;
+canvas.width = game.w;
+canvas.height = game.h;
 document.body.appendChild(canvas);
 
 // Background image
@@ -27,7 +35,7 @@ var monsterImage = new Image();
 monsterImage.onload = function () {
 	monsterReady = true;
 };
-monsterImage.src = "assets/cone-strawberry.png";
+monsterImage.src = "assets/cone-vanilla.png";
 
 // Game objects
 var hero = {
@@ -38,6 +46,10 @@ var monstersCaught = 0;
 
 // Handle keyboard controls
 var keysDown = {};
+
+// for fps measurement
+var times = [];
+var fps;
 
 addEventListener("keydown", function (e) {
 	keysDown[e.keyCode] = true;
@@ -103,7 +115,15 @@ var render = function () {
 	ctx.font = "24px Helvetica";
 	ctx.textAlign = "left";
 	ctx.textBaseline = "top";
-	ctx.fillText("Goblins caught: " + monstersCaught, 32, 32);
+    ctx.fillText("Goblins caught: " + monstersCaught, 32, 32);
+    
+	// FPS
+	ctx.fillStyle = "rgb(250, 250, 250)";
+	ctx.font = "8px Helvetica";
+	ctx.textAlign = "right";
+	ctx.textBaseline = "bottom";
+    ctx.fillText("FPS: " + fps, 802, 365);
+    
 };
 
 // The main game loop
@@ -114,7 +134,16 @@ var main = function () {
 	update(delta / 1000);
 	render();
 
-	then = now;
+    then = now;
+    
+    // Measure FPS performance
+    var now = performance.now();
+    while (times.length > 0 && times[0] <= now - 1000) {
+      times.shift();
+    }
+    times.push(now);
+    fps = times.length;
+    console.log(fps);
 
 	// Request to do this again ASAP
 	requestAnimationFrame(main);
