@@ -1,4 +1,6 @@
-# 🍦+🚚 = ICE CREAM FRENZY
+# 🍦+🚚
+
+## ICE CREAM FRENZY
 
 Play the game here: https://www.designedbycave.co.uk/icecream-frenzy/
 
