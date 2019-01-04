@@ -31,7 +31,7 @@ var road = {
 
     is_starting_up: true,  // Are we doing the initial acceleration or not
 
-    speed: 0,           // current speed in pixels per second
+    speed: 200,           // current speed in pixels per second -> TODO: set to 0 for production
     accel: 100,         // pixels per second^2
     target_speed: 300,  // desired road speed
 
@@ -52,7 +52,7 @@ var road = {
             this.speed = this.target_speed;
             if(this.is_starting_up){
                 // Finished starting up, so trigger something!
-                Customers.add();
+                CUSTOMERS.add();
                 this.is_starting_up = false;
             }
         }
@@ -66,7 +66,7 @@ var road = {
 }
 
 // Create customers array
-var Customers = new Customers();
+var CUSTOMERS = new Customers();
 
 // Queue image assets
 var ASS_MANAGER = new AssetManager();
@@ -110,22 +110,11 @@ addEventListener("keyup", function (e) {
     keysUp[e.keyCode] = true;
 }, false);
 
-// Reset the game when the player catches a monster
-var reset = function () {
-	hero.x = canvas.width / 2;
-	hero.y = canvas.height / 2;
 
-	// Throw the monster somewhere on the screen randomly
-	monster.x = 32 + (Math.random() * (canvas.width - 64));
-	monster.y = 32 + (Math.random() * (canvas.height - 64));
-};
+// /////////////////////////////////
+// // UPDATE //
+// /////////////////////////////////
 
-var add_customer = function(){
-    customers.push(new Customer());
-}
-
-
-// Update game objects
 var update = function (modifier) {
 
     if(38 in keysDown){         // UP
@@ -136,35 +125,21 @@ var update = function (modifier) {
         truck.lane_change(1);
     }
 
-    for (var i = 0; i < customers.length; i++) {
-        customers[i].update(modifier);
-    }
-
+    CUSTOMERS.update_all(modifier);
     road.update(modifier);
 
-	// Are they touching?
-	if (
-		hero.x <= (monster.x + 32)
-		&& monster.x <= (hero.x + 32)
-		&& hero.y <= (monster.y + 32)
-		&& monster.y <= (hero.y + 32)
-	) {
-		++monstersCaught;
-		reset();
-	}
 };
 
-// Draw everything
+// /////////////////////////////////
+// // RENDER //
+// /////////////////////////////////
 var render = function () {
     ctx.drawImage(ASS_MANAGER.getAsset('cone-strawberry.png'), hero.x, hero.y);
     ctx.drawImage(ASS_MANAGER.getAsset('cone-vanilla.png'), monster.x, monster.y);
 
     road.render();
     truck.render();
-    
-    for (var i = 0; i < customers.length; i++) {
-        customers[i].render();
-    }
+    CUSTOMERS.render_all();
     
 	// FPS
 	ctx.fillStyle = "rgb(250, 250, 250)";
@@ -174,7 +149,9 @@ var render = function () {
     ctx.fillText("FPS: " + fps, 802, 365);    
 };
 
-// The main game loop
+// /////////////////////////////////
+// // GAME LOOP //
+// /////////////////////////////////
 var main = function () {
 	var now = Date.now();
 	var delta = now - then;
@@ -208,9 +185,8 @@ ASS_MANAGER.downloadAll(function() {
 
     road.src = ASS_MANAGER.getAsset('bg.png');
     truck.src = ASS_MANAGER.getAsset('truck.png');
-    for (var i = 0; i < customers.length; i++) {
-        customers[i].src = ASS_MANAGER.getAsset('car.png');
-    }
+
+    CUSTOMERS.src_car = ASS_MANAGER.getAsset('car.png');
 
     then = Date.now();
     reset();
