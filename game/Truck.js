@@ -2,7 +2,7 @@
 
 function Truck(){
     this.src = null;
-    this.left = 700;
+    this.left = 20;
     this.lane = 0;
 }
 

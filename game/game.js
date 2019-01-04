@@ -107,7 +107,6 @@ var render = function () {
     CUSTOMERS.render_below(TRUCK.lane);
     TRUCK.render();
     CUSTOMERS.render_above(TRUCK.lane);
-    console.log(TRUCK.lane);
 
 	// FPS
 	ctx.fillStyle = "rgb(250, 250, 250)";

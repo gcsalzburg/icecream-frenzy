@@ -7,7 +7,7 @@ function Customers(){
 
     this.is_open_for_customers = false;
     this.last_customer_add = 0;
-    this.customer_interval = 1000;
+    this.customer_interval = 3000;
     this.customer_variance = 200;
 }
 
@@ -34,8 +34,15 @@ Customers.prototype.update = function(modifier){
 Customers.prototype.update_customers = function(modifier){
     for (var i = 0; i < this.num_customers; i++) {
         this.customers[i].update(modifier);
+
+        // Remove customers we have finished with
+        if(this.customers[i].is_finished){
+            this.customers.splice(i,1);
+            this.num_customers = this.customers.length;
+        }
     }
 }
+
 
 //
 // These two functions only render certain lanes, to preserve the draw order and keep the truck between the correct vehicles

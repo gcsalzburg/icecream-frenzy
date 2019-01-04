@@ -5,6 +5,10 @@ function Customer(src_img){
 
     this.pos = game.w;
     this.speed = 100;
+
+    this.is_fed = false;
+
+    this.is_finished = false; 
 }
 
 Customer.prototype.render = function(){
@@ -13,4 +17,8 @@ Customer.prototype.render = function(){
 
 Customer.prototype.update = function(modifier){
     this.pos -= this.speed*modifier;
+
+    if(this.pos <= this.src.width){
+        this.is_finished = true;
+    }
 }
