@@ -1,0 +1,24 @@
+body{
+    background-color: #555;
+}
+.game_holder{
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.keys{
+    font-family: 'VT323', monospace;
+    color: #FFF;
+    font-size: 1.3em;
+    margin: 1em;
+}
+canvas{
+    display: block;
+    position: relative;
+}
