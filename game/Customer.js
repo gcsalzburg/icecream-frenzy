@@ -18,7 +18,7 @@ Customer.prototype.render = function(){
 Customer.prototype.update = function(modifier){
     this.pos -= this.speed*modifier;
 
-    if(this.pos <= this.src.width){
+    if(this.pos <= -this.src.width){
         this.is_finished = true;
     }
 }
