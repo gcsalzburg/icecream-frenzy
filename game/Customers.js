@@ -57,12 +57,13 @@ Customers.prototype.serve = function(truck_lane,type){
                     if( (c.orders[j].type === type) && (!c.orders[j].is_served)){
                         c.orders[j].is_served = true;
                         c.check_order();
-                        return; // we only serve one order per button press!
+                        return 1; // we only serve one order per button press!
                     }
                 }
             }
         }
     }
+    return 0;
 }
 
 

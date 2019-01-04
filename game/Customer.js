@@ -4,7 +4,7 @@ function Customer(src_img){
     this.src = src_img;
 
     this.pos = game.w;
-    this.speed = 100;
+    this.speed = 100 + (Math.random()*10)+(this.lane*70);
 
     this.is_ordering = false;
     this.is_fed = false;
@@ -41,8 +41,9 @@ Customer.prototype.update = function(modifier){
         this.is_finished = true;
     }
 
-    if(this.pos <= game.w-this.src.width){
+    if( (this.pos <= game.w-this.src.width) && (!this.is_ordering)){
         this.is_ordering = true;
+        score.orders_placed ++;
     }
 }
 
@@ -54,9 +55,14 @@ Customer.prototype.create_order = function(){
 }
 
 Customer.prototype.check_order = function(){
-    var is_fed = true;
-    for(var i=0; i<this.orders.length; i++){
-        is_fed &= this.orders[i].is_served;
+    if(!this.is_fed){
+        var is_fed = true;
+        for(var i=0; i<this.orders.length; i++){
+            is_fed &= this.orders[i].is_served;
+        }
+        this.is_fed = is_fed;
+        if(this.is_fed){
+            score.orders_served ++;
+        }
     }
-    this.is_fed = is_fed;
 }

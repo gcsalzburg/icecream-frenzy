@@ -17,6 +17,13 @@ var NUM_LANES = 3;
 var LANES_Y = [2,96,191];
 var TRUCK_LANES_Y = [65,171];
 
+// Score keeping
+var score = {
+    orders_placed: 0,
+    orders_served: 0,
+    icecream_served: 0,
+    icecream_wasted: 0
+}
 
 // //////////////////////////////////
 // // ASSET & GAME OBJECTS LOADING //
@@ -102,15 +109,27 @@ var update = function (modifier) {
     }
     if(49 in keysDown){ // NUMBER 1
         delete keysDown[49];
-        CUSTOMERS.serve(TRUCK.lane,0);
+        if(CUSTOMERS.serve(TRUCK.lane,0)){
+            score.icecream_served++;
+        }else{
+            score.icecream_wasted++;
+        }
     }
     if(50 in keysDown){ // NUMBER 2
         delete keysDown[50];
-        CUSTOMERS.serve(TRUCK.lane,1);
+        if(CUSTOMERS.serve(TRUCK.lane,1)){
+            score.icecream_served++;
+        }else{
+            score.icecream_wasted++;
+        }
     }
     if(51 in keysDown){ // NUMBER 3
         delete keysDown[51];
-        CUSTOMERS.serve(TRUCK.lane,2);
+        if(CUSTOMERS.serve(TRUCK.lane,2)){
+            score.icecream_served++;
+        }else{
+            score.icecream_wasted++;
+        }
     }
 
     // Update loops for objects
@@ -129,12 +148,20 @@ var render = function () {
     TRUCK.render();
     CUSTOMERS.render_above(TRUCK.lane);
 
+    // Scores
+	ctx.fillStyle = "rgb(58, 61, 62)";
+    ctx.font = "22px VT323";
+	ctx.textAlign = "right";
+	ctx.textBaseline = "bottom";
+    ctx.fillText("Orders served: " + score.orders_served + "/" + score.orders_placed, 802, 370);  
+ //   ctx.fillText("Ice creams delivered: " + score.icecream_served + "/" + score.icecream_wasted, 802, 349);    
+    ctx.fillText("Ice cream efficiency: " + Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10 + "%" , 802, 349);   
+
 	// FPS
-	ctx.fillStyle = "rgb(250, 250, 250)";
 	ctx.font = "8px Helvetica";
 	ctx.textAlign = "right";
 	ctx.textBaseline = "bottom";
-    ctx.fillText("FPS: " + fps, 802, 365);    
+    ctx.fillText("FPS: " + fps, 807, 13);    
 };
 
 // /////////////////////////////////
