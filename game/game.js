@@ -35,14 +35,13 @@ ASS_MANAGER.queueDownloads(
 ASS_MANAGER.downloadAll(function() {
     ROAD.src = ASS_MANAGER.getAsset('bg.png');
     TRUCK.src = ASS_MANAGER.getAsset('truck.png');
-
     CUSTOMERS.src_car = ASS_MANAGER.getAsset('car.png');
 
     // Can start game once assets are loaded
     start_game();   
 });
 
-// Create customers array
+// Create game objects
 var CUSTOMERS = new Customers();
 var TRUCK = new Truck();
 var ROAD = new Road();
@@ -54,6 +53,8 @@ canvas.width = game.w;
 canvas.height = game.h;
 document.body.appendChild(canvas);
 
+// For game loop
+var then;
 
 // for fps measurement
 var times = [];
@@ -127,18 +128,16 @@ var main = function () {
     then = now;
     
     // Measure FPS performance
-    var now = performance.now();
-    while (times.length > 0 && times[0] <= now - 1000) {
-      times.shift();
+    var fps_now = performance.now();
+    while (times.length > 0 && times[0] <= fps_now - 1000) {
+        times.shift();
     }
-    times.push(now);
+    times.push(fps_now);
     fps = times.length;
 
 	// Request to do this again ASAP
 	requestAnimationFrame(main);
 };
-
-var then;
 
 // /////////////////////////////////
 // // START                       //
