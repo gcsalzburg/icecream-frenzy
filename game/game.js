@@ -15,7 +15,6 @@ var game = {
 
 var NUM_LANES = 3;
 var TRUCK_LANES = 2;
-var LANES_Y = [2,96,191];
 
 // Score keeping
 var score = {

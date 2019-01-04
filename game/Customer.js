@@ -1,4 +1,9 @@
 
+
+var CUSTOMER_DIMS = {
+    lanes: [2,96,191]
+}
+
 function Customer(src_img){
     this.lane = Math.floor((Math.random()*NUM_LANES));
     this.src = src_img;
@@ -21,14 +26,14 @@ function Order(){
 }
 
 Customer.prototype.render = function(){
-    ctx.drawImage(this.src,this.pos,LANES_Y[this.lane]);
+    ctx.drawImage(this.src,this.pos,CUSTOMER_DIMS.lanes[this.lane]);
 
     if(this.is_ordering & !this.is_fed){
-        ctx.drawImage(CUSTOMERS.src_speech_bubble,this.pos+25,LANES_Y[this.lane]-20);
+        ctx.drawImage(CUSTOMERS.src_speech_bubble,this.pos+25,CUSTOMER_DIMS.lanes[this.lane]-20);
         for(var i=0; i<this.orders.length; i++){
             var o = this.orders[i];
             if(!o.is_served){
-                ctx.drawImage(CUSTOMERS.src_cones[o.type],this.pos+33+(i*15),LANES_Y[this.lane]-15);
+                ctx.drawImage(CUSTOMERS.src_cones[o.type],this.pos+33+(i*15),CUSTOMER_DIMS.lanes[this.lane]-15);
             }
         }
     }
