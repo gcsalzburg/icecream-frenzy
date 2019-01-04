@@ -6,13 +6,32 @@ function Customer(src_img){
     this.pos = game.w;
     this.speed = 100;
 
+    this.is_ordering = false;
     this.is_fed = false;
 
     this.is_finished = false; 
+
+    this.orders = [];
+    this.create_order();
+}
+
+function Order(){
+    this.type = Math.floor((Math.random()*3)); // three types of ice cream
+    this.is_served = false;
 }
 
 Customer.prototype.render = function(){
     ctx.drawImage(this.src,this.pos,LANES_Y[this.lane]);
+
+    if(this.is_ordering & !this.is_fed){
+        ctx.drawImage(CUSTOMERS.src_speech_bubble,this.pos+25,LANES_Y[this.lane]-20);
+        for(var i=0; i<this.orders.length; i++){
+            var o = this.orders[i];
+            if(!o.is_served){
+                ctx.drawImage(CUSTOMERS.src_cones[o.type],this.pos+33+(i*15),LANES_Y[this.lane]-15);
+            }
+        }
+    }
 }
 
 Customer.prototype.update = function(modifier){
@@ -21,4 +40,23 @@ Customer.prototype.update = function(modifier){
     if(this.pos <= -this.src.width){
         this.is_finished = true;
     }
+
+    if(this.pos <= game.w-this.src.width){
+        this.is_ordering = true;
+    }
+}
+
+Customer.prototype.create_order = function(){
+    var num_orders = Math.floor((Math.random()*3))+1; // between 1 and 3 orders per car
+    for(var i=0; i<num_orders; i++){
+        this.orders.push(new Order());
+    }
+}
+
+Customer.prototype.check_order = function(){
+    var is_fed = true;
+    for(var i=0; i<this.orders.length; i++){
+        is_fed &= this.orders[i].is_served;
+    }
+    this.is_fed = is_fed;
 }

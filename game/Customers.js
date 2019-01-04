@@ -2,6 +2,9 @@
 function Customers(){
     this.src_car = null;
 
+    this.src_speech_bubble = null;
+    this.src_cones = [];
+
     this.num_customers = 0;
     this.customers = [];
 
@@ -33,12 +36,31 @@ Customers.prototype.update = function(modifier){
 
 Customers.prototype.update_customers = function(modifier){
     for (var i = 0; i < this.num_customers; i++) {
-        this.customers[i].update(modifier);
+        var c = this.customers[i];
+        c.update(modifier);
 
         // Remove customers we have finished with
-        if(this.customers[i].is_finished){
+        if(c.is_finished){
             this.customers.splice(i,1);
             this.num_customers = this.customers.length;
+        }
+    }
+}
+
+Customers.prototype.serve = function(truck_lane,type){
+    for (var i = 0; i < this.num_customers; i++) {
+        var c = this.customers[i];
+
+        if( (c.lane === truck_lane) || (c.lane === truck_lane+1) ){
+            if( (c.pos > -121) && (c.pos < 114) && (!c.is_fed)){
+                for(var j=0; j < c.orders.length; j++){
+                    if( (c.orders[j].type === type) && (!c.orders[j].is_served)){
+                        c.orders[j].is_served = true;
+                        c.check_order();
+                        return; // we only serve one order per button press!
+                    }
+                }
+            }
         }
     }
 }

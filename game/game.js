@@ -30,12 +30,20 @@ ASS_MANAGER.queueDownloads(
     'truck.png',
     'car.png',
     'cone-strawberry.png',
-    'cone-vanilla.png'
+    'cone-vanilla.png',
+    'cone-chocolate.png',
+    'speech-bubble.png'
 );
 ASS_MANAGER.downloadAll(function() {
-    ROAD.src = ASS_MANAGER.getAsset('bg.png');
-    TRUCK.src = ASS_MANAGER.getAsset('truck.png');
-    CUSTOMERS.src_car = ASS_MANAGER.getAsset('car.png');
+    ROAD.src =                      ASS_MANAGER.getAsset('bg.png');
+    TRUCK.src =                     ASS_MANAGER.getAsset('truck.png');
+    CUSTOMERS.src_car =             ASS_MANAGER.getAsset('car.png');
+    CUSTOMERS.src_speech_bubble =   ASS_MANAGER.getAsset('speech-bubble.png');
+
+    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-vanilla.png'));
+    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-chocolate.png'));
+    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-strawberry.png'));
+
 
     // Can start game once assets are loaded
     start_game();   
@@ -69,7 +77,7 @@ var keysDown = {};
 var keysUp = {};
 
 addEventListener("keydown", function (e) {
-	keysDown[e.keyCode] = true;
+    keysDown[e.keyCode] = true;
 }, false);
 
 addEventListener("keyup", function (e) {
@@ -91,6 +99,18 @@ var update = function (modifier) {
     }else if(40 in keysDown){   // DOWN
         delete keysDown[40];
         TRUCK.change_lane(1);
+    }
+    if(49 in keysDown){ // NUMBER 1
+        delete keysDown[49];
+        CUSTOMERS.serve(TRUCK.lane,0);
+    }
+    if(50 in keysDown){ // NUMBER 2
+        delete keysDown[50];
+        CUSTOMERS.serve(TRUCK.lane,1);
+    }
+    if(51 in keysDown){ // NUMBER 3
+        delete keysDown[51];
+        CUSTOMERS.serve(TRUCK.lane,2);
     }
 
     // Update loops for objects
