@@ -51,12 +51,13 @@ var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = game.w;
 canvas.height = game.h;
-document.body.appendChild(canvas);
+document.getElementById("game_holder").prepend(canvas);
 
 // For game loop
 var then;
 
 // for fps measurement
+// Taken from: https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
 var times = [];
 var fps;
 
