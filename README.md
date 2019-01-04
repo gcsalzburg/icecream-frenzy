@@ -1,7 +1,5 @@
 # 🍦+🚚 = ICE CREAM FRENZY
 
-> `Feed the humans!`
-
 Play the game here: https://www.designedbycave.co.uk/icecream-frenzy/
 
 ![Screenshot](https://www.designedbycave.co.uk/icecream-frenzy/docs/screenshot.png)
