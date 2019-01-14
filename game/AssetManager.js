@@ -37,56 +37,51 @@ AssetManager.prototype.downloadAll = function(downloadCallback) {
 
         // Check type of downloaded file
         var path = this.downloadQueue[i];
+
+        var cache_obj = null;
         if(path.slice(-3) == "png"){
-            var img = new Image();
-            var that = this;
-            img.addEventListener("load", function() {
-                if(that.debug){
-                    console.log(this.src + ' is loaded');
-                }
-                that.successCount += 1;
-                if (that.isDone()) {
-                    downloadCallback();
-                }
-            }, false);
-            img.addEventListener("error", function() {
-                if(that.debug){
-                    console.log("ERROR:" + this.src + 'was NOT loaded');
-                }
-                that.errorCount += 1;
-                if (that.isDone()) {
-                    downloadCallback();
-                }
-            }, false);
-            img.src = path;
-            this.cache[path] = img;
-
+            cache_obj = new Image();
         }else if(path.slice(-3) == "mp3"){
-
-            var audio = new Audio();
-            audio.addEventListener('canplaythrough', function(){
-                if(that.debug){
-                    console.log(this.src + ' is loaded');
-                }
-                that.successCount += 1;
-                if (that.isDone()) {
-                    downloadCallback();
-                }
-            }, false);
-            audio.addEventListener('error', function(){
-                if(that.debug){
-                    console.log("ERROR:" + this.src + 'was NOT loaded');
-                }
-                that.errorCount += 1;
-                if (that.isDone()) {
-                    downloadCallback();
-                }
-            }, false);
-            audio.src = path;
-            this.cache[path] = audio;
-        }else{
+            cache_obj = new Audio();
+        }else if(that.debug){
             console.log("Unknown file type: " + path);
         }
+
+        if(cache_obj){
+            var that = this;
+
+            ['load','canplaythrough'].forEach( function(evt) {
+                cache_obj.addEventListener(evt, function(){
+                    if(that.debug){
+                        console.log(this.src + ' is loaded');
+                    }
+                    that.successCount += 1;
+                    if (that.isDone()) {
+                        downloadCallback();
+                    }
+                }, false);
+            });
+            cache_obj.addEventListener("error", function() {
+                if(that.debug){
+                    console.log("ERROR:" + this.src + 'was NOT loaded');
+                }
+                that.errorCount += 1;
+                if (that.isDone()) {
+                    downloadCallback();
+                }
+            }, false);
+
+            // Initiate load by setting the path
+            cache_obj.src = path;
+
+            // Save path to cache
+            this.cache[path] = cache_obj;
+        }else{
+            that.errorCount += 1;
+            if (that.isDone()) {
+                downloadCallback();
+            }
+        }   
     }
 }
 
