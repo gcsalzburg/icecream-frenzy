@@ -24,6 +24,9 @@ var score = {
     icecream_wasted: 0
 }
 
+// Background music
+var bg_music = null;
+
 // //////////////////////////////////
 // // ASSET & GAME OBJECTS LOADING //
 // //////////////////////////////////
@@ -40,6 +43,7 @@ ASS_MANAGER.queueDownloads(
     'cone-chocolate.png',
     'speech-bubble.png',
     'truck-sprites.png',
+    'sounds/bg_109bpm.mp3'
 );
 ASS_MANAGER.downloadAll(function() {
     ROAD.src =                      ASS_MANAGER.getAsset('bg.png');
@@ -51,10 +55,23 @@ ASS_MANAGER.downloadAll(function() {
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-chocolate.png'));
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-strawberry.png'));
 
+    bg_music = ASS_MANAGER.getAsset('sounds/bg_109bpm.mp3');
+
 
     // Can start game once assets are loaded
     start_game();   
 });
+
+
+// Simple test of playing audio on click
+var el = document.querySelector('body');
+// attach anonymous function to click event
+el.addEventListener('click', function(){
+    bg_music.playbackRate = 1.0;
+    bg_music.loop = true;
+    bg_music.play();
+});
+
 
 // Create game objects
 var CUSTOMERS = new Customers();
