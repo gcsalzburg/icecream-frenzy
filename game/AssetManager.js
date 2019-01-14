@@ -83,6 +83,7 @@ AssetManager.prototype.downloadAll = function(downloadCallback) {
                 }
             }, false);
             audio.src = path;
+            this.cache[path] = audio;
         }else{
             console.log("Unknown file type: " + path);
         }
