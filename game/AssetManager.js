@@ -29,7 +29,7 @@ AssetManager.prototype.queueDownloads = function(){
     }
 }
 
-AssetManager.prototype.downloadAll = function(downloadCallback) {
+AssetManager.prototype.downloadAll = function(downloadCallback, progressCallback) {
     if (this.downloadQueue.length === 0) {
         downloadCallback();
     }
@@ -56,6 +56,7 @@ AssetManager.prototype.downloadAll = function(downloadCallback) {
                         console.log(this.src + ' is loaded');
                     }
                     that.successCount += 1;
+                    progressCallback(that.successCount, that.errorCount, that.downloadQueue.length);
                     if (that.isDone()) {
                         downloadCallback();
                     }
@@ -66,6 +67,7 @@ AssetManager.prototype.downloadAll = function(downloadCallback) {
                     console.log("ERROR:" + this.src + 'was NOT loaded');
                 }
                 that.errorCount += 1;
+                progressCallback(that.successCount, that.errorCount, that.downloadQueue.length);
                 if (that.isDone()) {
                     downloadCallback();
                 }
