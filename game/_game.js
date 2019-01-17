@@ -51,7 +51,8 @@ var distance_triggers = [
 var ASS_MANAGER = new AssetManager();
 ASS_MANAGER.setDefaultPath("assets/");
 ASS_MANAGER.queueDownloads(
-    'truck.png',
+    'truck/truck-sprite.png',
+
     'car.png',
     'cone-strawberry.png',
     'cone-vanilla.png',
@@ -59,6 +60,7 @@ ASS_MANAGER.queueDownloads(
     'speech-bubble.png',
     'truck-sprites.png',
     'sounds/bg_109bpm.mp3',
+
     'bg/road.png',
     'bg/cactus_1.png',
     'bg/cactus_2.png',
@@ -88,7 +90,8 @@ ASS_MANAGER.downloadAll(function() {
     ];
 
 
-    TRUCK.src =                     ASS_MANAGER.getAsset('truck-sprites.png');
+    TRUCK.init(ASS_MANAGER.getAsset('truck/truck-sprite.png'));
+
     CUSTOMERS.src_car =             ASS_MANAGER.getAsset('car.png');
     CUSTOMERS.src_speech_bubble =   ASS_MANAGER.getAsset('speech-bubble.png');
 
@@ -137,6 +140,7 @@ canvas.height = game.h;
 
 // For game loop
 var then;
+var start_time;
 
 // for fps measurement
 // Taken from: https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
@@ -230,11 +234,11 @@ var update = function (modifier) {
 // /////////////////////////////////
 // // RENDER                      //
 // /////////////////////////////////
-var render = function (modifier) {
+var render = function (modifier, elapsed) {
 
     ROAD.render();
     CUSTOMERS.render_below(TRUCK.lane);
-    TRUCK.render(modifier);
+    TRUCK.render(modifier, elapsed);
     CUSTOMERS.render_above(TRUCK.lane);
 
     // Scores
@@ -265,7 +269,7 @@ var main = function () {
 	var delta = now - then;
 
 	update(delta / 1000);
-	render(delta / 1000);
+	render(delta / 1000, now-start_time);
 
     then = now;
     
@@ -294,6 +298,7 @@ var start_game = function () {
     bg_music.play();
 
     then = Date.now();
+    start_time = then;
     main();
 }
 

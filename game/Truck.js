@@ -1,42 +1,21 @@
 
 var TRUCK_DIMS = {
     left: 2,
-    source_w: 640,
-    source_h: 300,
-    target_w: 160,
-    target_h: 75,
     lanes: [250,350,450]
 }
 
 function Truck(){
-    this.src = null;
     this.lane = 0;
-
-    this.elapsed_ms = 0;
-    
+    this.truck_ani = null;
 }
 
-Truck.prototype.render = function(modifier){
-    
-    // Calculate the frame of the animation
-    this.elapsed_ms += (1000*modifier);
-    var curr_frame = Math.floor((this.elapsed_ms/30)%18);
+Truck.prototype.init = function(src){
+    truck_ani = new Sprite(src,59,10,6,30);
+}
 
-    var x_c = Math.floor(curr_frame%6);
-    var y_c = Math.floor((curr_frame/3)%3);
-
-    // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
-    ctx.drawImage(
-        this.src,
-        TRUCK_DIMS.source_w*x_c,
-        TRUCK_DIMS.source_h*y_c,
-        TRUCK_DIMS.source_w,
-        TRUCK_DIMS.source_h,
-        TRUCK_DIMS.left,
-        TRUCK_DIMS.lanes[this.lane],
-        TRUCK_DIMS.target_w,
-        TRUCK_DIMS.target_h
-    );
+Truck.prototype.render = function(modifier, elapsed){
+    // Display truck sprite animation frame
+    truck_ani.draw(elapsed,TRUCK_DIMS.left,TRUCK_DIMS.lanes[this.lane]);
 }
 
 Truck.prototype.change_lane = function(dir){
