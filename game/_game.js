@@ -54,7 +54,7 @@ ASS_MANAGER.queueDownloads(
     'truck/truck-sprite.png',
 
     'customers/2people.png',
-    
+
     'cone-strawberry.png',
     'cone-vanilla.png',
     'cone-chocolate.png',
@@ -239,9 +239,10 @@ var update = function (modifier) {
 var render = function (modifier, elapsed) {
 
     ROAD.render();
-    CUSTOMERS.render_below(TRUCK.lane);
+
+    CUSTOMERS.render_below(TRUCK.lane, elapsed);
     TRUCK.render(modifier, elapsed);
-    CUSTOMERS.render_above(TRUCK.lane);
+    CUSTOMERS.render_above(TRUCK.lane, elapsed);
 
     // Scores
 	ctx.fillStyle = "rgb(58, 61, 62)";

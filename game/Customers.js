@@ -14,6 +14,10 @@ function Customers(){
     this.customer_variance = 200;
 }
 
+Customers.prototype.init = function(src_2pl){
+    this.src_car = src_2pl;
+}
+
 Customers.prototype.check_for_customers = function(){
     if(this.is_open_for_customers){
         if(Date.now() > (this.last_customer_add + this.customer_interval)){
@@ -23,7 +27,7 @@ Customers.prototype.check_for_customers = function(){
 }
 
 Customers.prototype.add = function(){
-    this.customers.push(new Customer(this.src_car));
+    this.customers.push(new Customer(new Sprite(this.src_car,60,5,12,30)));
     this.num_customers++;
 
     this.last_customer_add = Date.now();
@@ -71,22 +75,22 @@ Customers.prototype.serve = function(truck_lane,type){
 // These two functions only render certain lanes, to preserve the draw order and keep the truck between the correct vehicles
 // Loop through lanes one by one and draw vehicles in each lane in turn
 //
-Customers.prototype.render_below = function(lane){
+Customers.prototype.render_below = function(lane, elapsed){
     // Inclusive of lane number
     for(var l = 0; l < lane+1; l++){
         for (var i = 0; i < this.num_customers; i++) {
             if(this.customers[i].lane == l){
-                this.customers[i].render();
+                this.customers[i].render(elapsed);
             }
         }
     }
 }
-Customers.prototype.render_above = function(lane){
+Customers.prototype.render_above = function(lane, elapsed){
     // Exclusive of lane number
     for(var l = lane+1; l < NUM_LANES; l++){
         for (var i = 0; i < this.num_customers; i++) {
             if(this.customers[i].lane == l){
-                this.customers[i].render();
+                this.customers[i].render(elapsed);
             }
         }
     }

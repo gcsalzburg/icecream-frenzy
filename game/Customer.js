@@ -1,12 +1,12 @@
 
 
 var CUSTOMER_DIMS = {
-    lanes: [193,291,392,477]
+    lanes: [180,278,379,464]
 }
 
-function Customer(src_img){
+function Customer(src_ani){
     this.lane = Math.floor((Math.random()*NUM_LANES));
-    this.src = src_img;
+    this.src_ani = src_ani;
 
     this.pos = game.w;
     this.speed = 100 + (Math.random()*10)+(this.lane*70);
@@ -25,8 +25,9 @@ function Order(){
     this.is_served = false;
 }
 
-Customer.prototype.render = function(){
-    ctx.drawImage(this.src,this.pos,CUSTOMER_DIMS.lanes[this.lane]);
+Customer.prototype.render = function(elapsed){
+
+    this.src_ani.draw(elapsed,this.pos,CUSTOMER_DIMS.lanes[this.lane]);
 
     if(this.is_ordering & !this.is_fed){
         ctx.drawImage(CUSTOMERS.src_speech_bubble,this.pos+25,CUSTOMER_DIMS.lanes[this.lane]-20);
@@ -42,11 +43,11 @@ Customer.prototype.render = function(){
 Customer.prototype.update = function(modifier){
     this.pos -= this.speed*modifier;
 
-    if(this.pos <= -this.src.width){
+    if(this.pos <= -this.src_ani.w){
         this.is_finished = true;
     }
 
-    if( (this.pos <= game.w-this.src.width) && (!this.is_ordering)){
+    if( (this.pos <= game.w-this.src_ani.w) && (!this.is_ordering)){
         this.is_ordering = true;
         score.orders_placed ++;
     }
