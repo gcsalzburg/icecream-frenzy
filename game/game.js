@@ -9,8 +9,8 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 // /////////////////////////////////
 
 var game = {
-    w: 812,
-    h: 375
+    w: 1181,
+    h: 694
 }
 
 var NUM_LANES = 3;
@@ -43,10 +43,34 @@ ASS_MANAGER.queueDownloads(
     'cone-chocolate.png',
     'speech-bubble.png',
     'truck-sprites.png',
-    'sounds/bg_109bpm.mp3'
+    'sounds/bg_109bpm.mp3',
+    'bg/cactus_1.png',
+    'bg/cactus_2.png',
+    'bg/cactus_3.png',
+    'bg/cactus_4.png',
+    'bg/cactus_5.png',
+    'bg/crack_1.png',
+    'bg/crack_2.png',
+    'bg/crack_3.png',
+    'bg/crack_4.png'
 );
 ASS_MANAGER.downloadAll(function() {
-    ROAD.src =                      ASS_MANAGER.getAsset('bg.png');
+    ROAD.src =     ASS_MANAGER.getAsset('bg.png');
+    ROAD.cacti =   [
+        ASS_MANAGER.getAsset('bg/cactus_1.png'),
+        ASS_MANAGER.getAsset('bg/cactus_2.png'),
+        ASS_MANAGER.getAsset('bg/cactus_3.png'),
+        ASS_MANAGER.getAsset('bg/cactus_4.png'),
+        ASS_MANAGER.getAsset('bg/cactus_5.png')
+    ];
+    ROAD.cracks =   [
+        ASS_MANAGER.getAsset('bg/crack_1.png'),
+        ASS_MANAGER.getAsset('bg/crack_2.png'),
+        ASS_MANAGER.getAsset('bg/crack_3.png'),
+        ASS_MANAGER.getAsset('bg/crack_4.png')
+    ];
+
+
     TRUCK.src =                     ASS_MANAGER.getAsset('truck-sprites.png');
     CUSTOMERS.src_car =             ASS_MANAGER.getAsset('car.png');
     CUSTOMERS.src_speech_bubble =   ASS_MANAGER.getAsset('speech-bubble.png');
@@ -55,11 +79,12 @@ ASS_MANAGER.downloadAll(function() {
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-chocolate.png'));
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-strawberry.png'));
 
+
     bg_music = ASS_MANAGER.getAsset('sounds/bg_109bpm.mp3');
 
 
     // Can start game once assets are loaded
-    start_game();   
+ //   start_game();   
 });
 
 
@@ -79,11 +104,12 @@ var TRUCK = new Truck();
 var ROAD = new Road();
 
 // Create the canvas
-var canvas = document.createElement("canvas");
+// var canvas = document.createElement("canvas");
+
+var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 canvas.width = game.w;
 canvas.height = game.h;
-document.getElementById("game_holder").prepend(canvas);
 
 // For game loop
 var then;

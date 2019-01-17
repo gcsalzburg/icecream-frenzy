@@ -21,4 +21,57 @@ body{
 canvas{
     display: block;
     position: relative;
+    z-index:10;
+}
+
+.inner_wrap{
+    width: 1181px;
+    height: 694px;
+    position: relative;
+}
+
+.intro{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    font-family: 'VT323', monospace;
+    background-color:#F6E7B8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    z-index:20;
+}
+.intro h1{
+    font-size: 50px;
+    color: #474A4B;
+    text-align: center;
+    font-weight: normal;
+    margin-top:0;
+}
+.intro .loading_bar{
+    width: 400px;
+    height: 30px;
+    background-color: transparent;
+    margin: 0 auto;
+    border: 3px solid #474A4B;
+}
+.intro .play{
+    background-color: #A9D7E3;
+    text-decoration: none;
+    font-size: 30px;
+    margin: 20px 0;
+    padding: 12px 25px;
+    color: #474A4B;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.intro .play:hover{
+    background-color: #96D128;
+}
+.intro .play:active{
+    color: #FFF;
+    background-color: #67901C;
 }
