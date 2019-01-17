@@ -67,6 +67,7 @@ canvas{
     color: #474A4B;
     font-weight: bold;
     text-transform: uppercase;
+    outline:none;
 }
 .intro .play:hover{
     background-color: #96D128;
@@ -74,4 +75,17 @@ canvas{
 .intro .play:active{
     color: #FFF;
     background-color: #67901C;
+}
+.intro .play.disabled, .intro .play.disabled:hover, .intro .play.disabled:active{
+    background-color:#B1B1B1;
+    cursor:default;
+    opacity:0.5;
+    color: #474A4B;
+}
+.intro .bar{
+    height:100%;
+    background-color: #96D128;
+    border: 3px solid #F6E7B8;
+    box-sizing: border-box;
+    width: 0%;
 }

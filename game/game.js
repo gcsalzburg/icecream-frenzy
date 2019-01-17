@@ -13,6 +13,8 @@ var game = {
     h: 694
 }
 
+var can_start = false;
+
 var NUM_LANES = 3;
 var TRUCK_LANES = 2;
 
@@ -84,17 +86,24 @@ ASS_MANAGER.downloadAll(function() {
 
 
     // Can start game once assets are loaded
- //   start_game();   
+    can_start = true;
+    var bar = document.getElementById("play");
+    if (bar.classList) bar.classList.remove("disabled");
+    else bar.className = bar.className.replace(new RegExp('\\b'+ disabled+'\\b', 'g'), '');
+
+}, function(success,error,total){
+    var bar = document.getElementById("bar");
+    bar.style.width = (100*success/total) + "%";
 });
 
 
 // Simple test of playing audio on click
-var el = document.querySelector('body');
+var el = document.getElementById('play');
 // attach anonymous function to click event
 el.addEventListener('click', function(){
-    bg_music.playbackRate = 1.0;
-    bg_music.loop = true;
-    bg_music.play();
+    if(can_start){
+        start_game();   
+    }
 });
 
 
@@ -239,6 +248,13 @@ var main = function () {
 // // START                       //
 // ///////////////////////////////// 
 var start_game = function () {
+
+    document.getElementById("intro").style.display = "none";
+
+    bg_music.playbackRate = 1.0;
+    bg_music.loop = true;
+    bg_music.play();
+
     then = Date.now();
     main();
 }
