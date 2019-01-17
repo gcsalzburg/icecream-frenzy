@@ -11,6 +11,20 @@ function Road(){
     this.target_speed = 600;    // desired road speed
 
     this.pos = 0;
+
+    this.cacti_freq = 8;
+    this.crack_freq = 6;
+
+    function Decor(){
+        this.src = null;
+        this.pos = 0;
+        this.y = 0;
+    }
+
+    Decor.prototype.render = function(){
+        ctx.drawImage(this.src,this.pos,this.y);
+    }
+ //   Decor.prototype.update = function()
 }
 
 Road.prototype.render = function(){
@@ -20,23 +34,7 @@ Road.prototype.render = function(){
     ctx.drawImage(this.src,this.pos+this.src.width,0);
 }
 
-Road.prototype.update = function(modifier){
-    // Accelerate to desired speed (if necessary)
-    if(this.target_speed > this.speed){
-        this.speed += this.accel*modifier;
-    }
-    if(this.speed > this.target_speed){
-        this.speed = this.target_speed;
-        if(this.is_starting_up){
-            // Finished starting up, so trigger something!
-            CUSTOMERS.is_open_for_customers = true;
-            this.is_starting_up = false;
-        }
-    }
-
+Road.prototype.update = function(modifier, distance){
     // Advance position of road
-    this.pos -= this.speed*modifier;
-    if(this.pos < -this.src.width){
-        this.pos = this.pos + this.src.width;
-    }
+    this.pos = -distance%this.src.width;
 }

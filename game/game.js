@@ -9,11 +9,15 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 // /////////////////////////////////
 
 var game = {
-    w: 1180,
-    h: 694
-}
+    w:              1180,
+    h:              694,
+    distance:       0,
+    can_start:      false,
 
-var can_start = false;
+    speed:          200,  // current speed in pixels per second -> TODO: set to 0 for production
+    accel:          200,  // pixels per second^2
+    target_speed:   600,  // desired road speed
+}
 
 var NUM_LANES = 3;
 var TRUCK_LANES = 2;
@@ -28,6 +32,16 @@ var score = {
 
 // Background music
 var bg_music = null;
+
+var distance_triggers = [
+    {
+        distance:       800,
+        has_triggered:  false,
+        trigger:        function(){
+            CUSTOMERS.is_open_for_customers = true;
+        }
+    }
+];
 
 // //////////////////////////////////
 // // ASSET & GAME OBJECTS LOADING //
@@ -86,7 +100,7 @@ ASS_MANAGER.downloadAll(function() {
 
 
     // Can start game once assets are loaded
-    can_start = true;
+    game.can_start = true;
     var bar = document.getElementById("play");
     if (bar.classList) bar.classList.remove("disabled");
     else bar.className = bar.className.replace(new RegExp('\\b'+ disabled+'\\b', 'g'), '');
@@ -101,7 +115,7 @@ ASS_MANAGER.downloadAll(function() {
 var el = document.getElementById('play');
 // attach anonymous function to click event
 el.addEventListener('click', function(){
-    if(can_start){
+    if(game.can_start){
         start_game();   
     }
 });
@@ -151,6 +165,8 @@ addEventListener("keyup", function (e) {
 
 var update = function (modifier) {
 
+    // TODO: Check sequencing of functions in this update() call
+
     // Handle key presses
     if(38 in keysDown){         // UP
         delete keysDown[38];
@@ -184,9 +200,29 @@ var update = function (modifier) {
         }
     }
 
+    // Roll the road!
+    if(game.target_speed > game.speed){
+        game.speed += game.accel*modifier;
+    }
+    if(game.speed > game.target_speed){
+        game.speed = game.target_speed;
+    }
+    game.distance += game.speed*modifier;
+
+    // Check distance triggers
+    for (var i = 0; i < distance_triggers.length; i++) {
+        var trigger = distance_triggers[i];
+        if(!trigger.has_triggered){
+            if(game.distance > trigger.distance){
+                trigger.trigger();
+                trigger.has_triggered = true;
+            }
+        }
+    }
+
     // Update loops for objects
     CUSTOMERS.update(modifier);
-    ROAD.update(modifier);
+    ROAD.update(modifier, game.distance);
 
 };
 
