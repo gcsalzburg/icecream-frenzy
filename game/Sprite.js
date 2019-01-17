@@ -1,3 +1,6 @@
+// Convert sprites using
+// https://ezgif.com/gif-to-sprite
+
 function Sprite(src,frames,cols,rows,framerate) {
     this.src = src;
     this.frames = frames;
