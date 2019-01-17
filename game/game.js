@@ -295,3 +295,10 @@ var start_game = function () {
     then = Date.now();
     main();
 }
+
+
+
+// Helper fns
+function rand_int(max){
+    return Math.floor(Math.random()*max);
+}
