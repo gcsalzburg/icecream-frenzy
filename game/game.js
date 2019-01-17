@@ -19,8 +19,8 @@ var game = {
     target_speed:   200,  // desired road speed
 }
 
-var NUM_LANES = 3;
-var TRUCK_LANES = 2;
+var NUM_LANES = 4;
+var TRUCK_LANES = 3;
 
 // Score keeping
 var score = {
