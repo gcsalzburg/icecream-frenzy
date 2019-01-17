@@ -1,6 +1,8 @@
 
 function Road(){
     this.src = null;
+    this.cacti = [];
+    this.cracks = [];
 
     this.is_starting_up = true; // Are we doing the initial acceleration or not
 
