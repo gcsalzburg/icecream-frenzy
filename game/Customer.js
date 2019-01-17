@@ -1,7 +1,7 @@
 
 
 var CUSTOMER_DIMS = {
-    lanes: [2,96,191]
+    lanes: [193,291,392,477]
 }
 
 function Customer(src_img){

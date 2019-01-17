@@ -5,7 +5,7 @@ var TRUCK_DIMS = {
     source_h: 300,
     target_w: 160,
     target_h: 75,
-    lanes: [51,157]
+    lanes: [250,350,450]
 }
 
 function Truck(){
