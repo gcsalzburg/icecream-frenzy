@@ -9,7 +9,7 @@ requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame
 // /////////////////////////////////
 
 var game = {
-    w: 1181,
+    w: 1180,
     h: 694
 }
 
@@ -45,7 +45,7 @@ ASS_MANAGER.queueDownloads(
     'speech-bubble.png',
     'truck-sprites.png',
     'sounds/bg_109bpm.mp3',
-    'bg.png',
+    'bg/road.png',
     'bg/cactus_1.png',
     'bg/cactus_2.png',
     'bg/cactus_3.png',
@@ -57,7 +57,7 @@ ASS_MANAGER.queueDownloads(
     'bg/crack_4.png'
 );
 ASS_MANAGER.downloadAll(function() {
-    ROAD.src =     ASS_MANAGER.getAsset('bg.png');
+    ROAD.src =     ASS_MANAGER.getAsset('bg/road.png');
     ROAD.cacti =   [
         ASS_MANAGER.getAsset('bg/cactus_1.png'),
         ASS_MANAGER.getAsset('bg/cactus_2.png'),
