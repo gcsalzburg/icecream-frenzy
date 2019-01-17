@@ -1,7 +1,7 @@
 
 var TRUCK_DIMS = {
-    left: 2,
-    lanes: [250,350,450]
+    left: -39,
+    lanes: [207,307,407]
 }
 
 function Truck(){
