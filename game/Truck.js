@@ -10,7 +10,7 @@ function Truck(){
 }
 
 Truck.prototype.init = function(src){
-    truck_ani = new Sprite(src,59,10,6,30);
+    truck_ani = new Sprite(src,59,10,6,18);
 }
 
 Truck.prototype.render = function(modifier, elapsed){

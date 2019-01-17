@@ -16,7 +16,7 @@ var game = {
 
     speed:          200,  // current speed in pixels per second -> TODO: set to 0 for production
     accel:          200,  // pixels per second^2
-    target_speed:   200,  // desired road speed
+    target_speed:   600,  // desired road speed
 }
 
 var NUM_LANES = 4;
