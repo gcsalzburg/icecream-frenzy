@@ -69,7 +69,6 @@ Road.prototype.update = function(modifier, distance){
                 var new_d = generate_decor(category,j-game.w);
                 this.decors.push(new_d);
                 j = new_d.start + category.freq;
-                console.log(new_d);
             }
         }
         this.has_populated_initial = true;
