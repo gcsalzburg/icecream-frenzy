@@ -16,7 +16,7 @@ var game = {
 
     speed:          200,  // current speed in pixels per second -> TODO: set to 0 for production
     accel:          200,  // pixels per second^2
-    target_speed:   600,  // desired road speed
+    target_speed:   200,  // desired road speed
 }
 
 var NUM_LANES = 3;
@@ -72,14 +72,15 @@ ASS_MANAGER.queueDownloads(
 );
 ASS_MANAGER.downloadAll(function() {
     ROAD.src =     ASS_MANAGER.getAsset('bg/road.png');
-    ROAD.cacti =   [
+    ROAD.decor_data[0].graphics = [
         ASS_MANAGER.getAsset('bg/cactus_1.png'),
         ASS_MANAGER.getAsset('bg/cactus_2.png'),
         ASS_MANAGER.getAsset('bg/cactus_3.png'),
         ASS_MANAGER.getAsset('bg/cactus_4.png'),
         ASS_MANAGER.getAsset('bg/cactus_5.png')
     ];
-    ROAD.cracks =   [
+    ROAD.decor_data[1].graphics = ROAD.decor_data[0].graphics;
+    ROAD.decor_data[2].graphics = [
         ASS_MANAGER.getAsset('bg/crack_1.png'),
         ASS_MANAGER.getAsset('bg/crack_2.png'),
         ASS_MANAGER.getAsset('bg/crack_3.png'),
