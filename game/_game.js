@@ -53,7 +53,8 @@ ASS_MANAGER.setDefaultPath("assets/");
 ASS_MANAGER.queueDownloads(
     'truck/truck-sprite.png',
 
-    'car.png',
+    'customers/2people.png',
+    
     'cone-strawberry.png',
     'cone-vanilla.png',
     'cone-chocolate.png',
@@ -92,7 +93,8 @@ ASS_MANAGER.downloadAll(function() {
 
     TRUCK.init(ASS_MANAGER.getAsset('truck/truck-sprite.png'));
 
-    CUSTOMERS.src_car =             ASS_MANAGER.getAsset('car.png');
+    CUSTOMERS.init(ASS_MANAGER.getAsset('customers/2people.png'));
+
     CUSTOMERS.src_speech_bubble =   ASS_MANAGER.getAsset('speech-bubble.png');
 
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-vanilla.png'));
@@ -245,20 +247,20 @@ var render = function (modifier, elapsed) {
 	ctx.fillStyle = "rgb(58, 61, 62)";
     ctx.font = "22px VT323";
 	ctx.textAlign = "right";
-	ctx.textBaseline = "bottom";
-    ctx.fillText("Orders served: " + score.orders_served + "/" + score.orders_placed, 802, 370);    
-    ctx.fillText("Ice cream efficiency: " + Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10 + "%" , 802, 349);  
+	ctx.textBaseline = "top";
+    ctx.fillText("Orders served: " + score.orders_served + "/" + score.orders_placed, 1170, 40);    
+    ctx.fillText("Ice cream efficiency: " + Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10 + "%" , 1170, 62);  
     
     ctx.font = "50px VT323";
     ctx.textAlign = "left";
     var score_disp = score.orders_served - (score.orders_placed-score.orders_served)*2;
-    ctx.fillText(score_disp, 18,374);
+    ctx.fillText(score_disp, 20,20);
 
 	// FPS
 	ctx.font = "8px Helvetica";
 	ctx.textAlign = "right";
-	ctx.textBaseline = "bottom";
-    ctx.fillText("FPS: " + fps, 807, 13);    
+	ctx.textBaseline = "top";
+    ctx.fillText("FPS: " + fps, 1170, 10);    
 };
 
 // /////////////////////////////////
