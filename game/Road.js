@@ -7,6 +7,7 @@ function Road(){
     this.has_populated_initial = false;
     this.pos = 0;
 
+    // Measurement and calculation data for each set of graphics
     this.decor_data = [
         {   // Cacti top
             graphics: [],
@@ -14,7 +15,7 @@ function Road(){
             freq: (game.w/ 4), // average of 12 across width of screen at any time
             y_base: 105,
             y_variance: 50,
-            x_variance: 100
+            x_variance: 200
         },
         {   // Cacti bottom
             graphics: [],
@@ -22,13 +23,13 @@ function Road(){
             freq: (game.w/ 4),
             y_base: 550,
             y_variance: 70,
-            x_variance: 100
+            x_variance: 200
         },
         {   // Road cracks
             graphics: [],
             last: 0,
             freq: (game.w/ 3),
-            y_base: [239,322,425,521],
+            y_base: [239,322,425,521], // this variable can be an integer or array
             y_variance: 0,
             x_variance: 200
         }
