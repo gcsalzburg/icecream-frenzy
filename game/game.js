@@ -37,7 +37,6 @@ var bg_music = null;
 var ASS_MANAGER = new AssetManager();
 ASS_MANAGER.setDefaultPath("assets/");
 ASS_MANAGER.queueDownloads(
-    'bg.png',
     'truck.png',
     'car.png',
     'cone-strawberry.png',
@@ -46,6 +45,7 @@ ASS_MANAGER.queueDownloads(
     'speech-bubble.png',
     'truck-sprites.png',
     'sounds/bg_109bpm.mp3',
+    'bg.png',
     'bg/cactus_1.png',
     'bg/cactus_2.png',
     'bg/cactus_3.png',
@@ -251,6 +251,7 @@ var start_game = function () {
 
     document.getElementById("intro").style.display = "none";
 
+    bg_music.volume = 0;
     bg_music.playbackRate = 1.0;
     bg_music.loop = true;
     bg_music.play();
