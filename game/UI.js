@@ -43,7 +43,7 @@ check_keys = function(){
     }
     if(49 in keysDown){ // NUMBER 1
         delete keysDown[49];
-        if(CUSTOMERS.serve(TRUCK.lane,0)){
+        if(CUSTOMERS.serve(TRUCK.getLane(),0)){
             score.icecream_served++;
         }else{
             score.icecream_wasted++;
@@ -51,7 +51,7 @@ check_keys = function(){
     }
     if(50 in keysDown){ // NUMBER 2
         delete keysDown[50];
-        if(CUSTOMERS.serve(TRUCK.lane,1)){
+        if(CUSTOMERS.serve(TRUCK.getLane(),1)){
             score.icecream_served++;
         }else{
             score.icecream_wasted++;
@@ -59,7 +59,7 @@ check_keys = function(){
     }
     if(51 in keysDown){ // NUMBER 3
         delete keysDown[51];
-        if(CUSTOMERS.serve(TRUCK.lane,2)){
+        if(CUSTOMERS.serve(TRUCK.getLane(),2)){
             score.icecream_served++;
         }else{
             score.icecream_wasted++;

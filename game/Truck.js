@@ -1,28 +1,42 @@
+// /////////////////////////////////
+// // TRUCK                       //
+// // The ice cream truck itself  //
+// /////////////////////////////////
 
-var TRUCK_DIMS = {
-    left: -39,
-    lanes: [207,307,407]
-}
+class Truck{
+    constructor(){
 
-function Truck(){
-    this.lane = 0;
-    this.truck_ani = null;
-}
-
-Truck.prototype.init = function(src){
-    truck_ani = new Sprite(src,59,10,6,18);
-}
-
-Truck.prototype.render = function(modifier, elapsed){
-    // Display truck sprite animation frame
-    truck_ani.draw(elapsed,TRUCK_DIMS.left,TRUCK_DIMS.lanes[this.lane]);
-}
-
-Truck.prototype.change_lane = function(dir){
-    this.lane = this.lane+dir;
-    if(this.lane<0){
-        this.lane = 0;
-    }else if(this.lane>=TRUCK_LANES){
-        this.lane = TRUCK_LANES-1;
+        this._lane = 0;
+        this._truck_ani = null;
+        
+        this._dims = {
+            left: -39,
+            lanes: [207,307,407]
+        }
     }
+
+    // Getters / setters
+    getLane(){
+        return this._lane;
+    }
+
+    init(src){
+        this._truck_ani = new Sprite(src,59,10,6,18);
+    }
+
+    render(modifier, elapsed){
+        // Display truck sprite animation frame
+        this._truck_ani.draw(elapsed,this._dims.left,this._dims.lanes[this._lane]);
+    }
+
+    change_lane(dir){
+        this._lane = this._lane+dir;
+        if(this._lane<0){
+            this._lane = 0;
+        }else if(this._lane>=TRUCK_LANES){
+            this._lane = TRUCK_LANES-1;
+        }
+
+    }
+
 }

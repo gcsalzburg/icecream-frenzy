@@ -189,9 +189,9 @@ var render = function (modifier, elapsed) {
 
     ROAD.render();
 
-    CUSTOMERS.render_below(TRUCK.lane, elapsed);
+    CUSTOMERS.render_below(TRUCK.getLane(), elapsed);
     TRUCK.render(modifier, elapsed);
-    CUSTOMERS.render_above(TRUCK.lane, elapsed);
+    CUSTOMERS.render_above(TRUCK.getLane(), elapsed);
 
     display_scores();
 };
