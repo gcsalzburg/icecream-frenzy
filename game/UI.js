@@ -1,3 +1,14 @@
+//
+// Start button
+//
+var el = document.getElementById('play');
+// attach anonymous function to click event
+el.addEventListener('click', function(){
+    if(game.can_start){
+        start_game();   
+    }
+});
+
 // /////////////////////////////////
 // // KEYBOARD HANDLING           //
 // /////////////////////////////////
