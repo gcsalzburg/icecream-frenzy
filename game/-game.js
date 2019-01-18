@@ -16,9 +16,10 @@ const game = {
     
     can_start:      false,
 
-    speed:          200,  // current speed in pixels per second -> TODO: set to 0 for production
-    accel:          200,  // pixels per second^2
+    speed:          50,  // current speed in pixels per second -> TODO: set to 0 for production
     target_speed:   600,  // desired road speed
+
+    accel:          200,  // pixels per second^2
 }
 
 const NUM_LANES = 4;
