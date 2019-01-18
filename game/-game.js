@@ -1,17 +1,18 @@
 
 // Cross-browser support for requestAnimationFrame
-var w = window;
-requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+const w = window;
+const requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 
 // /////////////////////////////////
 // // CORE PROGRAM VARIABLES      //
 // // aka magic numbers           //
 // /////////////////////////////////
 
-var game = {
+const game = {
     w:              1180,
     h:              694,
     distance:       0,
+    
     can_start:      false,
 
     speed:          200,  // current speed in pixels per second -> TODO: set to 0 for production
@@ -19,11 +20,11 @@ var game = {
     target_speed:   600,  // desired road speed
 }
 
-var NUM_LANES = 4;
-var TRUCK_LANES = 3;
+const NUM_LANES = 4;
+const TRUCK_LANES = 3;
 
 // Score keeping
-var score = {
+const score = {
     orders_placed: 0,
     orders_served: 0,
     icecream_served: 0,
@@ -31,9 +32,10 @@ var score = {
 }
 
 // Background music
-var bg_music = null;
+let bg_music = null;
 
-var distance_triggers = [
+// Handling for game progression events
+const distance_triggers = [
     {
         distance:       800,
         has_triggered:  false,
@@ -43,12 +45,37 @@ var distance_triggers = [
     }
 ];
 
+// /////////////////////////////////
+// // CREATE GAME OBJECTS         //
+// /////////////////////////////////
+
+// Create game objects
+const CUSTOMERS = new Customers();
+const TRUCK = new Truck();
+const ROAD = new Road();
+
+// Create the canvas
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+canvas.width = game.w;
+canvas.height = game.h;
+
+// For game loop
+let then = 0;
+let start_time = 0;
+
+// for fps measurement
+// Taken from: https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
+let times = [];
+let fps = 0;
+
+
 // //////////////////////////////////
 // // ASSET & GAME OBJECTS LOADING //
 // //////////////////////////////////
 
 // Queue image assets
-var ASS_MANAGER = new AssetManager();
+const ASS_MANAGER = new AssetManager();
 ASS_MANAGER.setDefaultPath("assets/");
 ASS_MANAGER.queueDownloads(
     'truck/truck-sprite.png',
@@ -112,42 +139,10 @@ ASS_MANAGER.downloadAll(function() {
     else bar.className = bar.className.replace(new RegExp('\\b'+ disabled+'\\b', 'g'), '');
 
 }, function(success,error,total){
+    // Map loading progress onto error bar
     var bar = document.getElementById("bar");
     bar.style.width = (100*success/total) + "%";
 });
-
-
-// Simple test of playing audio on click
-var el = document.getElementById('play');
-// attach anonymous function to click event
-el.addEventListener('click', function(){
-    if(game.can_start){
-        start_game();   
-    }
-});
-
-
-// Create game objects
-var CUSTOMERS = new Customers();
-var TRUCK = new Truck();
-var ROAD = new Road();
-
-// Create the canvas
-// var canvas = document.createElement("canvas");
-
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-canvas.width = game.w;
-canvas.height = game.h;
-
-// For game loop
-var then;
-var start_time;
-
-// for fps measurement
-// Taken from: https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
-var times = [];
-var fps;
 
 
 
