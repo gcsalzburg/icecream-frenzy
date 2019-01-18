@@ -51,3 +51,25 @@ check_keys = function(){
     }
 
 }
+
+display_scores = function(){
+    
+    // Scores
+	ctx.fillStyle = "rgb(58, 61, 62)";
+    ctx.font = "22px VT323";
+	ctx.textAlign = "right";
+	ctx.textBaseline = "top";
+    ctx.fillText("Orders served: " + score.orders_served + "/" + score.orders_placed, 1170, 40);    
+    ctx.fillText("Ice cream efficiency: " + Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10 + "%" , 1170, 62);  
+    
+    ctx.font = "50px VT323";
+    ctx.textAlign = "left";
+    var score_disp = score.orders_served - (score.orders_placed-score.orders_served)*2;
+    ctx.fillText(score_disp, 20,20);
+
+	// FPS
+	ctx.font = "8px Helvetica";
+	ctx.textAlign = "right";
+	ctx.textBaseline = "top";
+    ctx.fillText("FPS: " + fps, 1170, 10);    
+}
