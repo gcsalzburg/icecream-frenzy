@@ -70,8 +70,12 @@ display_scores = function(){
     ctx.font = "22px VT323";
 	ctx.textAlign = "right";
 	ctx.textBaseline = "top";
-    ctx.fillText("Orders served: " + score.orders_served + "/" + score.orders_placed, 1170, 40);    
-    ctx.fillText("Ice cream efficiency: " + Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10 + "%" , 1170, 62);  
+    ctx.fillText(`Orders served: ${score.orders_served}/${score.orders_placed}`, 1170, 40);    
+    let efficiency = Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10;
+    if(isNaN(efficiency)){
+        efficiency = 0;
+    }
+    ctx.fillText(`Ice cream efficiency: ${efficiency}%` , 1170, 62);  
     
     ctx.font = "50px VT323";
     ctx.textAlign = "left";
@@ -82,5 +86,5 @@ display_scores = function(){
 	ctx.font = "8px Helvetica";
 	ctx.textAlign = "right";
 	ctx.textBaseline = "top";
-    ctx.fillText("FPS: " + fps, 1170, 10);    
+    ctx.fillText(`FPS: ${fps}`, 1170, 10);    
 }
