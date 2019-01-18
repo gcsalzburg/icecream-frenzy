@@ -9,6 +9,11 @@ el.addEventListener('click', function(){
     }
 });
 
+var enable_start = function(){
+    var bar = document.getElementById("play");
+    bar.classList.remove("disabled");
+}
+
 // /////////////////////////////////
 // // KEYBOARD HANDLING           //
 // /////////////////////////////////
@@ -65,7 +70,7 @@ check_keys = function(){
 
 display_scores = function(){
     
-    // Scores
+    // Data
 	ctx.fillStyle = "rgb(58, 61, 62)";
     ctx.font = "22px VT323";
 	ctx.textAlign = "right";
@@ -76,11 +81,14 @@ display_scores = function(){
         efficiency = 0;
     }
     ctx.fillText(`Ice cream efficiency: ${efficiency}%` , 1170, 62);  
+    ctx.fillText(`Distance: ${Math.round(game.distance / game.distance_scale)}m` , 1170, 84);  
     
+    // Main score
     ctx.font = "50px VT323";
     ctx.textAlign = "left";
     var score_disp = score.orders_served - (score.orders_placed-score.orders_served)*2;
     ctx.fillText(score_disp, 20,20);
+
 
 	// FPS
 	ctx.font = "8px Helvetica";
