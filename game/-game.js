@@ -12,6 +12,7 @@ const game = {
     w:              1180,
     h:              694,
     distance:       0,
+    distance_scale: 50,   // divider to convert distance figure to metres.
     
     can_start:      false,
 
@@ -100,7 +101,9 @@ ASS_MANAGER.queueDownloads(
     'bg/crack_3.png',
     'bg/crack_4.png'
 );
-ASS_MANAGER.downloadAll(function() {
+
+var assets_complete = function(){
+    // Map all assets to their respective objects
     ROAD.src =     ASS_MANAGER.getAsset('bg/road.png');
     ROAD.decor_data[0].graphics = [
         ASS_MANAGER.getAsset('bg/cactus_1.png'),
@@ -122,27 +125,23 @@ ASS_MANAGER.downloadAll(function() {
 
     CUSTOMERS.init(ASS_MANAGER.getAsset('customers/2people.png'));
 
-    CUSTOMERS.src_speech_bubble =   ASS_MANAGER.getAsset('speech-bubble.png');
-
+    CUSTOMERS.src_speech_bubble = ASS_MANAGER.getAsset('speech-bubble.png');
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-vanilla.png'));
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-chocolate.png'));
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-strawberry.png'));
 
-
     bg_music = ASS_MANAGER.getAsset('sounds/bg_109bpm.mp3');
-
 
     // Can start game once assets are loaded
     game.can_start = true;
-    var bar = document.getElementById("play");
-    if (bar.classList) bar.classList.remove("disabled");
-    else bar.className = bar.className.replace(new RegExp('\\b'+ disabled+'\\b', 'g'), '');
+    enable_start();
+}
 
-}, function(success,error,total){
+var assets_loading = function(success,error,total){
     // Map loading progress onto error bar
     var bar = document.getElementById("bar");
-    bar.style.width = (100*success/total) + "%";
-});
+    bar.style.width = (100*success/total) + "%";   
+}
 
 
 
@@ -237,6 +236,8 @@ var start_game = function () {
     main();
 }
 
+// Begin asset loading
+ASS_MANAGER.downloadAll(assets_complete,assets_loading);
 
 
 // Helper fns
