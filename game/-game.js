@@ -226,11 +226,13 @@ var render = function (modifier, elapsed) {
 var icecream_served = function(){
     score.icecream_served++;
     TRUCK.dollar(0);
+    score.dollars += 3;
 }
 
 var icecream_wasted = function(){
     score.icecream_served--;
     TRUCK.dollar(1);
+    score.dollars -= 1;
 }
 
 

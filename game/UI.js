@@ -86,7 +86,7 @@ display_scores = function(){
     // Main score
     ctx.font = "50px VT323";
     ctx.textAlign = "left";
-    var score_disp = score.orders_served - (score.orders_placed-score.orders_served)*2;
+    var score_disp = `$${score.dollars}`;
     ctx.fillText(score_disp, 20,20);
 
 
