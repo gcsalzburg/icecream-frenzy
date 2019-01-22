@@ -11,17 +11,24 @@ class Sprite {
         this.w      = src.width/cols;
         this.h      = src.height/rows;  
 
-        this.framerate = framerate;   
+        this.framerate = framerate;
+        
         
         this.loop = loop; // boolean
     }
 
     draw(elapsed_ms,x,y) {
+
+        // First time called, we start the animation
+        if(!this._start_ms){
+            this._start_ms = elapsed_ms;
+        }
+
         // Calculate the frame of the animation
         if(this.loop){
-            var curr_frame = Math.floor((elapsed_ms/this.framerate)%this.frames);
+            var curr_frame = Math.floor(((elapsed_ms-this._start_ms)/this.framerate)%this.frames);
         }else{
-            var curr_frame = Math.floor((elapsed_ms/this.framerate)/this.frames);
+            var curr_frame = Math.floor(((elapsed_ms-this._start_ms)/this.framerate)/this.frames);
             if(curr_frame >= this.frames){
                 curr_frame = this.frames-1;
             }
