@@ -25,12 +25,14 @@ class Sprite {
         }
 
         // Calculate the frame of the animation
+        var is_ended = false;
         if(this.loop){
             var curr_frame = Math.floor(((elapsed_ms-this._start_ms)/this.framerate)%this.frames);
         }else{
             var curr_frame = Math.floor(((elapsed_ms-this._start_ms)/this.framerate)/this.frames);
             if(curr_frame >= this.frames){
                 curr_frame = this.frames-1;
+                var is_ended = true;
             }
         }
 
@@ -44,6 +46,8 @@ class Sprite {
             this.src,
             x_c,    y_c,    this.w,     this.h, // Source inside sprite
             x,      y,      this.w,     this.h  // Destination inside canvas
-        );    
+        );  
+        
+        return is_ended;
     }
 }
