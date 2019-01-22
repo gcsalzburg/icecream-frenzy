@@ -91,6 +91,9 @@ ASS_MANAGER.queueDownloads(
     'orders/drop_vanilla.png',
     'orders/drop_chocolate.png',
     'orders/drop_strawberry.png',
+    
+    'truck/dollar_up.png',
+    'truck/dollar_down.png',
 
     'orders/bubble.png',
     'orders/bubble_order.png',
@@ -133,7 +136,9 @@ var assets_complete = function(){
         ASS_MANAGER.getAsset('truck/truck-sprite.png'),
         ASS_MANAGER.getAsset('orders/drop_vanilla.png'),
         ASS_MANAGER.getAsset('orders/drop_chocolate.png'),
-        ASS_MANAGER.getAsset('orders/drop_strawberry.png')
+        ASS_MANAGER.getAsset('orders/drop_strawberry.png'),
+        ASS_MANAGER.getAsset('truck/dollar_up.png'),
+        ASS_MANAGER.getAsset('truck/dollar_down.png')
     );
 
     CUSTOMERS.init(

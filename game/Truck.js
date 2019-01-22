@@ -23,12 +23,16 @@ class Truck{
         return this._lane;
     }
 
-    init(src, src_2, src_3, src_4){
-        this._truck_ani = new Sprite(src,59,10,6,18);
+    init(src_1, src_2, src_3, src_4, src_5, src_6){
+        this._truck_ani = new Sprite(src_1,59,10,6,18);
         this._drop_anis = [
             src_2,
             src_3,
             src_4
+        ];
+        this._dollar_anis = [
+            src_5,
+            src_6
         ];
     }
 
@@ -72,6 +76,46 @@ class Truck{
 // //////////////////////////////////////////
 // // DUMPS                                //
 // // Wasted ice cream dropped onto floor  //
+// //////////////////////////////////////////
+
+class Dumps{
+    constructor(src,y){
+
+        this._dims = {
+            x: 60,
+            y: y + 22,
+            framerate:  6,
+            duration:   6*9 // frames * framerate
+        }
+        this._ani = new Sprite(src,9,9,1,this._dims.framerate, false);
+
+        this._is_landed = false;
+    }
+
+    // getters
+    isLanded(){
+        return this._is_landed;
+    }
+    isGone(){
+        return (this._dims.x < -100); // must be off the screen by now, lol. 
+    }
+
+    render(modifier, elapsed){
+
+        if(this._ani.draw(elapsed,this._dims.x,this._dims.y) >= 5){
+            this._is_landed = true;
+        }
+
+        if(this._is_landed){
+            // Animate off the screen
+            this._dims.x -= game.speed*modifier;
+        }
+    }
+}
+
+// //////////////////////////////////////////
+// // MONEY                                //
+// // $$$ floating in the sky              //
 // //////////////////////////////////////////
 
 class Dumps{
