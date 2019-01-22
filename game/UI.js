@@ -45,24 +45,30 @@ check_keys = function(){
         delete keysDown[49];
         if(CUSTOMERS.serve(TRUCK.getLane(),0)){
             score.icecream_served++;
+            TRUCK.dollar(0);
         }else{
             score.icecream_wasted++;
+            TRUCK.dollar(1);
         }
     }
     if(50 in keysDown){ // NUMBER 2
         delete keysDown[50];
         if(CUSTOMERS.serve(TRUCK.getLane(),1)){
             score.icecream_served++;
+            TRUCK.dollar(0);
         }else{
             score.icecream_wasted++;
+            TRUCK.dollar(1);
         }
     }
     if(51 in keysDown){ // NUMBER 3
         delete keysDown[51];
         if(CUSTOMERS.serve(TRUCK.getLane(),2)){
             score.icecream_served++;
+            TRUCK.dollar(0);
         }else{
             score.icecream_wasted++;
+            TRUCK.dollar(1);
         }
     }
 
