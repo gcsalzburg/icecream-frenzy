@@ -69,6 +69,10 @@ class Truck{
 
 }
 
+// //////////////////////////////////////////
+// // DUMPS                                //
+// // Wasted ice cream dropped onto floor  //
+// //////////////////////////////////////////
 
 class Dumps{
     constructor(src,y){
