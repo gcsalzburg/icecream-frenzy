@@ -223,14 +223,14 @@ var render = function (modifier, elapsed) {
 // // SCORE                       //
 // /////////////////////////////////
 
-var icecream_served = function(){
+var ic_served = function(){
     score.icecream_served++;
     TRUCK.dollar(0);
     score.dollars += 3;
 }
 
-var icecream_wasted = function(){
-    score.icecream_served--;
+var ic_wasted = function(){
+    score.icecream_wasted++;
     TRUCK.dollar(1);
     score.dollars -= 1;
 }
