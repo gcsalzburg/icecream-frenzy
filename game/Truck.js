@@ -9,6 +9,7 @@ class Truck{
         this._lane = 0;
         this._truck_ani = null;
         this._drop_anis = [];
+        this._dollar_anis = [];
         
         this._dims = {
             left: -39,
@@ -16,6 +17,7 @@ class Truck{
         }
 
         this._dumps = [];
+        this._dollars = [];
     }
 
     // Getters / setters
@@ -43,6 +45,13 @@ class Truck{
                 this._dumps.splice(i,1);
             }
         }
+
+        // Remove old dollars
+        for(var i=0; i<this._dollars.length;i++){
+            if(this._dollars[i].isFinished()){
+                this._dollars.splice(i,1);
+            }
+        }
         
     }
 
@@ -53,6 +62,10 @@ class Truck{
         // Render dumped ice creams
         for(var i=0; i<this._dumps.length;i++){
             this._dumps[i].render(modifier, elapsed);
+        }
+        // Render dollars
+        for(var i=0; i<this._dollars.length;i++){
+            this._dollars[i].render(modifier, elapsed);
         }
     }
 
@@ -68,7 +81,12 @@ class Truck{
 
     // Dispense an ice cream to the floor!
     dump(type){
-        this._dumps.push(new Dumps(this._drop_anis[type],this._dims.lanes[this._lane]));
+        this._dumps.push(new Dump(this._drop_anis[type],this._dims.lanes[this._lane]));
+    }
+
+    // Add dollar
+    dollar(type){
+        this._dollars.push(new Dollar(this._dollar_anis[type],this._dims.lanes[this._lane]));
     }
 
 }
@@ -78,7 +96,7 @@ class Truck{
 // // Wasted ice cream dropped onto floor  //
 // //////////////////////////////////////////
 
-class Dumps{
+class Dump{
     constructor(src,y){
 
         this._dims = {
@@ -118,37 +136,25 @@ class Dumps{
 // // $$$ floating in the sky              //
 // //////////////////////////////////////////
 
-class Dumps{
+class Dollar{
     constructor(src,y){
 
         this._dims = {
-            x: 60,
-            y: y + 22,
-            framerate:  6,
-            duration:   6*9 // frames * framerate
+            x: 70,
+            y: y + -30
         }
-        this._ani = new Sprite(src,9,9,1,this._dims.framerate, false);
-
-        this._is_landed = false;
+        this._ani = new Sprite(src,14,14,1,3, false);
+        this._is_finished = false;
     }
 
     // getters
-    isLanded(){
-        return this._is_landed;
-    }
-    isGone(){
-        return (this._dims.x < -100); // must be off the screen by now, lol. 
+    isFinished(){
+        return this._is_finished;
     }
 
     render(modifier, elapsed){
-
-        if(this._ani.draw(elapsed,this._dims.x,this._dims.y) >= 5){
-            this._is_landed = true;
-        }
-
-        if(this._is_landed){
-            // Animate off the screen
-            this._dims.x -= game.speed*modifier;
+        if(this._ani.draw(elapsed,this._dims.x,this._dims.y) >= 14){
+            this._is_finished = true;
         }
     }
 }
