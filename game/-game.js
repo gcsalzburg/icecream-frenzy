@@ -87,7 +87,10 @@ ASS_MANAGER.queueDownloads(
     'cone-strawberry.png',
     'cone-vanilla.png',
     'cone-chocolate.png',
-    'speech-bubble.png',
+
+    'orders/bubble.png',
+    'orders/bubble_order.png',
+
     'truck-sprites.png',
     'sounds/bg_109bpm.mp3',
 
@@ -124,9 +127,12 @@ var assets_complete = function(){
 
     TRUCK.init(ASS_MANAGER.getAsset('truck/truck-sprite.png'));
 
-    CUSTOMERS.init(ASS_MANAGER.getAsset('customers/2people.png'));
+    CUSTOMERS.init(
+        ASS_MANAGER.getAsset('customers/2people.png'),
+        ASS_MANAGER.getAsset('orders/bubble.png'),
+        ASS_MANAGER.getAsset('orders/bubble_order.png')
+    );
 
-    CUSTOMERS.src_speech_bubble = ASS_MANAGER.getAsset('speech-bubble.png');
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-vanilla.png'));
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-chocolate.png'));
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-strawberry.png'));
