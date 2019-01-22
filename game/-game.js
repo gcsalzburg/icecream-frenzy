@@ -30,7 +30,8 @@ const score = {
     orders_placed: 0,
     orders_served: 0,
     icecream_served: 0,
-    icecream_wasted: 0
+    icecream_wasted: 0,
+    dollars: 0
 }
 
 // Background music
@@ -217,6 +218,21 @@ var render = function (modifier, elapsed) {
 
     display_scores();
 };
+
+// /////////////////////////////////
+// // SCORE                       //
+// /////////////////////////////////
+
+var icecream_served = function(){
+    score.icecream_served++;
+    TRUCK.dollar(0);
+}
+
+var icecream_wasted = function(){
+    score.icecream_served--;
+    TRUCK.dollar(1);
+}
+
 
 // /////////////////////////////////
 // // GAME LOOP                   //
