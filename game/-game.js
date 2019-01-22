@@ -88,6 +88,10 @@ ASS_MANAGER.queueDownloads(
     'cone-vanilla.png',
     'cone-chocolate.png',
 
+    'orders/drop_vanilla.png',
+    'orders/drop_chocolate.png',
+    'orders/drop_strawberry.png',
+
     'orders/bubble.png',
     'orders/bubble_order.png',
 
@@ -108,7 +112,7 @@ ASS_MANAGER.queueDownloads(
 
 var assets_complete = function(){
     // Map all assets to their respective objects
-    ROAD.src =     ASS_MANAGER.getAsset('bg/road.png');
+    ROAD.src = ASS_MANAGER.getAsset('bg/road.png');
     ROAD.decor_data[0].graphics = [
         ASS_MANAGER.getAsset('bg/cactus_1.png'),
         ASS_MANAGER.getAsset('bg/cactus_2.png'),
@@ -125,7 +129,12 @@ var assets_complete = function(){
     ];
 
 
-    TRUCK.init(ASS_MANAGER.getAsset('truck/truck-sprite.png'));
+    TRUCK.init(
+        ASS_MANAGER.getAsset('truck/truck-sprite.png'),
+        ASS_MANAGER.getAsset('orders/drop_vanilla.png'),
+        ASS_MANAGER.getAsset('orders/drop_chocolate.png'),
+        ASS_MANAGER.getAsset('orders/drop_strawberry.png')
+    );
 
     CUSTOMERS.init(
         ASS_MANAGER.getAsset('customers/2people.png'),
@@ -185,6 +194,7 @@ var update = function (modifier) {
 
     // Update loops for objects
     CUSTOMERS.update(modifier);
+    TRUCK.update(modifier);
     ROAD.update(modifier, game.distance);
 
 };
