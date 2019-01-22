@@ -2,7 +2,7 @@
 function Customers(){
     this.src_car = null;
 
-    this.src_speech_bubble = null;
+    this.src_bubbles = [];
     this.src_cones = [];
 
     this.num_customers = 0;
@@ -14,8 +14,12 @@ function Customers(){
     this.customer_variance = 200;
 }
 
-Customers.prototype.init = function(src_2pl){
+Customers.prototype.init = function(src_2pl, src_bubble, src_bubble_order){
     this.src_car = src_2pl;
+    this.src_bubbles = [
+        src_bubble,
+        src_bubble_order
+    ]
 }
 
 Customers.prototype.check_for_customers = function(){
@@ -56,7 +60,7 @@ Customers.prototype.serve = function(truck_lane,type){
         var c = this.customers[i];
 
         if( (c.getLane() === truck_lane) || (c.getLane() === truck_lane+1) ){
-            if( (c.getPos() > -121) && (c.getPos() < 114) && (!c.isFed())){
+            if(c.isServing() && !c.isFed()){
                 for(var j=0; j < c.orders.length; j++){
                     if( (c.orders[j].type === type) && (!c.orders[j].is_served)){
                         c.orders[j].is_served = true;
