@@ -18,6 +18,7 @@ class Customer{
 
         this._dims = {
             lanes: [180,278,379,464],
+            ordering_pos: 1000,
             serving_pos: {
                 start: 114,
                 end: -121
@@ -127,7 +128,7 @@ class Customer{
             this._is_finished = true;
         }
     
-        if( (this._pos <= game.w-this._src_ani.w) && (!this._is_ordering)){
+        if( (this._pos <= this._dims.ordering_pos) && (!this._is_ordering)){
             this._is_ordering = true;
             score.orders_placed ++;
         }
