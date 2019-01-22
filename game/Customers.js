@@ -44,7 +44,7 @@ Customers.prototype.update_customers = function(modifier){
         c.update(modifier);
 
         // Remove customers we have finished with
-        if(c.is_finished){
+        if(c.isFinished()){
             this.customers.splice(i,1);
             this.num_customers = this.customers.length;
         }
@@ -55,8 +55,8 @@ Customers.prototype.serve = function(truck_lane,type){
     for (var i = 0; i < this.num_customers; i++) {
         var c = this.customers[i];
 
-        if( (c.lane === truck_lane) || (c.lane === truck_lane+1) ){
-            if( (c.pos > -121) && (c.pos < 114) && (!c.is_fed)){
+        if( (c.getLane() === truck_lane) || (c.getLane() === truck_lane+1) ){
+            if( (c.getPos() > -121) && (c.getPos() < 114) && (!c.isFed())){
                 for(var j=0; j < c.orders.length; j++){
                     if( (c.orders[j].type === type) && (!c.orders[j].is_served)){
                         c.orders[j].is_served = true;
@@ -79,7 +79,7 @@ Customers.prototype.render_below = function(lane, elapsed){
     // Inclusive of lane number
     for(var l = 0; l < lane+1; l++){
         for (var i = 0; i < this.num_customers; i++) {
-            if(this.customers[i].lane == l){
+            if(this.customers[i].getLane() == l){
                 this.customers[i].render(elapsed);
             }
         }
@@ -89,7 +89,7 @@ Customers.prototype.render_above = function(lane, elapsed){
     // Exclusive of lane number
     for(var l = lane+1; l < NUM_LANES; l++){
         for (var i = 0; i < this.num_customers; i++) {
-            if(this.customers[i].lane == l){
+            if(this.customers[i].getLane() == l){
                 this.customers[i].render(elapsed);
             }
         }
