@@ -140,8 +140,8 @@ class Dollar{
     constructor(src,y){
 
         this._dims = {
-            x: 105,
-            y: y + -20
+            x: 100 + rand_int(20),
+            y: y + -20 + rand_int(20)
         }
         this._ani = new Sprite(src,14,14,1,3, false);
         this._is_finished = false;
