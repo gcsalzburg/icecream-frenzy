@@ -56,6 +56,8 @@ Customers.prototype.update_customers = function(modifier){
 }
 
 Customers.prototype.serve = function(truck_lane,type){
+
+    // Find someone to serve
     for (var i = 0; i < this.num_customers; i++) {
         var c = this.customers[i];
 
@@ -71,6 +73,9 @@ Customers.prototype.serve = function(truck_lane,type){
             }
         }
     }
+
+    // Otherwise dump an ice cream
+    TRUCK.dump(type);
     return 0;
 }
 
