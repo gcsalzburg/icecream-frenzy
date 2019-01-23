@@ -266,6 +266,7 @@ var main = function () {
 var start_game = function () {
 
     document.getElementById("intro").style.display = "none";
+    document.getElementById("keys").style.display = "none";
 
  //   bg_music.volume = 0;
     bg_music.playbackRate = 1.0;

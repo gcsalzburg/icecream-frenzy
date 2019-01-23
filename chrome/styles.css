@@ -14,9 +14,13 @@ body{
 }
 .keys{
     font-family: 'VT323', monospace;
-    color: #FFF;
+    color: #222;
     font-size: 1.3em;
     margin: 1em;
+    position: absolute;
+    right: 10px;
+    bottom: 120px;
+    z-index: 30;
 }
 canvas{
     display: block;
@@ -41,23 +45,27 @@ canvas{
     justify-content: center;
     flex-direction: column;
     z-index:20;
+    padding: 0 0 100px 800px;
 }
 .intro h1{
     font-size: 50px;
     color: #474A4B;
     text-align: center;
-    font-weight: normal;
-    margin-top:0;
+    font-weight: 700;
+    margin:0 0 15px 0;
+    z-index:20;
+    text-transform: uppercase;
 }
 .intro .loading_bar{
-    width: 400px;
+    width: 310px;
     height: 30px;
     background-color: transparent;
     margin: 0 auto;
     border: 3px solid #474A4B;
+    z-index:20;
 }
 .intro .play{
-    background-color: #A9D7E3;
+    background-color: #ffca12;
     text-decoration: none;
     font-size: 30px;
     margin: 20px 0;
@@ -66,9 +74,10 @@ canvas{
     font-weight: bold;
     text-transform: uppercase;
     outline:none;
+    z-index:20;
 }
 .intro .play:hover{
-    background-color: #96D128;
+    background-color: #ffffb1;
 }
 .intro .play:active{
     color: #FFF;
@@ -86,4 +95,11 @@ canvas{
     border: 3px solid #F6E7B8;
     box-sizing: border-box;
     width: 0%;
+}
+
+.intro video{
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index:10;
 }
