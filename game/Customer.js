@@ -130,6 +130,7 @@ class Customer{
     
         if( (this._pos <= this._dims.ordering_pos) && (!this._is_ordering)){
             this._is_ordering = true;
+            new Sound(sounds.new_order).play();
             score.orders_placed ++;
         }
     }
@@ -150,6 +151,7 @@ class Customer{
             this._is_fed = is_fed;
             if(this._is_fed){
                 score.orders_served ++;
+                new Sound(sounds.hurrah).play();
             }
         }
     }
