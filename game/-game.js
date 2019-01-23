@@ -228,7 +228,7 @@ var update = function (modifier) {
 // /////////////////////////////////
 var render = function (modifier, elapsed) {
 
-    ROAD.render();
+    ROAD.render(elapsed);
 
     CUSTOMERS.render_below(TRUCK.getLane(), elapsed);
     TRUCK.render(modifier, elapsed);
@@ -288,7 +288,7 @@ var start_game = function () {
     document.getElementById("intro").style.display = "none";
     document.getElementById("keys").style.display = "none";
 
-    bg_music.volume = 0.5;
+    bg_music.volume = 0; //0.5;
     bg_music.playbackRate = 1.0;
     bg_music.loop = true;
     bg_music.play();
