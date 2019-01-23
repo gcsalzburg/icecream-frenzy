@@ -34,8 +34,15 @@ const score = {
     dollars: 0
 }
 
-// Background music
+// Background music & sounds
 let bg_music = null;
+const sounds = {
+    served:     null,
+    dumped:    null,
+    lane:       null,
+    hurrah:     null,
+    new_order:  null
+}
 
 // Handling for game progression events
 const distance_triggers = [
@@ -158,11 +165,11 @@ var assets_complete = function(){
 
     bg_music = ASS_MANAGER.getAsset('sounds/bg_109bpm.mp3');
 
-    sound_served = ASS_MANAGER.getAsset('sounds/customer_served.mp3');
-    sound_dump = ASS_MANAGER.getAsset('sounds/dropped.mp3');
-    sound_lane_change = ASS_MANAGER.getAsset('sounds/lane_change.mp3');
-    sound_new_order = ASS_MANAGER.getAsset('sounds/new_order.mp3');
-    sound_serve = ASS_MANAGER.getAsset('sounds/serve.mp3');
+    sounds.served = ASS_MANAGER.getAsset('sounds/serve.mp3');
+    sounds.dumped = ASS_MANAGER.getAsset('sounds/dropped.mp3');
+    sounds.lane = ASS_MANAGER.getAsset('sounds/lane_change.mp3');
+    sounds.new_order = ASS_MANAGER.getAsset('sounds/new_order.mp3');
+    sounds.hurrah = ASS_MANAGER.getAsset('sounds/customer_served.mp3');
 
     // Can start game once assets are loaded
     game.can_start = true;
@@ -230,16 +237,18 @@ var render = function (modifier, elapsed) {
 };
 
 // /////////////////////////////////
-// // SCORE                       //
+// // SCORE & RESPONSE            //
 // /////////////////////////////////
 
 var ic_served = function(){
+    new Sound(sounds.served).play();
     score.icecream_served++;
     TRUCK.dollar(0);
     score.dollars += 3;
 }
 
 var ic_wasted = function(){
+    new Sound(sounds.dumped).play();
     score.icecream_wasted++;
     TRUCK.dollar(1);
     score.dollars -= 1;
@@ -278,7 +287,7 @@ var start_game = function () {
     document.getElementById("intro").style.display = "none";
     document.getElementById("keys").style.display = "none";
 
- //   bg_music.volume = 0;
+    bg_music.volume = 0.5;
     bg_music.playbackRate = 1.0;
     bg_music.loop = true;
     bg_music.play();
