@@ -99,8 +99,12 @@ ASS_MANAGER.queueDownloads(
     'orders/bubble.png',
     'orders/bubble_order.png',
 
-    'truck-sprites.png',
     'sounds/bg_109bpm.mp3',
+    'sounds/customer_served.mp3',
+    'sounds/dropped.mp3',
+    'sounds/lane_change.mp3',
+    'sounds/new_order.mp3',
+    'sounds/serve.mp3',
 
     'bg/road.png',
     'bg/cactus_1.png',
@@ -153,6 +157,12 @@ var assets_complete = function(){
     CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-strawberry.png'));
 
     bg_music = ASS_MANAGER.getAsset('sounds/bg_109bpm.mp3');
+
+    sound_served = ASS_MANAGER.getAsset('sounds/customer_served.mp3');
+    sound_dump = ASS_MANAGER.getAsset('sounds/dropped.mp3');
+    sound_lane_change = ASS_MANAGER.getAsset('sounds/lane_change.mp3');
+    sound_new_order = ASS_MANAGER.getAsset('sounds/new_order.mp3');
+    sound_serve = ASS_MANAGER.getAsset('sounds/serve.mp3');
 
     // Can start game once assets are loaded
     game.can_start = true;

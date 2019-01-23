@@ -37,9 +37,11 @@ check_keys = function(){
     if(38 in keysDown){         // UP
         delete keysDown[38];
         TRUCK.change_lane(-1);
+        sound_lane_change.play();
     }else if(40 in keysDown){   // DOWN
         delete keysDown[40];
         TRUCK.change_lane(1);
+        sound_lane_change.play();
     }
     if(49 in keysDown){ // NUMBER 1
         delete keysDown[49];
