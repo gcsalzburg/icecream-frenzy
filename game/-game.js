@@ -121,7 +121,8 @@ ASS_MANAGER.queueDownloads(
     'bg/crack_1.png',
     'bg/crack_2.png',
     'bg/crack_3.png',
-    'bg/crack_4.png'
+    'bg/crack_4.png',
+    'bg/tumbleweed.png'
 );
 
 var assets_complete = function(){
@@ -141,6 +142,7 @@ var assets_complete = function(){
         ASS_MANAGER.getAsset('bg/crack_3.png'),
         ASS_MANAGER.getAsset('bg/crack_4.png')
     ];
+    ROAD.decor_data[3].graphics = [ASS_MANAGER.getAsset('bg/tumbleweed.png')];
 
 
     TRUCK.init(

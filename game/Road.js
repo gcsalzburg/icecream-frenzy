@@ -32,6 +32,15 @@ function Road(){
             y_base: [239,322,425,521], // this variable can be an integer or array
             y_variance: 0,
             x_variance: 200
+        },
+        {   // Tumbleweed
+            // TODO: Fix display of this tumbleweed (hidden for now)
+            graphics: [],
+            last: 0,
+            freq: (game.w/ 5),
+            y_base: 900, // this variable can be an integer or array
+            y_variance: 0,
+            x_variance: 200
         }
     ]
 
