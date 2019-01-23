@@ -92,10 +92,9 @@ ASS_MANAGER.queueDownloads(
 
     'customers/2people.png',
 
-    'cone-strawberry.png',
-    'cone-vanilla.png',
-    'cone-chocolate.png',
-
+    'orders/cone-strawberry.png',
+    'orders/cone-vanilla.png',
+    'orders/cone-chocolate.png',
     'orders/drop_vanilla.png',
     'orders/drop_chocolate.png',
     'orders/drop_strawberry.png',
@@ -159,9 +158,9 @@ var assets_complete = function(){
         ASS_MANAGER.getAsset('orders/bubble_order.png')
     );
 
-    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-vanilla.png'));
-    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-chocolate.png'));
-    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('cone-strawberry.png'));
+    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('orders/cone-vanilla.png'));
+    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('orders/cone-chocolate.png'));
+    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('orders/cone-strawberry.png'));
 
     bg_music = ASS_MANAGER.getAsset('sounds/bg_109bpm.mp3');
 
