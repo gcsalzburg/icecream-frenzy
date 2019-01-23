@@ -3,7 +3,8 @@
 //
 var el = document.getElementById('play');
 // attach anonymous function to click event
-el.addEventListener('click', function(){
+el.addEventListener('click', function(e){
+    e.preventDefault();
     if(game.can_start){
         start_game();   
     }
