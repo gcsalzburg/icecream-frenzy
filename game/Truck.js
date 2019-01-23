@@ -100,8 +100,8 @@ class Dump{
     constructor(src,y){
 
         this._dims = {
-            x: 60,
-            y: y + 22,
+            x: 60 + rand_int(20),
+            y: y + 22 + rand_int(40),
             framerate:  6,
             duration:   6*9 // frames * framerate
         }
