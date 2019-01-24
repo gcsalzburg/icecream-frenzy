@@ -5,12 +5,13 @@
 
 class Customer{
 
-    constructor(src_ani){
-        this._lane = Math.floor((Math.random()*NUM_LANES));
+    constructor(src_ani,lane,speed){
+        
         this._src_ani = src_ani;
+        this._lane = lane;
+        this._speed = speed;
     
         this._pos = game.w;
-        this._speed = 100 + (Math.random()*10)+(this._lane*70);
     
         this._is_ordering   = false;
         this._is_fed        = false;

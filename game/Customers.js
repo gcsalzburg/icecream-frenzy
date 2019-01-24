@@ -1,8 +1,6 @@
 
 class Customers{
-    constructor(){
-        this.src_car = null;
-    
+    constructor(){    
         this.src_bubbles = [];
         this.src_cones = [];
     
@@ -13,10 +11,47 @@ class Customers{
         this.last_customer_add = 0;
         this.customer_interval = 3000;
         this.customer_variance = 200;
+
+        // Weighting should be a distribution such as:
+        // 0.3 ... 0.6 ... 0.7 ... 1
+        // Last one should always be 1
+        this.customer_data = [
+            {
+                type: "bike",
+                src: null,
+                sprite_data: [0,0,0,0],
+                cones: [1,1],
+                enabled: false,
+                weighting: 0         
+            },
+            {
+                type: "small_car",
+                src: null,
+                sprite_data: [60,5,12,30],
+                cones: [1,3],
+                enabled: true,
+                weighting: 1   
+            },
+             {
+                type: "mid_car",
+                src: null,
+                sprite_data: [0,0,0,0],
+                cones: [3,4],
+                enabled: false,
+                weighting: 1                   
+            },
+            {
+                type: "large_car",
+                src: null,
+                sprite_data: [0,0,0,0],
+                cones: [5,6],
+                enabled: false,
+                weighting: 1                   
+            }
+        ];
     }
 
-    init(src_2pl, src_bubble, src_bubble_order){
-        this.src_car = src_2pl;
+    init(src_bubble, src_bubble_order){
         this.src_bubbles = [
             src_bubble,
             src_bubble_order
@@ -32,10 +67,28 @@ class Customers{
     }
     
     add(){
-        this.customers.push(new Customer(new Sprite(this.src_car,60,5,12,30)));
-        this.num_customers++;
-    
-        this.last_customer_add = performance.now();
+        const weight = Math.random();
+        for(let i=0; i<this.customer_data.length; i++){
+            const c = this.customer_data[i];
+            if(c.enabled && (c.weighting >= weight)){
+                // Prepare new customer data
+                const sprite = new Sprite(
+                    c.src,
+                    c.sprite_data[0],
+                    c.sprite_data[1],
+                    c.sprite_data[2],
+                    c.sprite_data[3]
+                );
+                const lane = rand_int(NUM_LANES);
+                const speed = 100 + rand_int(10)+(lane*70);
+
+                this.customers.push( new Customer(sprite,lane,speed) );
+                this.last_customer_add = performance.now(); 
+                this.num_customers++;
+                console.log(c.enabled);
+                break;
+            }
+        }   
     }
     
     update(modifier){
