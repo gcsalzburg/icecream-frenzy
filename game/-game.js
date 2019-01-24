@@ -21,6 +21,8 @@ const game = {
     target_speed:   600,  // desired road speed
 
     accel:          200,  // pixels per second^2
+
+    is_muted:       false
 }
 
 const NUM_LANES = 4;
@@ -37,6 +39,7 @@ const score = {
 
 // Background music & sounds
 let bg_music = null;
+let bg_music_vol = 0.5;
 const sounds = {
     served:     null,
     dumped:    null,
@@ -271,6 +274,23 @@ var ic_wasted = function(){
 }
 
 
+var toggle_music = function(){
+    if(game.is_muted){
+        console.log("unmute!");
+        bg_music.volume = bg_music_vol;
+        for (let sound in sounds) {
+            sounds[sound].volume = 1;
+        }
+    }else{
+        console.log("mute!");
+        bg_music.volume = 0;
+        for (let sound in sounds) {
+            sounds[sound].volume = 0;
+        }
+    }
+    game.is_muted = !game.is_muted;
+}
+
 // /////////////////////////////////
 // // GAME LOOP                   //
 // /////////////////////////////////
@@ -310,7 +330,7 @@ var start_game = function () {
     document.getElementById("intro").style.display = "none";
     document.getElementById("keys").style.display = "none";
 
-    bg_music.volume = 0.5;
+    bg_music.volume = bg_music_vol;
     bg_music.playbackRate = 1.0;
     bg_music.loop = true;
     bg_music.play();
