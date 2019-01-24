@@ -156,15 +156,18 @@ var assets_complete = function(){
         ASS_MANAGER.getAsset('truck/dollar_down.png')
     );
 
+    CUSTOMERS.customer_data[1].src = ASS_MANAGER.getAsset('customers/2people.png');
+
     CUSTOMERS.init(
-        ASS_MANAGER.getAsset('customers/2people.png'),
         ASS_MANAGER.getAsset('orders/bubble.png'),
         ASS_MANAGER.getAsset('orders/bubble_order.png')
     );
 
-    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('orders/cone-vanilla.png'));
-    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('orders/cone-chocolate.png'));
-    CUSTOMERS.src_cones.push(ASS_MANAGER.getAsset('orders/cone-strawberry.png'));
+    CUSTOMERS.src_cones = [
+        ASS_MANAGER.getAsset('orders/cone-vanilla.png'),
+        ASS_MANAGER.getAsset('orders/cone-chocolate.png'),
+        ASS_MANAGER.getAsset('orders/cone-strawberry.png')
+    ];
 
     bg_music = ASS_MANAGER.getAsset('sounds/bg_109bpm.mp3');
 
