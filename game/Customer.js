@@ -6,7 +6,7 @@
 class Customer{
 
     constructor(src_ani,lane,speed){
-        
+
         this._src_ani = src_ani;
         this._lane = lane;
         this._speed = speed;
@@ -123,7 +123,9 @@ class Customer{
     }
     
     update(modifier){
-        this._pos -= this._speed*modifier;
+
+        // Fetch game speed and adjust based upon this
+        this._pos += (this._speed-game.speed)*modifier;
     
         if(this._pos <= -this._src_ani.w){
             this._is_finished = true;
