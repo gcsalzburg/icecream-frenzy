@@ -115,7 +115,6 @@ class Customers{
                 this.customers.push( new Customer(sprite,lane,speed) );
                 this.last_customer_add = performance.now(); 
                 this.num_customers++;
-                console.log(c.enabled);
                 break;
             }
         }   
