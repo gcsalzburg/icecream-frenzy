@@ -60,14 +60,13 @@ class Road{
                 x_variance: 400
             },
             {   // Tumbleweed
-                // TODO: Fix display of this tumbleweed (hidden for now)
                 graphics: [],
                 ani: true,
                 speed: 0.4,
                 speed_variance: 0.4,
                 last: 1000,
                 freq: game.w/0.5,
-                y_base: [130,550], // this variable can be an integer or array
+                y_base: [130,570], // this variable can be an integer or array
                 y_variance: 25,
                 x_variance: 800
             }
