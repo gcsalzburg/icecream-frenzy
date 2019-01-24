@@ -124,6 +124,10 @@ ASS_MANAGER.queueDownloads(
     'bg/crack_2.png',
     'bg/crack_3.png',
     'bg/crack_4.png',
+    'bg/cloud_1.png',
+    'bg/cloud_2.png',
+    'bg/cloud_3.png',
+    'bg/cloud_4.png',
     'bg/tumbleweed.png'
 );
 
@@ -144,7 +148,13 @@ var assets_complete = function(){
         ASS_MANAGER.getAsset('bg/crack_3.png'),
         ASS_MANAGER.getAsset('bg/crack_4.png')
     ];
-    ROAD.decor_data[3].graphics = [ASS_MANAGER.getAsset('bg/tumbleweed.png')];
+    ROAD.decor_data[3].graphics = [
+        ASS_MANAGER.getAsset('bg/cloud_1.png'),
+        ASS_MANAGER.getAsset('bg/cloud_2.png'),
+        ASS_MANAGER.getAsset('bg/cloud_3.png'),
+        ASS_MANAGER.getAsset('bg/cloud_4.png')
+    ];
+    ROAD.decor_data[4].graphics = [ASS_MANAGER.getAsset('bg/tumbleweed.png')];
 
 
     TRUCK.init(
@@ -317,4 +327,7 @@ ASS_MANAGER.downloadAll(assets_complete,assets_loading);
 // Helper fns
 function rand_int(max){
     return Math.floor(Math.random()*max);
+}
+function rand(max){
+    return Math.random()*max;
 }

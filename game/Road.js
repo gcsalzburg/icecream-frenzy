@@ -18,9 +18,10 @@ class Road{
             {   // Cacti top
                 graphics: [],
                 ani: false,
-                speed: 1,
+                speed: 1,          // percentage of game speed
+                speed_variance: 0,
                 last: 100,
-                freq: (game.w/ 4), // average of 12 across width of screen at any time
+                freq: (game.w/ 5), // average of 12 across width of screen at any time
                 y_base: 105,
                 y_variance: 50,
                 x_variance: 200
@@ -29,8 +30,9 @@ class Road{
                 graphics: [],
                 ani: false,
                 speed: 1,
+                speed_variance: 0,
                 last: 0,
-                freq: (game.w/ 4),
+                freq: (game.w/ 5),
                 y_base: 550,
                 y_variance: 70,
                 x_variance: 200
@@ -39,22 +41,35 @@ class Road{
                 graphics: [],
                 ani: false,
                 speed: 1,
+                speed_variance: 0,
                 last: 0,
                 freq: (game.w/ 3),
                 y_base: [239,322,425,521], // this variable can be an integer or array
                 y_variance: 0,
                 x_variance: 200
             },
+            {   // Clouds
+                graphics: [],
+                ani: false,
+                speed: 0.1,
+                speed_variance: 0.1,
+                last: 0,
+                freq: (game.w/ 5),
+                y_base: 10, // this variable can be an integer or array
+                y_variance: 70,
+                x_variance: 400
+            },
             {   // Tumbleweed
                 // TODO: Fix display of this tumbleweed (hidden for now)
                 graphics: [],
                 ani: true,
-                speed: 0.7,
+                speed: 0.4,
+                speed_variance: 0.4,
                 last: 1000,
                 freq: game.w/0.5,
                 y_base: [130,550], // this variable can be an integer or array
                 y_variance: 25,
-                x_variance: 200
+                x_variance: 800
             }
         ]
     
@@ -104,7 +119,7 @@ class Road{
         for (var i=0; i < this.decor_data.length; i++){
             var category = this.decor_data[i];
             if(distance > (category.last + category.freq)){
-                this.decors.push(this._generate_decor(category,distance,category.ani,category.speed));
+                this.decors.push(this._generate_decor(category,distance,category.ani,category.speed+rand(category.speed_variance)));
                 category.last = distance;
             }
         }
@@ -114,7 +129,8 @@ class Road{
             var d = this.decors[i];
     
             // Set distance for decor
-            d.setPos((d.getStart() - distance)*d.getSpeed());
+    //        d.setPos(d.getPos() - modifier*(d.getSpeed()+rand(d.getSpeedVariance())*game.speed));
+            d.setPos(d.getPos() - modifier *d.getSpeed()*game.speed);
     
             // Remove old decor
             if(d.getPos() < -d.getWidth()){
@@ -152,7 +168,7 @@ class Decor{
         this._speed = speed;
     
         this._start = start;
-        this._pos = 0;
+        this._pos = start;
     }
 
     // Getters
