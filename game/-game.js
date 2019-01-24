@@ -255,6 +255,35 @@ var render = function (delta, elapsed) {
     display_scores();
 };
 
+display_scores = function(){
+    
+    // Data
+	ctx.fillStyle = "rgb(58, 61, 62)";
+    ctx.font = "22px VT323";
+	ctx.textAlign = "right";
+	ctx.textBaseline = "top";
+    ctx.fillText(`Orders served: ${score.orders_served}/${score.orders_placed}`, 1170, 40);    
+    let efficiency = Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10;
+    if(isNaN(efficiency)){
+        efficiency = 0;
+    }
+    ctx.fillText(`Ice cream efficiency: ${efficiency}%` , 1170, 62);  
+    ctx.fillText(`Distance: ${Math.round(game.distance / game.distance_scale)}m` , 1170, 84);  
+    
+    // Main score
+    ctx.font = "50px VT323";
+    ctx.textAlign = "left";
+    var score_disp = `$${score.dollars}`;
+    ctx.fillText(score_disp, 20,20);
+
+
+	// FPS
+	ctx.font = "8px Helvetica";
+	ctx.textAlign = "right";
+	ctx.textBaseline = "top";
+    ctx.fillText(`FPS: ${fps.current}`, 1170, 10);    
+}
+
 // /////////////////////////////////
 // // SCORE & RESPONSE            //
 // /////////////////////////////////
@@ -273,6 +302,10 @@ var ic_wasted = function(){
     score.dollars -= 1;
 }
 
+
+// /////////////////////////////////
+// // GAME CONTROLS               //
+// /////////////////////////////////
 
 var toggle_music = function(){
     if(game.is_muted){
@@ -294,6 +327,7 @@ var toggle_music = function(){
 // /////////////////////////////////
 // // GAME LOOP                   //
 // /////////////////////////////////
+
 var main = function () {
 	const now = performance.now();
     const delta = (now - then)/1000; // num ms since last frame was rendered
@@ -325,6 +359,7 @@ const update_fps = function(){
 // /////////////////////////////////
 // // START                       //
 // ///////////////////////////////// 
+
 var start_game = function () {
 
     document.getElementById("intro").style.display = "none";

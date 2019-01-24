@@ -75,32 +75,3 @@ check_keys = function(){
     }
 
 }
-
-display_scores = function(){
-    
-    // Data
-	ctx.fillStyle = "rgb(58, 61, 62)";
-    ctx.font = "22px VT323";
-	ctx.textAlign = "right";
-	ctx.textBaseline = "top";
-    ctx.fillText(`Orders served: ${score.orders_served}/${score.orders_placed}`, 1170, 40);    
-    let efficiency = Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10;
-    if(isNaN(efficiency)){
-        efficiency = 0;
-    }
-    ctx.fillText(`Ice cream efficiency: ${efficiency}%` , 1170, 62);  
-    ctx.fillText(`Distance: ${Math.round(game.distance / game.distance_scale)}m` , 1170, 84);  
-    
-    // Main score
-    ctx.font = "50px VT323";
-    ctx.textAlign = "left";
-    var score_disp = `$${score.dollars}`;
-    ctx.fillText(score_disp, 20,20);
-
-
-	// FPS
-	ctx.font = "8px Helvetica";
-	ctx.textAlign = "right";
-	ctx.textBaseline = "top";
-    ctx.fillText(`FPS: ${fps.current}`, 1170, 10);    
-}
