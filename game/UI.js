@@ -97,5 +97,5 @@ display_scores = function(){
 	ctx.font = "8px Helvetica";
 	ctx.textAlign = "right";
 	ctx.textBaseline = "top";
-    ctx.fillText(`FPS: ${fps}`, 1170, 10);    
+    ctx.fillText(`FPS: ${fps.current}`, 1170, 10);    
 }
