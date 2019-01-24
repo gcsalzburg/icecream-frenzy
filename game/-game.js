@@ -12,11 +12,12 @@ const game = {
     w:              1180,
     h:              694,
     distance:       0,
-    distance_scale: 50,   // divider to convert distance figure to metres.
+    distance_scale: 50,   // pixels -> metres conversion (can be anything, just should be sensible and consistent)
     
     can_start:      false,
+    start_time:     0,
 
-    speed:          50,  // current speed in pixels per second -> TODO: set to 0 for production
+    speed:          0,  // current speed in pixels per second
     target_speed:   600,  // desired road speed
 
     accel:          200,  // pixels per second^2
@@ -72,12 +73,13 @@ canvas.height = game.h;
 
 // For game loop
 let then = 0;
-let start_time = 0;
 
 // for fps measurement
 // Taken from: https://www.growingwiththeweb.com/2017/12/fast-simple-js-fps-counter.html
-let times = [];
-let fps = 0;
+const fps = {
+    current: 0,
+    times: []
+}
 
 
 // //////////////////////////////////
@@ -189,7 +191,7 @@ var assets_loading = function(success,error,total){
 // // UPDATE                      //
 // /////////////////////////////////
 
-var update = function (modifier) {
+var update = function (delta, elapsed) {
 
     // TODO: Check sequencing of functions in this update() call
 
@@ -198,12 +200,12 @@ var update = function (modifier) {
 
     // Roll the road!
     if(game.target_speed > game.speed){
-        game.speed += game.accel*modifier;
+        game.speed += game.accel*delta;
     }
     if(game.speed > game.target_speed){
         game.speed = game.target_speed;
     }
-    game.distance += game.speed*modifier;
+    game.distance += game.speed*delta; // v = s/t
 
     // Check distance triggers
     for (var i = 0; i < distance_triggers.length; i++) {
@@ -217,21 +219,21 @@ var update = function (modifier) {
     }
 
     // Update loops for objects
-    CUSTOMERS.update(modifier);
-    TRUCK.update(modifier);
-    ROAD.update(modifier, game.distance);
+    CUSTOMERS.update(delta);
+    TRUCK.update(delta);
+    ROAD.update(delta, game.distance);
 
 };
 
 // /////////////////////////////////
 // // RENDER                      //
 // /////////////////////////////////
-var render = function (modifier, elapsed) {
+var render = function (delta, elapsed) {
 
     ROAD.render(elapsed);
 
     CUSTOMERS.render_below(TRUCK.getLane(), elapsed);
-    TRUCK.render(modifier, elapsed);
+    TRUCK.render(delta, elapsed);
     CUSTOMERS.render_above(TRUCK.getLane(), elapsed);
 
     display_scores();
@@ -260,25 +262,32 @@ var ic_wasted = function(){
 // // GAME LOOP                   //
 // /////////////////////////////////
 var main = function () {
-	var now = Date.now();
-	var delta = now - then;
-
-	update(delta / 1000);
-	render(delta / 1000, now-start_time);
-
+	const now = performance.now();
+    const delta = (now - then)/1000; // num ms since last frame was rendered
+    const elapsed = now - game.start_time;
     then = now;
-    
+
+    // Call main game loops
+	update(delta, elapsed);
+	render(delta, elapsed);
+
     // Measure FPS performance
-    var fps_now = performance.now();
-    while (times.length > 0 && times[0] <= fps_now - 1000) {
-        times.shift();
-    }
-    times.push(fps_now);
-    fps = times.length;
+    update_fps();
 
 	// Request to do this again ASAP
 	requestAnimationFrame(main);
 };
+
+
+const update_fps = function(){
+    // Measure FPS performance
+    var fps_now = performance.now();
+    while (fps.times.length > 0 && fps.times[0] <= fps_now - 1000) {
+        fps.times.shift();
+    }
+    fps.times.push(fps_now);
+    fps.current = fps.times.length;
+}
 
 // /////////////////////////////////
 // // START                       //
@@ -288,13 +297,13 @@ var start_game = function () {
     document.getElementById("intro").style.display = "none";
     document.getElementById("keys").style.display = "none";
 
-    bg_music.volume = 0.5;
+    bg_music.volume = 0; //0.5;
     bg_music.playbackRate = 1.0;
     bg_music.loop = true;
     bg_music.play();
 
-    then = Date.now();
-    start_time = then;
+    then = performance.now();
+    game.start_time = then;
     main();
 }
 
