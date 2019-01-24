@@ -49,6 +49,36 @@ class Customers{
                 weighting: 1                   
             }
         ];
+        this.lane_data = [
+            {
+                lane: 0,
+                y: 180,
+                speed: 500,         // Absolute speed. Initial speed of the game is 600
+                speed_variance: 10
+
+            },
+            {
+                lane: 1,
+                y: 278,
+                speed: 430,
+                speed_variance: 10
+
+            },
+            {
+                lane: 2,
+                y: 379,
+                speed: 360,
+                speed_variance: 10
+
+            },
+            {
+                lane: 3,
+                y: 464,
+                speed: 290,
+                speed_variance: 10
+
+            }
+        ]
     }
 
     init(src_bubble, src_bubble_order){
@@ -80,7 +110,7 @@ class Customers{
                     c.sprite_data[3]
                 );
                 const lane = rand_int(NUM_LANES);
-                const speed = 100 + rand_int(10)+(lane*70);
+                const speed = this.lane_data[lane].speed + rand_int(this.lane_data[lane].speed_variance);
 
                 this.customers.push( new Customer(sprite,lane,speed) );
                 this.last_customer_add = performance.now(); 
