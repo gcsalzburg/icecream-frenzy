@@ -12,10 +12,15 @@ class Sound{
         this.src.addEventListener("ended", function(){
             callback();
         });
+
+        if(game.is_muted){
+            this.src.volume = 0;
+        }
     }
 
     // Play!
     play(){
         this.src.play();
     }
+
 }
