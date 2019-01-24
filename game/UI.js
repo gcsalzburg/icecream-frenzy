@@ -69,6 +69,11 @@ check_keys = function(){
         }
     }
 
+    if(77 in keysUp){ // LETTER M
+        delete keysUp[77];
+        toggle_music();
+    }
+
 }
 
 display_scores = function(){
