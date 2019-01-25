@@ -14,9 +14,8 @@ class Customers{
 
         this.lanes = [180,278,379,464];
 
-        // Weighting should be a distribution such as:
-        // 0.3 ... 0.6 ... 0.7 ... 1
-        // Last one should always be 1
+        this.weightings = []; //Populated by another function 
+        
         this.customer_data = [
             {
                 type: "bike",
@@ -24,12 +23,16 @@ class Customers{
                 sprite_data: [37,5,8,30],
                 cones: [1,1],
                 enabled: true,
-                weighting: 0.25,
+                weighting: 1, // Figure
                 order_pos: 1000,
                 serve_pos: {
                     start: 114,
                     end: -121
-                }         
+                },
+                bubble_offset: {
+                    x: 0,
+                    y: -20
+                }      
             },
             {
                 type: "small_car",
@@ -37,38 +40,50 @@ class Customers{
                 sprite_data: [57,5,12,30],
                 cones: [1,3],
                 enabled: true,
-                weighting: 0.5,
+                weighting: 1,
                 order_pos: 1000,
                 serve_pos: {
                     start: 114,
                     end: -121
-                }     
+                },
+                bubble_offset: {
+                    x: 25,
+                    y: -20
+                }       
             },
              {
                 type: "mid_car",
                 src: null,
                 sprite_data: [57,5,12,30],
                 cones: [3,4],
-                enabled: true,
-                weighting: 0.75,
+                enabled: false,
+                weighting: 1,
                 order_pos: 1000,
                 serve_pos: {
                     start: 114,
                     end: -121
-                }                     
+                },
+                bubble_offset: {
+                    x: 25,
+                    y: -20
+                }                       
             },
             {
                 type: "large_car",
                 src: null,
                 sprite_data: [57,5,12,30],
                 cones: [5,6],
-                enabled: true,
+                enabled: false,
                 weighting: 1,
                 order_pos: 1000,
                 serve_pos: {
                     start: 114,
                     end: -121
-                }                     
+                },
+                bubble_offset: {
+                    x: 25,
+                    y: -20
+                }                       
             }
         ];
         this.lane_data = [
@@ -107,7 +122,8 @@ class Customers{
         this.src_bubbles = [
             src_bubble,
             src_bubble_order
-        ]
+        ];
+        this.calculate_weightings();
     }
     
     check_for_customers(){
@@ -120,9 +136,10 @@ class Customers{
     
     add(){
         const weight = Math.random();
+        console.log(weight);
         for(let i=0; i<this.customer_data.length; i++){
             const c = this.customer_data[i];
-            if(c.enabled && (c.weighting >= weight)){
+            if(c.enabled && (this.weightings[i] >= weight)){
                 // Prepare new customer data
                 const sprite = new Sprite(
                     c.src,
@@ -134,9 +151,11 @@ class Customers{
                 const lane = rand_int(NUM_LANES);
                 const speed = this.lane_data[lane].speed + rand_int(this.lane_data[lane].speed_variance);
                 const dims = {
-                    lane: this.lanes[lane],
-                    ordering_pos: c.order_pos,
-                    serving_pos: c.serve_pos
+                    lane:           this.lanes[lane],
+                    ordering_pos:   c.order_pos,
+                    serving_pos:    c.serve_pos,
+                    cones:          c.cones,
+                    bubble_offset:  c.bubble_offset
                 }
 
                 this.customers.push( new Customer(sprite,lane,speed,dims) );
@@ -187,6 +206,29 @@ class Customers{
         // Otherwise dump an ice cream
         TRUCK.dump(type);
         return 0;
+    }
+
+    calculate_weightings(){
+        let sum = 0;
+
+        this.weightings = [];
+
+        for(let i=0; i<this.customer_data.length; i++){
+            if(this.customer_data[i].enabled){
+                sum += this.customer_data[i].weighting;
+            }
+        }
+
+        let so_far = 0;
+        for(let i=0; i<this.customer_data.length; i++){
+            if(this.customer_data[i].enabled){
+                const _w = this.customer_data[i].weighting;
+                this.weightings.push((_w+so_far)/sum);
+                so_far += _w;
+            }
+        }
+
+        console.log(this.weightings);
     }
     
     
