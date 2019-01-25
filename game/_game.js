@@ -27,9 +27,13 @@ const game = {
 
 const NUM_LANES = 4;
 const TRUCK_LANES = 3;
+const SATISFACTION_MAX = 3; // equivalent to number of lives
+const SATISFACTION_LIFE_LOSS_SIZE = 1;
+const SATISFACTION_LIFE_GAIN_SIZE = 0.1;
 
 // Score keeping
 const score = {
+    satisfaction: 3,
     orders_placed: 0,
     orders_served: 0,
     icecream_served: 0,
@@ -64,6 +68,7 @@ const distance_triggers = [
 // /////////////////////////////////
 
 // Create game objects
+const SATISFACTION = new Satisfaction();
 const CUSTOMERS = new Customers();
 const TRUCK = new Truck();
 const ROAD = new Road();
@@ -93,7 +98,11 @@ const fps = {
 const ASS_MANAGER = new AssetManager();
 ASS_MANAGER.setDefaultPath("assets/");
 ASS_MANAGER.queueDownloads(
-    'truck/truck-sprite.png',
+
+    'ui/bar_solid.png',
+    'ui/bar_behind.png',
+    'ui/sad.png',
+    'ui/happy.png',
 
     'customers/biker.png',
     'customers/2ppl.png',
@@ -107,6 +116,7 @@ ASS_MANAGER.queueDownloads(
     'orders/drop_chocolate.png',
     'orders/drop_strawberry.png',
     
+    'truck/truck-sprite.png',
     'truck/dollar_up.png',
     'truck/dollar_down.png',
 
@@ -140,6 +150,14 @@ ASS_MANAGER.queueDownloads(
 var assets_complete = function(){
 
     // Map all assets to their objects
+
+    // UI
+    SATISFACTION.init([
+        ASS_MANAGER.getAsset('ui/bar_solid.png'),
+        ASS_MANAGER.getAsset('ui/bar_behind.png'),
+        ASS_MANAGER.getAsset('ui/happy.png'),
+        ASS_MANAGER.getAsset('ui/sad.png')
+    ]);
 
     // Road and decor
     ROAD.src = ASS_MANAGER.getAsset('bg/road.png');
@@ -201,6 +219,8 @@ var assets_complete = function(){
     // Can start game once assets are loaded
     game.can_start = true;
     enable_start();
+    start_game(); // FOR TESTING ONLY
+    toggle_music();
 }
 
 var assets_loading = function(success,error,total){
@@ -260,6 +280,7 @@ var render = function (delta, elapsed) {
     TRUCK.render(delta, elapsed);
     CUSTOMERS.render_above(TRUCK.getLane(), elapsed);
 
+    SATISFACTION.render();
     display_scores();
 };
 
@@ -279,7 +300,7 @@ display_scores = function(){
     ctx.fillText(`Distance: ${Math.round(game.distance / game.distance_scale)}m` , 1170, 84);  
     
     // Main score
-    ctx.font = "50px VT323";
+    ctx.font = "60px VT323";
     ctx.textAlign = "left";
     var score_disp = `$${score.dollars}`;
     ctx.fillText(score_disp, 20,20);
@@ -308,6 +329,29 @@ var ic_wasted = function(){
     score.icecream_wasted++;
     TRUCK.dollar(1);
     score.dollars -= 1;
+}
+
+var customers_fed = function(){
+    score.orders_served ++;
+    new Sound(sounds.hurrah).play();
+    life_gain();
+}
+
+var life_gain = function(){
+    score.satisfaction += SATISFACTION_LIFE_GAIN_SIZE;
+    if(score.satisfaction >= SATISFACTION_MAX){
+        score.satisfaction = SATISFACTION_MAX;
+    }
+    SATISFACTION.set_satisfaction(score.satisfaction);
+}
+
+var life_lost = function(){
+    score.satisfaction -= SATISFACTION_LIFE_LOSS_SIZE;
+    if(score.satisfaction <= 0){
+        score.satisfaction = 0;
+        console.log("GAME OVER!");
+    }
+    SATISFACTION.set_satisfaction(score.satisfaction);
 }
 
 
