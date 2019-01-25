@@ -36,6 +36,7 @@ const score = {
     satisfaction: 3,
     orders_placed: 0,
     orders_served: 0,
+    orders_not_served: 0,
     icecream_served: 0,
     icecream_wasted: 0,
     dollars: 0
@@ -331,10 +332,17 @@ var ic_wasted = function(){
     score.dollars -= 1;
 }
 
-var customers_fed = function(){
+var customer_fed = function(){
+    console.log("FED!");
     score.orders_served ++;
     new Sound(sounds.hurrah).play();
     life_gain();
+}
+
+var customer_not_fed = function(){
+    console.log("NOT FED!");
+    score.orders_not_served ++;
+    life_lost();
 }
 
 var life_gain = function(){
