@@ -7,8 +7,8 @@ class Satisfaction{
         this._happy_src = null;
         this._sad_src = null;
 
-        this._max_satisfaction = 3;
-        this._satisfaction = 2.4;
+        this._max_satisfaction = SATISFACTION_MAX;
+        this._satisfaction = SATISFACTION_MAX;
 
         this._dims = {
             bar_x: 50,
