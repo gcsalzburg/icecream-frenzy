@@ -95,7 +95,10 @@ ASS_MANAGER.setDefaultPath("assets/");
 ASS_MANAGER.queueDownloads(
     'truck/truck-sprite.png',
 
-    'customers/2people.png',
+    'customers/biker.png',
+    'customers/2ppl.png',
+    'customers/4ppl.png',
+    'customers/6ppl.png',
 
     'orders/cone-strawberry.png',
     'orders/cone-vanilla.png',
@@ -169,7 +172,10 @@ var assets_complete = function(){
         ASS_MANAGER.getAsset('truck/dollar_down.png')
     );
 
-    CUSTOMERS.customer_data[1].src = ASS_MANAGER.getAsset('customers/2people.png');
+    CUSTOMERS.customer_data[0].src = ASS_MANAGER.getAsset('customers/biker.png');
+    CUSTOMERS.customer_data[1].src = ASS_MANAGER.getAsset('customers/2ppl.png');
+    CUSTOMERS.customer_data[2].src = ASS_MANAGER.getAsset('customers/4ppl.png');
+    CUSTOMERS.customer_data[3].src = ASS_MANAGER.getAsset('customers/6ppl.png');
 
     CUSTOMERS.init(
         ASS_MANAGER.getAsset('orders/bubble.png'),
