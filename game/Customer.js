@@ -51,7 +51,7 @@ class Customer{
         return this._is_finished;
     }
     isFed(){
-        return this.is_fed;
+        return this._is_fed;
     }
     isServing(){
         return ((this._pos > this.serving_pos.end) && (this._pos < this.serving_pos.start));
@@ -162,7 +162,7 @@ class Customer{
             }
             this._is_fed = is_fed;
             if(this._is_fed){
-                customers_fed();
+                customer_fed();
             }
         }
     }
