@@ -17,6 +17,10 @@ class Sprite {
         this.loop = loop; // boolean
     }
 
+    width(){
+        return this.w;
+    }
+    
     draw(elapsed_ms,x,y) {
 
         // First time called, we start the animation
