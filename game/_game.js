@@ -357,6 +357,11 @@ var life_lost = function(){
     score.satisfaction -= SATISFACTION_LIFE_LOSS_SIZE;
     if(score.satisfaction <= 0){
         score.satisfaction = 0;
+
+        // TODO : Proper end game scenario here
+        game.target_speed = 0;
+        game.speed = 0,  // desired road speed
+
         console.log("GAME OVER!");
     }
     SATISFACTION.set_satisfaction(score.satisfaction);
