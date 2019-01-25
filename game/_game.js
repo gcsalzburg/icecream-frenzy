@@ -315,13 +315,11 @@ var ic_wasted = function(){
 
 var toggle_music = function(){
     if(game.is_muted){
-        console.log("unmute!");
         bg_music.volume = bg_music_vol;
         for (let sound in sounds) {
             sounds[sound].volume = 1;
         }
     }else{
-        console.log("mute!");
         bg_music.volume = 0;
         for (let sound in sounds) {
             sounds[sound].volume = 0;
