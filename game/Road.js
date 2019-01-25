@@ -105,7 +105,7 @@ class Road{
                 for(var j=0; j <= game.w;){
                     var new_d = this._generate_decor(category,j-game.w,category.ani,category.speed);
                     this.decors.push(new_d);
-                    j = new_d.getStart() + category.freq;
+                    j = new_d.getPos() + category.freq;
                 }
             }
             this.has_populated_initial = true;
@@ -118,7 +118,8 @@ class Road{
         for (var i=0; i < this.decor_data.length; i++){
             var category = this.decor_data[i];
             if(distance > (category.last + category.freq)){
-                this.decors.push(this._generate_decor(category,distance,category.ani,category.speed+rand(category.speed_variance)));
+                var new_d = this._generate_decor(category,distance,category.ani,category.speed+rand(category.speed_variance))
+                this.decors.push(new_d);
                 category.last = distance;
             }
         }
@@ -128,11 +129,11 @@ class Road{
             var d = this.decors[i];
     
             // Set distance for decor
-    //        d.setPos(d.getPos() - modifier*(d.getSpeed()+rand(d.getSpeedVariance())*game.speed));
             d.setPos(d.getPos() - modifier *d.getSpeed()*game.speed);
     
             // Remove old decor
             if(d.getPos() < -d.getWidth()){
+                console.log("remove!");
                 this.decors.splice(i,1);
             }
         }
@@ -166,16 +167,12 @@ class Decor{
         this._y = y;
         this._speed = speed;
     
-        this._start = start;
         this._pos = start;
     }
 
     // Getters
     getWidth(){
         return this._src.width;
-    }
-    getStart(){
-        return this._start;
     }
     getSpeed(){
         return this._speed;
