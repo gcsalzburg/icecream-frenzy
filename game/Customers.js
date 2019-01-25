@@ -135,7 +135,7 @@ class Customers{
     
     check_for_customers(){
         if(this.is_open_for_customers){
-            if(performance.now() > (this.last_customer_add + this.customer_interval)){
+            if(game.distance > (this.last_customer_add + this.customer_interval)){
                 this.add();
             }
         }
@@ -165,7 +165,7 @@ class Customers{
                 }
 
                 this.customers.push( new Customer(sprite,lane,speed,dims) );
-                this.last_customer_add = performance.now(); 
+                this.last_customer_add = game.distance; 
                 this.num_customers++;
                 break;
             }
