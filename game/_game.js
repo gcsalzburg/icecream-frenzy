@@ -138,7 +138,10 @@ ASS_MANAGER.queueDownloads(
 );
 
 var assets_complete = function(){
-    // Map all assets to their respective objects
+
+    // Map all assets to their objects
+
+    // Road and decor
     ROAD.src = ASS_MANAGER.getAsset('bg/road.png');
     ROAD.decor_data[0].graphics = [
         ASS_MANAGER.getAsset('bg/cactus_1.png'),
@@ -162,7 +165,7 @@ var assets_complete = function(){
     ];
     ROAD.decor_data[4].graphics = [ASS_MANAGER.getAsset('bg/tumbleweed.png')];
 
-
+    // Truck
     TRUCK.init(
         ASS_MANAGER.getAsset('truck/truck-sprite.png'),
         ASS_MANAGER.getAsset('orders/drop_vanilla.png'),
@@ -172,24 +175,23 @@ var assets_complete = function(){
         ASS_MANAGER.getAsset('truck/dollar_down.png')
     );
 
+    // Customers
     CUSTOMERS.customer_data[0].src = ASS_MANAGER.getAsset('customers/biker.png');
     CUSTOMERS.customer_data[1].src = ASS_MANAGER.getAsset('customers/2ppl.png');
     CUSTOMERS.customer_data[2].src = ASS_MANAGER.getAsset('customers/4ppl.png');
     CUSTOMERS.customer_data[3].src = ASS_MANAGER.getAsset('customers/6ppl.png');
-
-    CUSTOMERS.init(
+    CUSTOMERS.src_bubbles = [
         ASS_MANAGER.getAsset('orders/bubble.png'),
         ASS_MANAGER.getAsset('orders/bubble_order.png')
-    );
-
+    ];
     CUSTOMERS.src_cones = [
         ASS_MANAGER.getAsset('orders/cone-vanilla.png'),
         ASS_MANAGER.getAsset('orders/cone-chocolate.png'),
         ASS_MANAGER.getAsset('orders/cone-strawberry.png')
     ];
 
+    // Music
     bg_music = ASS_MANAGER.getAsset('sounds/bg_109bpm.mp3');
-
     sounds.served = ASS_MANAGER.getAsset('sounds/serve.mp3');
     sounds.dumped = ASS_MANAGER.getAsset('sounds/dropped.mp3');
     sounds.lane = ASS_MANAGER.getAsset('sounds/lane_change.mp3');

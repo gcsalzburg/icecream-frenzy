@@ -115,7 +115,9 @@ class Customers{
                 speed_variance: 10
 
             }
-        ]
+        ];
+        
+        this._calculate_weightings();
     }
 
     init(src_bubble, src_bubble_order){
@@ -123,7 +125,12 @@ class Customers{
             src_bubble,
             src_bubble_order
         ];
-        this.calculate_weightings();
+    }
+
+    set_weighting(vehicle,weighting){
+        this.customer_data[vehicle].weighting = weighting;
+        this._calculate_weightings();
+
     }
     
     check_for_customers(){
@@ -208,7 +215,7 @@ class Customers{
         return 0;
     }
 
-    calculate_weightings(){
+    _calculate_weightings(){
         let sum = 0;
 
         this.weightings = [];
