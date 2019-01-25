@@ -112,7 +112,7 @@ class Customer{
         for(var i=0; i<3; i++){
             ctx.drawImage(
                 src,
-                starts[i],                                    0,                                                  this._b_dims.segs[i], this._b_dims.size.h, // Source
+                starts[i],            0,                                     this._b_dims.segs[i], this._b_dims.size.h, // Source
                 b_start+width_so_far, this._dims.lane+this._b_dims.offset.y, widths[i],            this._b_dims.size.h  // Destination
             );  
             width_so_far += widths[i];  
@@ -162,8 +162,7 @@ class Customer{
             }
             this._is_fed = is_fed;
             if(this._is_fed){
-                score.orders_served ++;
-                new Sound(sounds.hurrah).play();
+                customers_fed();
             }
         }
     }
