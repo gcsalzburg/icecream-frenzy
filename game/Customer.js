@@ -11,6 +11,11 @@ class Customer{
         this._lane = lane;
         this._speed = speed;
         this._dims = dims;
+
+        this.serving_pos = {
+            start:  114,
+            end:    -this._src_ani.width()+40
+        };
     
         this._pos = game.w;
     
@@ -31,7 +36,9 @@ class Customer{
                 x: 14,
                 y: 6
             },
-            b_min_x: 10
+            b_min_x: 10,
+            b_buffer_right: 30,
+            scroll_bubble: this._dims.scroll_bubble
         }
 
         // Create the order for this customer
@@ -47,7 +54,7 @@ class Customer{
         return this.is_fed;
     }
     isServing(){
-        return ((this._pos > this._dims.serving_pos.end) && (this._pos < this._dims.serving_pos.start));
+        return ((this._pos > this.serving_pos.end) && (this._pos < this.serving_pos.start));
     }
     getLane(){
         return this._lane;
@@ -74,12 +81,6 @@ class Customer{
             }
         }
 
-        // See if bubble will be off the screen
-        let b_start = this._pos+this._b_dims.offset.x;
-        if(b_start < this._b_dims.b_min_x){
-            b_start = this._b_dims.b_min_x;
-        }
-
         // Bubble section widths and start co-ordinates
         var widths = [
             this._b_dims.segs[0],
@@ -92,6 +93,19 @@ class Customer{
             this._b_dims.segs[0]+this._b_dims.segs[1]
         ];
         var src = (this.isServing() ? CUSTOMERS.src_bubbles[1] : CUSTOMERS.src_bubbles[0]);
+
+        // See if we should adjust bubble to stay in view
+        let b_start = this._pos+this._b_dims.offset.x;
+        if(this._dims.scroll_bubble){
+            if(b_start < this._b_dims.b_min_x){
+                b_start = this._b_dims.b_min_x;
+            }
+    
+            let b_width = widths[0]+widths[1]+widths[2]+this._b_dims.b_buffer_right;
+            if(b_start+b_width > this._pos+this._src_ani.width()){
+                b_start = this._pos+this._src_ani.width()-b_width;
+            }
+        }
 
         // Draw three parts of the bubble
         var width_so_far = 0;

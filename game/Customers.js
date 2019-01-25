@@ -25,10 +25,7 @@ class Customers{
                 enabled: true,
                 weighting: 1, // Figure
                 order_pos: 1000,
-                serve_pos: {
-                    start: 114,
-                    end: -121
-                },
+                scroll_bubble: false,
                 bubble_offset: {
                     x: 0,
                     y: -20
@@ -42,10 +39,7 @@ class Customers{
                 enabled: true,
                 weighting: 1,
                 order_pos: 1000,
-                serve_pos: {
-                    start: 114,
-                    end: -121
-                },
+                scroll_bubble: true,
                 bubble_offset: {
                     x: 25,
                     y: -20
@@ -56,13 +50,10 @@ class Customers{
                 src: null,
                 sprite_data: [57,5,12,30],
                 cones: [3,4],
-                enabled: false,
+                enabled: true,
                 weighting: 1,
                 order_pos: 1000,
-                serve_pos: {
-                    start: 114,
-                    end: -121
-                },
+                scroll_bubble: true,
                 bubble_offset: {
                     x: 25,
                     y: -20
@@ -73,13 +64,10 @@ class Customers{
                 src: null,
                 sprite_data: [57,5,12,30],
                 cones: [5,6],
-                enabled: false,
+                enabled: true,
                 weighting: 1,
                 order_pos: 1000,
-                serve_pos: {
-                    start: 114,
-                    end: -121
-                },
+                scroll_bubble: true,
                 bubble_offset: {
                     x: 25,
                     y: -20
@@ -159,9 +147,9 @@ class Customers{
                 const dims = {
                     lane:           this.lanes[lane],
                     ordering_pos:   c.order_pos,
-                    serving_pos:    c.serve_pos,
                     cones:          c.cones,
-                    bubble_offset:  c.bubble_offset
+                    bubble_offset:  c.bubble_offset,
+                    scroll_bubble:  c.scroll_bubble
                 }
 
                 this.customers.push( new Customer(sprite,lane,speed,dims) );
