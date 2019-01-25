@@ -220,8 +220,10 @@ var assets_complete = function(){
     // Can start game once assets are loaded
     game.can_start = true;
     enable_start();
-    start_game(); // FOR TESTING ONLY
-    toggle_music();
+
+    // FOR TESTING ONLY
+    //   start_game(); 
+    //   toggle_music();
 }
 
 var assets_loading = function(success,error,total){
@@ -333,14 +335,12 @@ var ic_wasted = function(){
 }
 
 var customer_fed = function(){
-    console.log("FED!");
     score.orders_served ++;
     new Sound(sounds.hurrah).play();
     life_gain();
 }
 
 var customer_not_fed = function(){
-    console.log("NOT FED!");
     score.orders_not_served ++;
     life_lost();
 }
