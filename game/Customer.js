@@ -24,10 +24,7 @@ class Customer{
                 w: 61,
                 h: 56
             },
-            offset: {
-                x: 25,
-                y: -20
-            },
+            offset: this._dims.bubble_offset,
             mid_width: 7,      // starting width of the centre of bubble
             mid_width_inc: 18, // each ice cream adds 18px to the width
             ice_offset: {      // from bubble
@@ -39,7 +36,7 @@ class Customer{
 
         // Create the order for this customer
         this.orders = [];
-        this.create_order();
+        this.create_order( rand_int(this._dims.cones[1]-this._dims.cones[0]) + this._dims.cones[0]);
     }
 
     // Getters
@@ -131,8 +128,7 @@ class Customer{
         }
     }
     
-    create_order(){
-        var num_orders = rand_int(2)+1; // between 1 and 3 orders per car
+    create_order(num_orders){
         for(var i=0; i<num_orders; i++){
             this.orders.push(new Order());
         }
