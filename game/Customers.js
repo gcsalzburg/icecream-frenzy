@@ -143,7 +143,6 @@ class Customers{
     
     add(){
         const weight = Math.random();
-        console.log(weight);
         for(let i=0; i<this.customer_data.length; i++){
             const c = this.customer_data[i];
             if(c.enabled && (this.weightings[i] >= weight)){
@@ -234,8 +233,6 @@ class Customers{
                 so_far += _w;
             }
         }
-
-        console.log(this.weightings);
     }
     
     
