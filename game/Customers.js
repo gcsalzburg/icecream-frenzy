@@ -12,6 +12,8 @@ class Customers{
         this.customer_interval = 3000;
         this.customer_variance = 200;
 
+        this.lanes = [180,278,379,464];
+
         // Weighting should be a distribution such as:
         // 0.3 ... 0.6 ... 0.7 ... 1
         // Last one should always be 1
@@ -19,34 +21,54 @@ class Customers{
             {
                 type: "bike",
                 src: null,
-                sprite_data: [0,0,0,0],
+                sprite_data: [37,5,8,30],
                 cones: [1,1],
-                enabled: false,
-                weighting: 0         
+                enabled: true,
+                weighting: 0.25,
+                order_pos: 1000,
+                serve_pos: {
+                    start: 114,
+                    end: -121
+                }         
             },
             {
                 type: "small_car",
                 src: null,
-                sprite_data: [60,5,12,30],
+                sprite_data: [57,5,12,30],
                 cones: [1,3],
                 enabled: true,
-                weighting: 1   
+                weighting: 0.5,
+                order_pos: 1000,
+                serve_pos: {
+                    start: 114,
+                    end: -121
+                }     
             },
              {
                 type: "mid_car",
                 src: null,
-                sprite_data: [0,0,0,0],
+                sprite_data: [57,5,12,30],
                 cones: [3,4],
-                enabled: false,
-                weighting: 1                   
+                enabled: true,
+                weighting: 0.75,
+                order_pos: 1000,
+                serve_pos: {
+                    start: 114,
+                    end: -121
+                }                     
             },
             {
                 type: "large_car",
                 src: null,
-                sprite_data: [0,0,0,0],
+                sprite_data: [57,5,12,30],
                 cones: [5,6],
-                enabled: false,
-                weighting: 1                   
+                enabled: true,
+                weighting: 1,
+                order_pos: 1000,
+                serve_pos: {
+                    start: 114,
+                    end: -121
+                }                     
             }
         ];
         this.lane_data = [
@@ -111,8 +133,13 @@ class Customers{
                 );
                 const lane = rand_int(NUM_LANES);
                 const speed = this.lane_data[lane].speed + rand_int(this.lane_data[lane].speed_variance);
+                const dims = {
+                    lane: this.lanes[lane],
+                    ordering_pos: c.order_pos,
+                    serving_pos: c.serve_pos
+                }
 
-                this.customers.push( new Customer(sprite,lane,speed) );
+                this.customers.push( new Customer(sprite,lane,speed,dims) );
                 this.last_customer_add = performance.now(); 
                 this.num_customers++;
                 break;

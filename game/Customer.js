@@ -5,11 +5,12 @@
 
 class Customer{
 
-    constructor(src_ani,lane,speed){
+    constructor(src_ani,lane,speed,dims){
 
         this._src_ani = src_ani;
         this._lane = lane;
         this._speed = speed;
+        this._dims = dims;
     
         this._pos = game.w;
     
@@ -17,14 +18,6 @@ class Customer{
         this._is_fed        = false;
         this._is_finished   = false; 
 
-        this._dims = {
-            lanes: [180,278,379,464],
-            ordering_pos: 1000,
-            serving_pos: {
-                start: 114,
-                end: -121
-            }
-        }  
         this._b_dims = {
             segs: [18,26,17],
             size: {
@@ -68,7 +61,7 @@ class Customer{
     
     render(elapsed){
     
-        this._src_ani.draw(elapsed,this._pos,this._dims.lanes[this._lane]);
+        this._src_ani.draw(elapsed,this._pos,this._dims.lane);
     
         if(this._is_ordering & !this._is_fed){
             this.render_order();
@@ -103,7 +96,7 @@ class Customer{
             ctx.drawImage(
                 src,
                 starts[i],                                    0,                                                  this._b_dims.segs[i], this._b_dims.size.h, // Source
-                this._pos+this._b_dims.offset.x+width_so_far, this._dims.lanes[this._lane]+this._b_dims.offset.y, widths[i],            this._b_dims.size.h  // Destination
+                this._pos+this._b_dims.offset.x+width_so_far, this._dims.lane+this._b_dims.offset.y, widths[i],            this._b_dims.size.h  // Destination
             );  
             width_so_far += widths[i];  
         }
@@ -115,7 +108,7 @@ class Customer{
                 ctx.drawImage(
                     CUSTOMERS.src_cones[o.type],
                     this._pos + this._b_dims.offset.x + this._b_dims.ice_offset.x + offset,
-                    this._dims.lanes[this._lane] + this._b_dims.offset.y + this._b_dims.ice_offset.y
+                    this._dims.lane + this._b_dims.offset.y + this._b_dims.ice_offset.y
                 );
                 offset += this._b_dims.mid_width_inc;
             }
