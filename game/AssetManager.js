@@ -43,7 +43,7 @@ AssetManager.prototype.downloadAll = function(downloadCallback, progressCallback
             cache_obj = new Image();
         }else if(path.slice(-3) == "mp3"){
             cache_obj = new Audio();
-        }else if(that.debug){
+        }else if(this.debug){
             console.log("Unknown file type: " + path);
         }
 
@@ -79,8 +79,8 @@ AssetManager.prototype.downloadAll = function(downloadCallback, progressCallback
             // Save path to cache
             this.cache[path] = cache_obj;
         }else{
-            that.errorCount += 1;
-            if (that.isDone()) {
+            this.errorCount += 1;
+            if (this.isDone()) {
                 downloadCallback();
             }
         }   
