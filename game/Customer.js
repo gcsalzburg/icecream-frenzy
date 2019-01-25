@@ -30,8 +30,8 @@ class Customer{
             ice_offset: {      // from bubble
                 x: 14,
                 y: 6
-            }
-
+            },
+            b_min_x: 10
         }
 
         // Create the order for this customer
@@ -74,6 +74,12 @@ class Customer{
             }
         }
 
+        // See if bubble will be off the screen
+        let b_start = this._pos+this._b_dims.offset.x;
+        if(b_start < this._b_dims.b_min_x){
+            b_start = this._b_dims.b_min_x;
+        }
+
         // Bubble section widths and start co-ordinates
         var widths = [
             this._b_dims.segs[0],
@@ -93,7 +99,7 @@ class Customer{
             ctx.drawImage(
                 src,
                 starts[i],                                    0,                                                  this._b_dims.segs[i], this._b_dims.size.h, // Source
-                this._pos+this._b_dims.offset.x+width_so_far, this._dims.lane+this._b_dims.offset.y, widths[i],            this._b_dims.size.h  // Destination
+                b_start+width_so_far, this._dims.lane+this._b_dims.offset.y, widths[i],            this._b_dims.size.h  // Destination
             );  
             width_so_far += widths[i];  
         }
@@ -104,7 +110,7 @@ class Customer{
             if(!o.is_served){
                 ctx.drawImage(
                     CUSTOMERS.src_cones[o.type],
-                    this._pos + this._b_dims.offset.x + this._b_dims.ice_offset.x + offset,
+                    b_start + this._b_dims.ice_offset.x + offset,
                     this._dims.lane + this._b_dims.offset.y + this._b_dims.ice_offset.y
                 );
                 offset += this._b_dims.mid_width_inc;

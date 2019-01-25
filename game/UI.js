@@ -1,6 +1,11 @@
-//
+
+// /////////////////////////////////
+// // UI BUTTON HANDLING          //
+// /////////////////////////////////
+
+
 // Start button
-//
+
 var el = document.getElementById('play');
 // attach anonymous function to click event
 el.addEventListener('click', function(e){
@@ -14,6 +19,14 @@ var enable_start = function(){
     var bar = document.getElementById("play");
     bar.classList.remove("disabled");
 }
+
+// Special buttons
+
+var crazy = document.getElementById('crazy_mode').addEventListener('click',function(e){
+    e.preventDefault();
+    console.log("Enabled crazy mode!");
+    CUSTOMERS.customer_interval = 100;
+});
 
 // /////////////////////////////////
 // // KEYBOARD HANDLING           //
