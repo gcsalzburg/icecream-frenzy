@@ -133,7 +133,6 @@ class Road{
     
             // Remove old decor
             if(d.getPos() < -d.getWidth()){
-                console.log("remove!");
                 this.decors.splice(i,1);
             }
         }
