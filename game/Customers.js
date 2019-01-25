@@ -172,6 +172,10 @@ class Customers{
     
             // Remove customers we have finished with
             if(c.isFinished()){
+                if(!c.isFed()){
+                    // Didn't feed them all!
+                    customer_not_fed();
+                }
                 this.customers.splice(i,1);
                 this.num_customers = this.customers.length;
             }
