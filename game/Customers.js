@@ -51,7 +51,7 @@ class Customers{
                 sprite_data: [57,5,12,30],
                 cones: [3,4],
                 enabled: true,
-                weighting: 1,
+                weighting: 0,
                 order_pos: 1000,
                 scroll_bubble: true,
                 bubble_offset: {
@@ -65,7 +65,7 @@ class Customers{
                 sprite_data: [57,5,12,30],
                 cones: [5,6],
                 enabled: true,
-                weighting: 1,
+                weighting: 0,
                 order_pos: 1000,
                 scroll_bubble: true,
                 bubble_offset: {

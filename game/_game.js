@@ -22,7 +22,8 @@ const game = {
 
     accel:          300,  // pixels per second^2
 
-    is_muted:       false
+    is_muted:       false,
+    is_over:        false
 }
 
 const NUM_LANES = 4;
@@ -53,10 +54,40 @@ const sounds = {
 // Handling for game progression events
 const distance_triggers = [
     {
-        distance:       800,
+        distance:       400,
         has_triggered:  false,
         trigger:        function(){
             CUSTOMERS.is_open_for_customers = true;
+        }
+    },
+    {
+        distance:       5000,
+        has_triggered:  false,
+        trigger:        function(){
+            CUSTOMERS.customer_interval = 2000;
+        }
+    },
+    {
+        distance:       10000,
+        has_triggered:  false,
+        trigger:        function(){
+            CUSTOMERS.set_weighting(2,1);
+        }
+    },
+    {
+        distance:       20000,
+        has_triggered:  false,
+        trigger:        function(){
+            CUSTOMERS.set_weighting(3,1);
+            CUSTOMERS.customer_interval = 1500;
+        }
+    },
+    {
+        distance:       30000,
+        has_triggered:  false,
+        trigger:        function(){
+            CUSTOMERS.set_weighting(0,0);
+            CUSTOMERS.customer_interval = 1000;
         }
     }
 ];
@@ -246,7 +277,6 @@ var update = function (delta, elapsed) {
     }else{
         game.speed = Math.round(game.speed);
     }
-    console.log(game.speed);
 
     // Now calculate distance increase
     game.distance += game.speed*delta; // v = s/t
