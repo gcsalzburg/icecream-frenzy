@@ -20,7 +20,7 @@ const game = {
     speed:          0,  // current speed in pixels per second
     target_speed:   600,  // desired road speed
 
-    accel:          200,  // pixels per second^2
+    accel:          300,  // pixels per second^2
 
     is_muted:       false
 }
@@ -241,12 +241,14 @@ var update = function (delta, elapsed) {
     check_keys();
 
     // Roll the road!
-    if(game.target_speed > game.speed){
-        game.speed += game.accel*delta;
+    if(Math.round(game.speed) != game.target_speed){
+        game.speed = game.speed + (game.accel*delta*((game.target_speed-game.speed)/Math.abs(game.target_speed-game.speed)));
+    }else{
+        game.speed = Math.round(game.speed);
     }
-    if(game.speed > game.target_speed){
-        game.speed = game.target_speed;
-    }
+    console.log(game.speed);
+
+    // Now calculate distance increase
     game.distance += game.speed*delta; // v = s/t
 
     // Check distance triggers
@@ -357,7 +359,6 @@ var life_lost = function(){
 
         // TODO : Proper end game scenario here
         game.target_speed = 0;
-        game.speed = 0,  // desired road speed
 
         console.log("GAME OVER!");
     }
