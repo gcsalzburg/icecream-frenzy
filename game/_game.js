@@ -104,6 +104,10 @@ ASS_MANAGER.queueDownloads(
     'ui/bar_behind.png',
     'ui/sad.png',
     'ui/happy.png',
+    
+    'ui/stats-cones.png',
+    'ui/stats-dropped.png',
+    'ui/stats-road.png',
 
     'customers/biker.png',
     'customers/2ppl.png',
