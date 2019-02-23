@@ -73,6 +73,7 @@ const SATISFACTION = new Satisfaction();
 const CUSTOMERS = new Customers();
 const TRUCK = new Truck();
 const ROAD = new Road();
+const LIVES = [new Life(), new Life(), new Life()];
 
 // Create the canvas
 const canvas = document.getElementById("canvas");
@@ -104,6 +105,7 @@ ASS_MANAGER.queueDownloads(
     'ui/bar_behind.png',
     'ui/sad.png',
     'ui/happy.png',
+    'ui/life.png',
     
     'ui/stats-cones.png',
     'ui/stats-dropped.png',
@@ -163,6 +165,9 @@ var assets_complete = function(){
         ASS_MANAGER.getAsset('ui/happy.png'),
         ASS_MANAGER.getAsset('ui/sad.png')
     ]);
+    for(let i=0;i<LIVES.length;i++){
+        LIVES[i].init(ASS_MANAGER.getAsset('ui/life.png'));
+    }
 
     // Road and decor
     ROAD.src = ASS_MANAGER.getAsset('bg/road.png');
@@ -288,29 +293,36 @@ var render = function (delta, elapsed) {
     CUSTOMERS.render_above(TRUCK.getLane(), elapsed);
 
     SATISFACTION.render();
-    display_scores();
+    display_scores(elapsed);
 };
 
-display_scores = function(){
+display_scores = function(elapsed){
 
-    // Stats
-    ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-cones.png'),960,40);
-    ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-dropped.png'),1025,40);
-    ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-road.png'),1090,40);
-
-    // Data
 	ctx.fillStyle = "rgb(58, 61, 62)";
-    ctx.font = "22px VT323";
-	ctx.textAlign = "center";
-    ctx.textBaseline = "top";
-    ctx.fillText(score.icecream_served, 985, 90); 
+
+    // Stats icons 
     let efficiency = Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10;
     if(isNaN(efficiency)){
         efficiency = 100;
     }
+
+    ctx.font = "22px VT323";
+	ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+
+    ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-cones.png'),960,40);
+    ctx.fillText(score.icecream_served, 985, 90); 
+
+    ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-dropped.png'),1025,40);
     ctx.fillText(`${efficiency}%` , 1050, 90); 
 
+    ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-road.png'),1090,40);
     ctx.fillText(`${Math.round(game.distance / game.distance_scale)}m` , 1115, 90);  
+
+    // Lives
+    for(let i=0; i<LIVES.length; i++){
+        LIVES[i].render(elapsed);
+    }
     
     // Main score
     ctx.font = "60px VT323";
