@@ -1,7 +1,4 @@
-// /////////////////////////////////
-// // TRUCK                       //
-// // The ice cream truck itself  //
-// /////////////////////////////////
+ 
 
 class Truck{
     constructor(){
