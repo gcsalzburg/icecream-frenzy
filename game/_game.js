@@ -69,7 +69,7 @@ const distance_triggers = [
 const CUSTOMERS = new Customers();
 const TRUCK = new Truck();
 const ROAD = new Road();
-const LIVES = [new Life(), new Life(), new Life()];
+const LIVES = [new Life(10), new Life(40), new Life(70)];
 
 // Create the canvas
 const canvas = document.getElementById("canvas");
@@ -310,10 +310,10 @@ display_scores = function(elapsed){
     }
     
     // Main score
-    ctx.font = "60px VT323";
+    ctx.font = "70px VT323";
     ctx.textAlign = "left";
     var score_disp = `$${score.dollars}`;
-    ctx.fillText(score_disp, 20,20);
+    ctx.fillText(score_disp, 25,20);
 
 
 	// FPS

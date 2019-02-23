@@ -4,14 +4,14 @@
 // /////////////////////////////////
 
 class Life{
-    constructor(){
+    constructor(x){
         this._life_ani = null;
         this._is_alive = false;
 
 
         this._dims = {
-            x: 50,
-            y: 90
+            _x: x,
+            _y: 80
         }
     }
 
@@ -20,7 +20,7 @@ class Life{
     }
 
     render(elapsed){
-        this._life_ani.draw(elapsed,this._dims.x,this._dims.y);
+        this._life_ani.draw(elapsed,this._dims._x,this._dims._y);
     }
 
     end(){
