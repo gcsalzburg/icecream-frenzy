@@ -292,19 +292,25 @@ var render = function (delta, elapsed) {
 };
 
 display_scores = function(){
-    
+
+    // Stats
+    ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-cones.png'),960,40);
+    ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-dropped.png'),1025,40);
+    ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-road.png'),1090,40);
+
     // Data
 	ctx.fillStyle = "rgb(58, 61, 62)";
     ctx.font = "22px VT323";
-	ctx.textAlign = "right";
-	ctx.textBaseline = "top";
-    ctx.fillText(`Orders served: ${score.orders_served}/${score.orders_placed}`, 1170, 40);    
+	ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    ctx.fillText(score.icecream_served, 985, 90); 
     let efficiency = Math.round(1000*(score.icecream_served / (score.icecream_served+score.icecream_wasted)))/10;
     if(isNaN(efficiency)){
-        efficiency = 0;
+        efficiency = 100;
     }
-    ctx.fillText(`Ice cream efficiency: ${efficiency}%` , 1170, 62);  
-    ctx.fillText(`Distance: ${Math.round(game.distance / game.distance_scale)}m` , 1170, 84);  
+    ctx.fillText(`${efficiency}%` , 1050, 90); 
+
+    ctx.fillText(`${Math.round(game.distance / game.distance_scale)}m` , 1115, 90);  
     
     // Main score
     ctx.font = "60px VT323";
