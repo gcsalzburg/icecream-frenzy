@@ -3,7 +3,7 @@
 
 
 class Sprite {
-    constructor(src, frames, cols, rows, framerate, loop = true) {
+    constructor(src, frames, cols, rows, framerate, loop = true, autostart = true) {
         this.src    = src;
         this.frames = frames;
         this.cols   = cols;
@@ -15,27 +15,40 @@ class Sprite {
         
         
         this.loop = loop; // boolean
+        this.autostart = autostart; // boolean
+
+        this._is_playing = false // boolean
     }
 
     width(){
         return this.w;
     }
+
+    start(){
+        return this._is_playing = true;
+    }
     
     draw(elapsed_ms,x,y) {
 
         // First time called, we start the animation
-        if(!this._start_ms){
+        if(!this._start_ms && (this._is_playing || this.autostart)){
             this._start_ms = elapsed_ms;
+            this._is_playing = true;
         }
 
-        // Calculate the frame of the animation
-        if(this.loop){
-            var curr_frame = Math.floor(((elapsed_ms-this._start_ms)/this.framerate)%this.frames);
-        }else{
-            var curr_frame = Math.floor(((elapsed_ms-this._start_ms)/this.framerate)/this.frames);
-            if(curr_frame >= this.frames){
-                curr_frame = this.frames-1;
+        var curr_frame;
+        if(this._is_playing){
+            // Calculate the frame of the animation
+            if(this.loop){
+                curr_frame = Math.floor(((elapsed_ms-this._start_ms)/this.framerate)%this.frames);
+            }else{
+                curr_frame = Math.floor(((elapsed_ms-this._start_ms)/this.framerate)/this.frames);
+                if(curr_frame >= this.frames){
+                    curr_frame = this.frames-1;
+                }
             }
+        }else{
+            curr_frame = 0;
         }
 
         // Get co-ordinates for this sprite frame
