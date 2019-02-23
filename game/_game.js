@@ -361,7 +361,7 @@ var life_lost = function(){
 
         console.log("GAME OVER!");
     }
-    LIVES[score.lives-1].end();
+    LIVES[score.lives].end();
 }
 
 

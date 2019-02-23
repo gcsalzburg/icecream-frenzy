@@ -16,7 +16,7 @@ class Life{
     }
 
     init(src){
-        this._life_ani = new Sprite(src,5,5,1,25,false,false);
+        this._life_ani = new Sprite(src,6,6,1,15,false,false);
     }
 
     render(elapsed){
