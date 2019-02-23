@@ -27,13 +27,10 @@ const game = {
 
 const NUM_LANES = 4;
 const TRUCK_LANES = 3;
-const SATISFACTION_MAX = 3; // equivalent to number of lives
-const SATISFACTION_LIFE_LOSS_SIZE = 1;
-const SATISFACTION_LIFE_GAIN_SIZE = 0.1;
 
 // Score keeping
 const score = {
-    satisfaction: 3,
+    lives: 3,
     orders_placed: 0,
     orders_served: 0,
     orders_not_served: 0,
@@ -69,7 +66,6 @@ const distance_triggers = [
 // /////////////////////////////////
 
 // Create game objects
-const SATISFACTION = new Satisfaction();
 const CUSTOMERS = new Customers();
 const TRUCK = new Truck();
 const ROAD = new Road();
@@ -101,10 +97,6 @@ const ASS_MANAGER = new AssetManager();
 ASS_MANAGER.setDefaultPath("assets/");
 ASS_MANAGER.queueDownloads(
 
-    'ui/bar_solid.png',
-    'ui/bar_behind.png',
-    'ui/sad.png',
-    'ui/happy.png',
     'ui/life.png',
     
     'ui/stats-cones.png',
@@ -159,12 +151,6 @@ var assets_complete = function(){
     // Map all assets to their objects
 
     // UI
-    SATISFACTION.init([
-        ASS_MANAGER.getAsset('ui/bar_solid.png'),
-        ASS_MANAGER.getAsset('ui/bar_behind.png'),
-        ASS_MANAGER.getAsset('ui/happy.png'),
-        ASS_MANAGER.getAsset('ui/sad.png')
-    ]);
     for(let i=0;i<LIVES.length;i++){
         LIVES[i].init(ASS_MANAGER.getAsset('ui/life.png'));
     }
@@ -292,7 +278,6 @@ var render = function (delta, elapsed) {
     TRUCK.render(delta, elapsed);
     CUSTOMERS.render_above(TRUCK.getLane(), elapsed);
 
-    SATISFACTION.render();
     display_scores(elapsed);
 };
 
@@ -359,7 +344,6 @@ var ic_wasted = function(){
 var customer_fed = function(){
     score.orders_served ++;
     new Sound(sounds.hurrah).play();
-    life_gain();
 }
 
 var customer_not_fed = function(){
@@ -367,18 +351,9 @@ var customer_not_fed = function(){
     life_lost();
 }
 
-var life_gain = function(){
-    score.satisfaction += SATISFACTION_LIFE_GAIN_SIZE;
-    if(score.satisfaction >= SATISFACTION_MAX){
-        score.satisfaction = SATISFACTION_MAX;
-    }
-    SATISFACTION.set_satisfaction(score.satisfaction);
-}
-
 var life_lost = function(){
-    score.satisfaction -= SATISFACTION_LIFE_LOSS_SIZE;
-    if(score.satisfaction <= 0){
-        score.satisfaction = 0;
+    score.lives--;
+    if(score.lives <= 0){
 
         // TODO : Proper end game scenario here
         game.target_speed = 0;
@@ -386,7 +361,7 @@ var life_lost = function(){
 
         console.log("GAME OVER!");
     }
-    SATISFACTION.set_satisfaction(score.satisfaction);
+    LIVES[score.lives-1].end();
 }
 
 
