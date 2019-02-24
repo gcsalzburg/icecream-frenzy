@@ -23,7 +23,9 @@ const game = {
     accel:          300,  // pixels per second^2
 
     is_muted:       false,
-    is_over:        false
+    is_over:        false,
+
+    game_over_time: 0
 }
 
 const NUM_LANES = 4;
@@ -31,7 +33,7 @@ const TRUCK_LANES = 3;
 
 // Score keeping
 const score = {
-    lives: 3,
+    lives: 1,
     orders_placed: 0,
     orders_served: 0,
     orders_not_served: 0,
@@ -103,7 +105,12 @@ const distance_triggers = [
 const CUSTOMERS = new Customers();
 const TRUCK = new Truck();
 const ROAD = new Road();
-const LIVES = [new Life(10), new Life(40), new Life(70)];
+
+// Generate life icons array
+let LIVES = [];
+for(let i=0; i<score.lives; i++){
+    LIVES.push(new Life(10 + i*30));
+}
 
 // Create the canvas
 const canvas = document.getElementById("canvas");
@@ -259,9 +266,8 @@ var assets_complete = function(){
     enable_start();
 
     // FOR TESTING ONLY
-    start_game(); 
-    toggle_music();
-    generate_end_cones();
+ //   start_game(); 
+ //   toggle_music();
 }
 
 var assets_loading = function(success,error,total){
@@ -324,9 +330,9 @@ var render = function (delta, elapsed) {
 
     display_scores(elapsed);
 
- //   if(game.is_over){
+    if(game.is_over){
         render_end_cones(elapsed);
- //   }
+    }
 };
 
 display_scores = function(elapsed){
@@ -403,8 +409,12 @@ var life_lost = function(){
     score.lives--;
     if(score.lives <= 0){
 
-        // TODO : Proper end game scenario here
+        generate_end_cones(); // Create the array of end cones we will show shortly
+
         game.target_speed = 0;
+        setTimeout(function(){
+            game.is_over = true;
+        },3000);
 
         console.log("GAME OVER!");
     }
@@ -416,35 +426,125 @@ var life_lost = function(){
 // // END GAME SCENARIO           //
 // /////////////////////////////////
 
-let end_cones = [];
+let end_cones = []; // array to store end state cones in
 
+// Generator for random cone positions
 var generate_end_cones = function(){
 
-    // Cone raw size = 321 x 302
+    // Cone raw size = 321 x 302 -> this is important for the magic numbers used below
+    const num_cone_types = 3;
+    const row_dims = [
+        {
+            n: 5,
+            y: 150,
+            y_var: 50,
+            x: -250,
+            x_inc: 300,
+            x_var: 50,
+            sf: 1.8
+        },
+        {
+            n: 5,
+            y: 140,
+            y_var: 50,
+            x: -250,
+            x_inc: 250,
+            x_var: 50,
+            sf: 1.3
+        },
+        {
+            n: 7,
+            y: 70,
+            y_var: 30,
+            x: -250,
+            x_inc: 200,
+            x_var: 30,
+            sf: 1.3
+        },
+        {
+            n: 9,
+            y: 0,
+            y_var: 30,
+            x: -250,
+            x_inc: 150,
+            x_var: 30,
+            sf: 1.1
+        },
+        {
+            n: 9,
+            y: -100,
+            y_var: 30,
+            x: -270,
+            x_inc: 150,
+            x_var: 30,
+            sf: 1.1
+        },
+        {
+            n: 12,
+            y: -200,
+            y_var: 30,
+            x: -250,
+            x_inc: 100,
+            x_var: 30,
+            sf: 1.1
+        }
+    ];
 
-    let y = 150;
-    let y_variance = 50;
-    let x = -180;
-    let x_variance = 50;
-    let sf = 1.8;
+    // Populate array of cones
+    row_dims.forEach(row => {
+        for(let i=0; i<row.n; i++){
 
-    // How many rows of cones
-    for(let i=0; i<5; i++){
+            const this_y = row.y + rand_int(row.y_var); 
+            const this_x = row.x + rand_int(row.x_var); 
+            const this_rotation = rand(10)-5;
+    
+            end_cones.push(new EndCone(end_cone_srcs[rand_int(num_cone_types)],this_x,this_y,row.sf,this_rotation));
+    
+            row.x += row.x_inc;
+        } 
+    });
 
-        const this_y = y + rand_int(y_variance); 
-        const this_x = x + rand_int(x_variance); 
+    
+    // Create array to shuffle [0,1,2,3,4,5...x]
+    const num_cones = end_cones.length;
+    let order = Array.from(new Array(num_cones), (x,i) => i);
 
-        const this_rotation = rand(10)-5;
+    // Randomise order
+    for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+    }
 
-        end_cones.push(new EndCone(end_cone_srcs[rand_int(end_cone_srcs.length)],this_x,this_y,sf,this_rotation));
-
-        x += 300;
+    // Apply ordering
+    for(let i=0; i<num_cones; i++){
+        end_cones[i].render_order = order[i];
     }
 } 
 
-var render_end_cones = function(){
+let cones_shown = 0;
+let cones_show_interval = 150;
+var render_end_cones = function(elapsed){
+
+    if(game.game_over_time == 0){
+        game.game_over_time = elapsed;
+    }
+
+    const to_show = (elapsed-game.game_over_time)/cones_show_interval;
+
+    if(cones_shown <= end_cones.length){
+        if(to_show > cones_shown){
+            cones_shown = Math.ceil(to_show);
+            new Sound(sounds.dumped).play();
+            cones_show_interval -= 1;
+            if(cones_show_interval < 100){
+                cones_show_interval = 100;
+            }
+        }
+    }
     end_cones.slice().reverse().forEach(c => {
-        c.render();
+        if(c.render_order <= to_show){
+            c.render();
+        }
     });
 }
 

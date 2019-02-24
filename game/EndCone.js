@@ -17,6 +17,8 @@ class EndCone{
             new_h: 302*scale
         };
 
+        this.render_order = 0;
+
     }
 
     render(){
