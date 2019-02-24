@@ -420,14 +420,30 @@ let end_cones = [];
 
 var generate_end_cones = function(){
 
+    // Cone raw size = 321 x 302
+
+    let y = 150;
+    let y_variance = 50;
+    let x = -180;
+    let x_variance = 50;
+    let sf = 1.8;
+
     // How many rows of cones
-    for(let i=0; i<20; i++){
-        end_cones.push(new EndCone(end_cone_srcs[rand_int(end_cone_srcs.length)],rand_int(game.w),rand_int(game.h),1));
+    for(let i=0; i<5; i++){
+
+        const this_y = y + rand_int(y_variance); 
+        const this_x = x + rand_int(x_variance); 
+
+        const this_rotation = rand(10)-5;
+
+        end_cones.push(new EndCone(end_cone_srcs[rand_int(end_cone_srcs.length)],this_x,this_y,sf,this_rotation));
+
+        x += 300;
     }
 } 
 
 var render_end_cones = function(){
-    end_cones.forEach(c => {
+    end_cones.slice().reverse().forEach(c => {
         c.render();
     });
 }
