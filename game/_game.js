@@ -61,9 +61,10 @@ let end_cone_srcs = [];
 // Handling for game progression events
 const distance_triggers = [
     {
-        distance:       400,
+        distance:       1000,
         has_triggered:  false,
         trigger:        function(){
+            // Open for serving!
             CUSTOMERS.is_open_for_customers = true;
         }
     },
@@ -71,6 +72,7 @@ const distance_triggers = [
         distance:       5000,
         has_triggered:  false,
         trigger:        function(){
+            // Decrease interval between customers
             CUSTOMERS.customer_interval = 2000;
         }
     },
@@ -78,6 +80,7 @@ const distance_triggers = [
         distance:       10000,
         has_triggered:  false,
         trigger:        function(){
+            // Introduce mid-sized cars
             CUSTOMERS.set_weighting(2,1);
         }
     },
@@ -85,6 +88,7 @@ const distance_triggers = [
         distance:       15000,
         has_triggered:  false,
         trigger:        function(){
+            // Add a second flavour
             CUSTOMERS.number_flavours = 2;
         }
     },
@@ -92,6 +96,7 @@ const distance_triggers = [
         distance:       20000,
         has_triggered:  false,
         trigger:        function(){
+            // Decrease interval between customers
             CUSTOMERS.customer_interval = 1500;
         }
     },
@@ -99,6 +104,7 @@ const distance_triggers = [
         distance:       30000,
         has_triggered:  false,
         trigger:        function(){
+            // Add a third flavour
             CUSTOMERS.number_flavours = 3;
         }
     },
@@ -106,6 +112,7 @@ const distance_triggers = [
         distance:       40000,
         has_triggered:  false,
         trigger:        function(){
+            // Add large cars
             CUSTOMERS.set_weighting(3,1);
         }
     },
@@ -113,6 +120,7 @@ const distance_triggers = [
         distance:       50000,
         has_triggered:  false,
         trigger:        function(){
+            // Decrease interval between cars
             CUSTOMERS.customer_interval = 1000;
         }
     },
@@ -120,6 +128,7 @@ const distance_triggers = [
         distance:       60000,
         has_triggered:  false,
         trigger:        function(){
+            // Remove smallest car
             CUSTOMERS.set_weighting(0,0);
         }
     }
@@ -386,8 +395,8 @@ display_scores = function(elapsed){
     ctx.fillText(`${efficiency}%` , 1050, 90); 
 
     ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-road.png'),1090,40);
- //   ctx.fillText(`${Math.round(game.distance / game.distance_scale)}m` , 1115, 90);  
-    ctx.fillText(`${Math.round(game.distance)}` , 1115, 90);  
+    ctx.fillText(`${Math.round(game.distance / game.distance_scale)}m` , 1115, 90);  
+ //   ctx.fillText(`${Math.round(game.distance)}` , 1115, 90);  
 
     // Lives
     for(let i=0; i<LIVES.length; i++){
