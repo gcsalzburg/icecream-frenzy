@@ -157,8 +157,6 @@ class Customers{
                 this.customers.push( new Customer(sprite,lane,speed,dims) );
                 this.last_customer_add = game.distance; 
                 this.num_customers++;
-
-                console.log("Add!");
                 break;
             }
         }   
