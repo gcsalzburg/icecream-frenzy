@@ -15,6 +15,8 @@ class Customers{
         this.lanes = [180,278,379,464];
 
         this.weightings = []; //Populated by another function 
+
+        this.number_flavours = 1;
         
         this.customer_data = [
             {

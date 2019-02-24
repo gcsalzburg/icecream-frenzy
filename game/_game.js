@@ -33,7 +33,7 @@ const TRUCK_LANES = 3;
 
 // Score keeping
 const score = {
-    lives: 1,
+    lives: 3,
     orders_placed: 0,
     orders_served: 0,
     orders_not_served: 0,
@@ -45,7 +45,7 @@ const score = {
 // Background music & sounds
 let bg_music = null;
 let bg_music_vol = 0.5;
-const bg_music_endgame_scaler = 0.75; //to reduce volume of end game clip compared to main clip
+const bg_music_endgame_scaler = 0.65; //to reduce volume of end game clip compared to main clip
 const sounds = {
     served:     null,
     dumped:    null,
@@ -82,10 +82,16 @@ const distance_triggers = [
         }
     },
     {
+        distance:       15000,
+        has_triggered:  false,
+        trigger:        function(){
+            CUSTOMERS.number_flavours = 2;
+        }
+    },
+    {
         distance:       20000,
         has_triggered:  false,
         trigger:        function(){
-            CUSTOMERS.set_weighting(3,1);
             CUSTOMERS.customer_interval = 1500;
         }
     },
@@ -93,8 +99,28 @@ const distance_triggers = [
         distance:       30000,
         has_triggered:  false,
         trigger:        function(){
-            CUSTOMERS.set_weighting(0,0);
+            CUSTOMERS.number_flavours = 3;
+        }
+    },
+    {
+        distance:       40000,
+        has_triggered:  false,
+        trigger:        function(){
+            CUSTOMERS.set_weighting(3,1);
+        }
+    },
+    {
+        distance:       50000,
+        has_triggered:  false,
+        trigger:        function(){
             CUSTOMERS.customer_interval = 1000;
+        }
+    },
+    {
+        distance:       60000,
+        has_triggered:  false,
+        trigger:        function(){
+            CUSTOMERS.set_weighting(0,0);
         }
     }
 ];
@@ -360,7 +386,8 @@ display_scores = function(elapsed){
     ctx.fillText(`${efficiency}%` , 1050, 90); 
 
     ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-road.png'),1090,40);
-    ctx.fillText(`${Math.round(game.distance / game.distance_scale)}m` , 1115, 90);  
+ //   ctx.fillText(`${Math.round(game.distance / game.distance_scale)}m` , 1115, 90);  
+    ctx.fillText(`${Math.round(game.distance)}` , 1115, 90);  
 
     // Lives
     for(let i=0; i<LIVES.length; i++){
