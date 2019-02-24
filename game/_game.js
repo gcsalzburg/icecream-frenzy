@@ -131,6 +131,14 @@ const distance_triggers = [
             // Remove smallest car
             CUSTOMERS.set_weighting(0,0);
         }
+    },
+    {
+        distance:       100000,
+        has_triggered:  false,
+        trigger:        function(){
+            // Increase game speed
+            game.target_speed += 200;
+        }
     }
 ];
 
