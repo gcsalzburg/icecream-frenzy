@@ -8,7 +8,7 @@ class Customers{
         this.customers = [];
     
         this.is_open_for_customers = false;
-        this.last_customer_add = 0;
+        this.last_customer_add = -10000; // Silly high so the first customer triggers correctly
         this.customer_interval = 3000;
         this.customer_variance = 200;
 
@@ -155,6 +155,8 @@ class Customers{
                 this.customers.push( new Customer(sprite,lane,speed,dims) );
                 this.last_customer_add = game.distance; 
                 this.num_customers++;
+
+                console.log("Add!");
                 break;
             }
         }   
