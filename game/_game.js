@@ -51,6 +51,9 @@ const sounds = {
     new_order:  null
 }
 
+// End game cones
+let end_cone_srcs = [];
+
 // Handling for game progression events
 const distance_triggers = [
     {
@@ -129,10 +132,13 @@ ASS_MANAGER.setDefaultPath("assets/");
 ASS_MANAGER.queueDownloads(
 
     'ui/life.png',
-    
     'ui/stats-cones.png',
     'ui/stats-dropped.png',
     'ui/stats-road.png',
+
+    'end/death-chocolate.png',
+    'end/death-strawberry.png',
+    'end/death-vanilla.png',
 
     'customers/biker.png',
     'customers/2ppl.png',
@@ -185,6 +191,11 @@ var assets_complete = function(){
     for(let i=0;i<LIVES.length;i++){
         LIVES[i].init(ASS_MANAGER.getAsset('ui/life.png'));
     }
+
+    // End game cones
+    end_cone_srcs[0] = ASS_MANAGER.getAsset('end/death-chocolate.png');
+    end_cone_srcs[1] = ASS_MANAGER.getAsset('end/death-vanilla.png');
+    end_cone_srcs[2] = ASS_MANAGER.getAsset('end/death-strawberry.png');
 
     // Road and decor
     ROAD.src = ASS_MANAGER.getAsset('bg/road.png');
@@ -248,8 +259,9 @@ var assets_complete = function(){
     enable_start();
 
     // FOR TESTING ONLY
-    //   start_game(); 
-    //   toggle_music();
+    start_game(); 
+    toggle_music();
+    generate_end_cones();
 }
 
 var assets_loading = function(success,error,total){
@@ -311,6 +323,10 @@ var render = function (delta, elapsed) {
     CUSTOMERS.render_above(TRUCK.getLane(), elapsed);
 
     display_scores(elapsed);
+
+ //   if(game.is_over){
+        render_end_cones(elapsed);
+ //   }
 };
 
 display_scores = function(elapsed){
@@ -393,6 +409,27 @@ var life_lost = function(){
         console.log("GAME OVER!");
     }
     LIVES[score.lives].end();
+}
+
+
+// /////////////////////////////////
+// // END GAME SCENARIO           //
+// /////////////////////////////////
+
+let end_cones = [];
+
+var generate_end_cones = function(){
+
+    // How many rows of cones
+    for(let i=0; i<20; i++){
+        end_cones.push(new EndCone(end_cone_srcs[rand_int(end_cone_srcs.length)],rand_int(game.w),rand_int(game.h),1));
+    }
+} 
+
+var render_end_cones = function(){
+    end_cones.forEach(c => {
+        c.render();
+    });
 }
 
 
