@@ -92,4 +92,5 @@ check_keys = function(){
 
 var show_highscore_table = function(){
     document.getElementById("highscore_table").style.display = "block";
+    document.getElementById("user_score").innerHTML = "$"+score.dollars;
 }
