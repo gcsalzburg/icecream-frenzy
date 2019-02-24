@@ -52,6 +52,7 @@ const sounds = {
     hurrah:     null,
     new_order:  null
 }
+let bg_music_end = null;
 
 // End game cones
 let end_cone_srcs = [];
@@ -172,6 +173,7 @@ ASS_MANAGER.queueDownloads(
     'sounds/lane_change.mp3',
     'sounds/new_order.mp3',
     'sounds/serve.mp3',
+    'sounds/endgame.mp3',
 
     'bg/road.png',
     'bg/cactus_1.png',
@@ -260,6 +262,7 @@ var assets_complete = function(){
     sounds.lane = ASS_MANAGER.getAsset('sounds/lane_change.mp3');
     sounds.new_order = ASS_MANAGER.getAsset('sounds/new_order.mp3');
     sounds.hurrah = ASS_MANAGER.getAsset('sounds/customer_served.mp3');
+    bg_music_end = ASS_MANAGER.getAsset('sounds/endgame.mp3');
 
     // Can start game once assets are loaded
     game.can_start = true;
@@ -412,8 +415,15 @@ var life_lost = function(){
         generate_end_cones(); // Create the array of end cones we will show shortly
 
         game.target_speed = 0;
+
+        bg_music.pause();
+        bg_music_end.volume = bg_music_vol;
+        bg_music_end.loop = false;
+        bg_music_end.play();
+
         setTimeout(function(){
             game.is_over = true;
+
         },3000);
 
         console.log("GAME OVER!");
