@@ -120,3 +120,55 @@ canvas{
 .special_buttons a:hover{
     background-color: #cb4577;
 }
+
+/* HIGH SCORE TABLE */
+
+.highscore_table{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: 50px;
+    background-color: #F9E6B3;
+    z-index: 40;
+    font-family: 'VT323', monospace;
+    display:none;
+}
+.highscore_table h1{
+    color: #444;
+    text-transform: uppercase;
+    font-size: 3em;
+    text-align: center;
+}
+.highscore_table form{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.highscore_table .score{
+    font-size: 2.9em;
+    padding: 0 15px;
+    height: 40px;
+    line-height: 40px;
+}
+.highscore_table .input_box{
+    height: 40px;
+    border: 2px solid #666;
+    background: none;
+    padding: 0 15px;
+    font-size: 1.8em;
+    font-family: 'VT323', monospace;
+}
+.highscore_table .submit_button{
+    height: 40px;
+    background-color: #ffca12;
+    font-size: 1.4em;
+    color: #474A4B;
+    font-family: 'VT323', monospace;
+    border: none;
+    margin: 0 8px;
+    padding: 0 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+}

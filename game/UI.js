@@ -28,10 +28,6 @@ var crazy = document.getElementById('crazy_mode').addEventListener('click',funct
     CUSTOMERS.customer_interval = 100;
 });
 
-// /////////////////////////////////
-// // KEYBOARD HANDLING           //
-// /////////////////////////////////
-
 var keysDown = {};
 var keysUp = {};
 
@@ -87,4 +83,13 @@ check_keys = function(){
         toggle_music();
     }
 
+}
+
+
+// /////////////////////////////////
+// // HIGH SCORE TABLE            //
+// /////////////////////////////////
+
+var show_highscore_table = function(){
+    document.getElementById("highscore_table").style.display = "block";
 }

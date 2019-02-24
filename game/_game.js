@@ -45,6 +45,7 @@ const score = {
 // Background music & sounds
 let bg_music = null;
 let bg_music_vol = 0.5;
+const bg_music_endgame_scaler = 0.75; //to reduce volume of end game clip compared to main clip
 const sounds = {
     served:     null,
     dumped:    null,
@@ -414,21 +415,25 @@ var life_lost = function(){
 
         generate_end_cones(); // Create the array of end cones we will show shortly
 
+        // Slow game to a stop
         game.target_speed = 0;
 
+        // Stop background music, play end music
         bg_music.pause();
-        bg_music_end.volume = bg_music_vol;
+        bg_music_end.volume = bg_music_vol*bg_music_endgame_scaler;
         bg_music_end.loop = false;
         bg_music_end.play();
 
+        // Trigger cones to show and highscore table
         setTimeout(function(){
             game.is_over = true;
-
         },3000);
-
-        console.log("GAME OVER!");
+        setTimeout(function(){
+            show_highscore_table();
+        },8000);
+    }else{
+        LIVES[score.lives].end();
     }
-    LIVES[score.lives].end();
 }
 
 
