@@ -98,28 +98,87 @@ var show_highscore_table = function(){
     document.getElementById("highscore_table").style.display = "block";
     document.getElementById("user_score").innerHTML = "$"+score.dollars;
     fetch_highscores();
+
+    document.getElementById("score_form").addEventListener("submit",function(e){
+        e.preventDefault();
+        send_score();
+    });
 }
 
+var send_score = function(){
 
-
-function getAjax(url, success) {
-    var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    xhr.open('GET', url);
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState>3 && xhr.status==200) success(xhr.responseText);
+    var stats = {
+        orders_placed: score.orders_placed,
+        orders_served: score.orders_served,
+        orders_not_served: score.orders_not_served,
+        icecream_served: score.icecream_served,
+        iceream_wasted: score.icecream_wasted,
+        mode: 0,
+        distance: game.distance
     };
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xhr.send();
-    return xhr;
+
+    postAjax(
+        'https://scores.designedbycave.co.uk/a/iCPF6psu6iZULoMYKnZq/',
+        {
+            score: score.dollars,
+            user: document.getElementById("name").value,
+            stats: JSON.stringify(stats)
+        },
+        function(data){
+            console.log(data);
+            try{
+                var json = JSON.parse(data);
+                if(!json.error){
+                    var form = document.getElementById('score_form');
+                    form.parentNode.removeChild(form);
+                    fetch_highscores();
+                }
+            }catch{
+                console.log("Score response parse error");
+            }
+        }
+    );
 }
+
 
 var fetch_highscores = function(){
-    getAjax('https://scores.designedbycave.co.uk/f/iCPF6psu6iZULoMYKnZq/', function(data){
+    getCORS('https://scores.designedbycave.co.uk/f/iCPF6psu6iZULoMYKnZq/', function(request){
+        var data = request.currentTarget.response || request.target.responseText;
         try{
             var json = JSON.parse(data);
-            console.log(json); 
+            document.getElementById("score_table").innerHTML = '';
+            json.scores.forEach(row => {
+                document.getElementById("score_table").innerHTML += `<div class="entry"><span class="name">${row.user}</span><span class="score">$${row.score}</span></div>`;
+            });
         }catch{
             console.log("Highscore table parse error");
         }
     });
+}
+
+
+
+function getCORS(url, success) {
+    var xhr = new XMLHttpRequest();
+    if (!('withCredentials' in xhr)) xhr = new XDomainRequest();
+    xhr.open('GET', url);
+    xhr.onload = success;
+    xhr.send();
+    return xhr;
+}
+
+function postAjax(url, data, success) {
+    var params = typeof data == 'string' ? data : Object.keys(data).map(
+            function(k){ return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]) }
+        ).join('&');
+
+    var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+    xhr.open('POST', url);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState>3 && xhr.status==200) { success(xhr.responseText); }
+    };
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(params);
+    return xhr;
 }

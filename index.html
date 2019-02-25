@@ -12,11 +12,13 @@
             <div class="inner_wrap">
                 <div class="highscore_table" id="highscore_table">
                     <h1>High scores</h1>
-                    <form method="post" action="https://scores.designedbycave.co.uk/a/iCPF6psu6iZULoMYKnZq/">
-                        <div class="score" id="user_score">$?</div>
+                    <form method="post" action="https://scores.designedbycave.co.uk/a/iCPF6psu6iZULoMYKnZq/" id="score_form">
+                        <div class="user_score" id="user_score">$?</div>
                         <input name="user" type="text" id="name" class="input_box" placeholder="Enter your name">
+                        <input name="score" type="hidden" id="score" value="150">
                         <input type="submit" id="submit" class="submit_button" value="Add Highscore">
                     </form>
+                    <div class="score_table" id="score_table"></div>
                 </div>
                 <div class="intro" id="intro">
                     <h1>ice cream frenzy</h1>
