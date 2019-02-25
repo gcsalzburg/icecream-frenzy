@@ -82,6 +82,10 @@ check_keys = function(){
         delete keysUp[77];
         toggle_music();
     }
+    if(76 in keysUp){ // LETTER L
+        delete keysUp[76];
+        life_lost();
+    }
 
 }
 
@@ -93,4 +97,29 @@ check_keys = function(){
 var show_highscore_table = function(){
     document.getElementById("highscore_table").style.display = "block";
     document.getElementById("user_score").innerHTML = "$"+score.dollars;
+    fetch_highscores();
+}
+
+
+
+function getAjax(url, success) {
+    var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    xhr.open('GET', url);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState>3 && xhr.status==200) success(xhr.responseText);
+    };
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    xhr.send();
+    return xhr;
+}
+
+var fetch_highscores = function(){
+    getAjax('https://scores.designedbycave.co.uk/f/iCPF6psu6iZULoMYKnZq/', function(data){
+        try{
+            var json = JSON.parse(data);
+            console.log(json); 
+        }catch{
+            console.log("Highscore table parse error");
+        }
+    });
 }
