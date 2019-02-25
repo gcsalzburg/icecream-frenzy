@@ -454,7 +454,10 @@ var customer_not_fed = function(){
 }
 
 var life_lost = function(){
+
     score.lives--;
+    LIVES[score.lives].end();
+
     if(score.lives <= 0){
 
         generate_end_cones(); // Create the array of end cones we will show shortly
@@ -475,8 +478,6 @@ var life_lost = function(){
         setTimeout(function(){
             show_highscore_table();
         },8000);
-    }else{
-        LIVES[score.lives].end();
     }
 }
 
