@@ -171,6 +171,19 @@ class Customers{
         for (var i = 0; i < this.num_customers; i++) {
             var c = this.customers[i];
             c.update(modifier);
+
+            // Shuffle back a little to avoid overlaps
+            // Get max customer pos
+            let buffer_width = -3; // min space between traffic
+            let max_pos = - 10000;
+            for (var j=0; j < i; j++){
+                if(this.customers[j].getLane() == c.getLane()){
+                    max_pos = this.customers[j].getPos()+this.customers[j].getWidth();
+                }
+            }
+            if(max_pos+buffer_width > c.getPos()){
+                c.setPos(max_pos+buffer_width);
+            }
     
             // Remove customers we have finished with
             if(c.isFinished() && game.is_playing){
