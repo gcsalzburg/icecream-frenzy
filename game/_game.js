@@ -138,7 +138,23 @@ const distance_triggers = [
         has_triggered:  false,
         trigger:        function(){
             // Increase game speed
-            game.target_speed += 200;
+            game.target_speed += 50;
+        }
+    },
+    {
+        distance:       110000,
+        has_triggered:  false,
+        trigger:        function(){
+            // Increase game speed
+            game.target_speed += 50;
+        }
+    },
+    {
+        distance:       120000,
+        has_triggered:  false,
+        trigger:        function(){
+            // Increase game speed
+            game.target_speed += 50;
         }
     }
 ];
