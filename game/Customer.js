@@ -13,7 +13,7 @@ class Customer{
         this._dims = dims;
 
         this.serving_pos = {
-            start:  114,
+            start:  140,
             end:    -this._src_ani.width()+40
         };
     
