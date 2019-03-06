@@ -62,6 +62,12 @@ class Customer{
     getPos(){
         return this._pos;
     }
+    getWidth(){
+        return this._src_ani.width();
+    }
+    setPos(pos){
+        return this._pos = pos;
+    }
     
     render(elapsed){
     
