@@ -168,7 +168,7 @@ const distance_triggers = [
             has_triggered:  false,
             trigger:        function(){
                 CUSTOMERS.is_open_for_customers = true;     // Open for serving!
-                CUSTOMERS.customer_interval = 100;          // Reduce interval
+                CUSTOMERS.customer_interval = 150;          // Reduce interval
                 CUSTOMERS.number_flavours = 3;              // Add all flavours
                 CUSTOMERS.set_weighting(3,1);               // Enable large cars
             }
