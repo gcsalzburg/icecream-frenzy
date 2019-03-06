@@ -7,7 +7,7 @@
 // Start button
 
 var play_btn = document.getElementById('play');
-var play_crazy_btn = document.getElementById('play');
+var play_crazy_btn = document.getElementById('play_crazy');
 // attach anonymous function to click event
 play_btn.addEventListener('click', function(e){
     e.preventDefault();
@@ -24,8 +24,8 @@ play_crazy_btn.addEventListener('click', function(e){
 });
 
 var enable_start = function(){
-    var bar = document.getElementById("play");
-    bar.classList.remove("disabled");
+    play_btn.classList.remove("disabled");
+    play_crazy_btn.classList.remove("disabled");
 }
 
 // Special buttons
