@@ -26,6 +26,7 @@ play_crazy_btn.addEventListener('click', function(e){
 var enable_start = function(){
     play_btn.classList.remove("disabled");
     play_crazy_btn.classList.remove("disabled");
+    play_btn.focus();
 }
 
 // Keyboard handling
