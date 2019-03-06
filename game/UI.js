@@ -6,11 +6,19 @@
 
 // Start button
 
-var el = document.getElementById('play');
+var play_btn = document.getElementById('play');
+var play_crazy_btn = document.getElementById('play');
 // attach anonymous function to click event
-el.addEventListener('click', function(e){
+play_btn.addEventListener('click', function(e){
     e.preventDefault();
     if(game.can_start){
+        start_game();   
+    }
+});
+play_crazy_btn.addEventListener('click', function(e){
+    e.preventDefault();
+    if(game.can_start){
+        game.mode = 1;
         start_game();   
     }
 });
