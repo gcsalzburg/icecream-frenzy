@@ -28,13 +28,7 @@ var enable_start = function(){
     play_crazy_btn.classList.remove("disabled");
 }
 
-// Special buttons
-
-var crazy = document.getElementById('crazy_mode').addEventListener('click',function(e){
-    e.preventDefault();
-    console.log("Enabled crazy mode!");
-    CUSTOMERS.customer_interval = 100;
-});
+// Keyboard handling
 
 var keysDown = {};
 var keysUp = {};
