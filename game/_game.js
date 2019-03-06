@@ -23,8 +23,9 @@ const game = {
     accel:          300,  // pixels per second^2
 
     is_muted:       false,
-    is_over:        false,
+    is_playing:     false,
 
+    is_over:        false,  // Used for end game cones
     game_over_time: 0
 }
 
@@ -460,6 +461,9 @@ var life_lost = function(){
 
     if(score.lives <= 0){
 
+        // End game activity
+        game.is_playing = false;
+
         generate_end_cones(); // Create the array of end cones we will show shortly
 
         // Slow game to a stop
@@ -676,6 +680,7 @@ var start_game = function () {
 
     then = performance.now();
     game.start_time = then;
+    game.is_playing = true;
     main();
 }
 

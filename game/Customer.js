@@ -136,15 +136,17 @@ class Customer{
 
         // Fetch game speed and adjust based upon this
         this._pos += (this._speed-game.speed)*modifier;
-    
-        if(this._pos <= -this._src_ani.w){
-            this._is_finished = true;
-        }
-    
-        if( (this._pos <= this._dims.ordering_pos) && (!this._is_ordering)){
-            this._is_ordering = true;
-            new Sound(sounds.new_order).play();
-            score.orders_placed ++;
+
+        if(!game.is_over){
+            if(this._pos <= -this._src_ani.w){
+                this._is_finished = true;
+            }
+        
+            if( (this._pos <= this._dims.ordering_pos) && (!this._is_ordering)){
+                this._is_ordering = true;
+                new Sound(sounds.new_order).play();
+                score.orders_placed ++;
+            }
         }
     }
     

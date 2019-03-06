@@ -55,26 +55,32 @@ check_keys = function(){
     }
     if(49 in keysDown){ // NUMBER 1
         delete keysDown[49];
-        if(CUSTOMERS.serve(TRUCK.getLane(),0)){
-            ic_served();
-        }else{
-            ic_wasted();
+        if(!game.is_over){
+            if(CUSTOMERS.serve(TRUCK.getLane(),0)){
+                ic_served();
+            }else{
+                ic_wasted();
+            }
         }
     }
     if(50 in keysDown){ // NUMBER 2
         delete keysDown[50];
-        if(CUSTOMERS.serve(TRUCK.getLane(),1)){
-            ic_served();
-        }else{
-            ic_wasted();
+        if(!game.is_over){
+            if(CUSTOMERS.serve(TRUCK.getLane(),1)){
+                ic_served();
+            }else{
+                ic_wasted();
+            }
         }
     }
     if(51 in keysDown){ // NUMBER 3
         delete keysDown[51];
-        if(CUSTOMERS.serve(TRUCK.getLane(),2)){
-            ic_served();
-        }else{
-            ic_wasted();
+        if(!game.is_over){
+            if(CUSTOMERS.serve(TRUCK.getLane(),2)){
+                ic_served();
+            }else{
+                ic_wasted();
+            }
         }
     }
 

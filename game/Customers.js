@@ -124,7 +124,7 @@ class Customers{
     }
     
     check_for_customers(){
-        if(this.is_open_for_customers){
+        if(this.is_open_for_customers && !game.is_over){
             if(game.distance > (this.last_customer_add + this.customer_interval)){
                 this.add();
             }
@@ -173,7 +173,7 @@ class Customers{
             c.update(modifier);
     
             // Remove customers we have finished with
-            if(c.isFinished()){
+            if(c.isFinished() && !game.is_over){
                 if(!c.isFed()){
                     // Didn't feed them all!
                     customer_not_fed();
