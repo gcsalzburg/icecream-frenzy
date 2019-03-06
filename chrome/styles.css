@@ -92,6 +92,10 @@ canvas{
     margin-left: 10px;
     font-size: 22px;
     padding: 8px 20px;
+    background-color: #ECB0C8;
+}
+.intro .play_crazy:hover{
+    background-color: #F3CFDE;
 }
 .intro .bar{
     height:100%;
