@@ -55,7 +55,7 @@ check_keys = function(){
     }
     if(49 in keysDown){ // NUMBER 1
         delete keysDown[49];
-        if(!game.is_over){
+        if(game.is_playing){
             if(CUSTOMERS.serve(TRUCK.getLane(),0)){
                 ic_served();
             }else{
@@ -65,7 +65,7 @@ check_keys = function(){
     }
     if(50 in keysDown){ // NUMBER 2
         delete keysDown[50];
-        if(!game.is_over){
+        if(game.is_playing){
             if(CUSTOMERS.serve(TRUCK.getLane(),1)){
                 ic_served();
             }else{
@@ -75,7 +75,7 @@ check_keys = function(){
     }
     if(51 in keysDown){ // NUMBER 3
         delete keysDown[51];
-        if(!game.is_over){
+        if(game.is_playing){
             if(CUSTOMERS.serve(TRUCK.getLane(),2)){
                 ic_served();
             }else{

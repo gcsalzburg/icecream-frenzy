@@ -137,7 +137,7 @@ class Customer{
         // Fetch game speed and adjust based upon this
         this._pos += (this._speed-game.speed)*modifier;
 
-        if(!game.is_over){
+        if(game.is_playing){
             if(this._pos <= -this._src_ani.w){
                 this._is_finished = true;
             }
