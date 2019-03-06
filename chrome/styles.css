@@ -37,15 +37,14 @@ canvas{
     left: 0;
     top: 0;
     right: 0;
-    bottom: 0;
     font-family: 'VT323', monospace;
     background-color:#F6E7B8;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    flex-wrap: wrap;
     z-index:20;
-    padding: 0 0 100px 800px;
+    padding: 200px 0 100px 800px;
 }
 .intro h1{
     font-size: 50px;
@@ -88,6 +87,11 @@ canvas{
     cursor:default;
     opacity:0.5;
     color: #474A4B;
+}
+.intro .play_crazy{
+    margin-left: 10px;
+    font-size: 22px;
+    padding: 8px 20px;
 }
 .intro .bar{
     height:100%;
