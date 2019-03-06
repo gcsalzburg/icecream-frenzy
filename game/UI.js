@@ -56,8 +56,8 @@ check_keys = function(){
         TRUCK.change_lane(1);
         new Sound(sounds.lane).play();
     }
-    if(49 in keysDown){ // NUMBER 1
-        delete keysDown[49];
+    if(86 in keysDown){ // LETTER V
+        delete keysDown[86];
         if(game.is_playing){
             if(CUSTOMERS.serve(TRUCK.getLane(),0)){
                 ic_served();
@@ -66,8 +66,8 @@ check_keys = function(){
             }
         }
     }
-    if(50 in keysDown){ // NUMBER 2
-        delete keysDown[50];
+    if(67 in keysDown){ // LETTER C
+        delete keysDown[67];
         if(game.is_playing){
             if(CUSTOMERS.serve(TRUCK.getLane(),1)){
                 ic_served();
@@ -76,8 +76,8 @@ check_keys = function(){
             }
         }
     }
-    if(51 in keysDown){ // NUMBER 3
-        delete keysDown[51];
+    if(83 in keysDown){ // LETTER S
+        delete keysDown[83];
         if(game.is_playing){
             if(CUSTOMERS.serve(TRUCK.getLane(),2)){
                 ic_served();
