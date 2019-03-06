@@ -13,6 +13,8 @@ const game = {
     h:              694,
     distance:       0,
     distance_scale: 50,   // pixels -> metres conversion (can be anything, just should be sensible and consistent)
+
+    mode:           0,
     
     can_start:      false,
     start_time:     0,
@@ -61,102 +63,117 @@ let end_cone_srcs = [];
 
 // Handling for game progression events
 const distance_triggers = [
-    {
-        distance:       1000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Open for serving!
-            CUSTOMERS.is_open_for_customers = true;
+    [
+        // Normal mode game triggers
+        {
+            distance:       1000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Open for serving!
+                CUSTOMERS.is_open_for_customers = true;
+            }
+        },
+        {
+            distance:       5000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Decrease interval between customers
+                CUSTOMERS.customer_interval = 2000;
+            }
+        },
+        {
+            distance:       10000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Introduce mid-sized cars
+                CUSTOMERS.set_weighting(2,1);
+            }
+        },
+        {
+            distance:       15000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Add a second flavour
+                CUSTOMERS.number_flavours = 2;
+            }
+        },
+        {
+            distance:       20000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Decrease interval between customers
+                CUSTOMERS.customer_interval = 1500;
+            }
+        },
+        {
+            distance:       30000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Add a third flavour
+                CUSTOMERS.number_flavours = 3;
+            }
+        },
+        {
+            distance:       40000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Add large cars
+                CUSTOMERS.set_weighting(3,1);
+            }
+        },
+        {
+            distance:       50000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Decrease interval between cars
+                CUSTOMERS.customer_interval = 1000;
+            }
+        },
+        {
+            distance:       60000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Remove smallest car
+                CUSTOMERS.set_weighting(0,0);
+            }
+        },
+        {
+            distance:       100000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Increase game speed
+                game.target_speed += 50;
+            }
+        },
+        {
+            distance:       110000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Increase game speed
+                game.target_speed += 50;
+            }
+        },
+        {
+            distance:       120000,
+            has_triggered:  false,
+            trigger:        function(){
+                // Increase game speed
+                game.target_speed += 50;
+            }
         }
-    },
-    {
-        distance:       5000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Decrease interval between customers
-            CUSTOMERS.customer_interval = 2000;
+    ],[
+        // Crazy mode game triggers
+        {
+            distance:       1000,
+            has_triggered:  false,
+            trigger:        function(){
+                CUSTOMERS.is_open_for_customers = true;     // Open for serving!
+                CUSTOMERS.customer_interval = 100;          // Reduce interval
+                CUSTOMERS.number_flavours = 3;              // Add all flavours
+                CUSTOMERS.set_weighting(3,1);               // Enable large cars
+            }
         }
-    },
-    {
-        distance:       10000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Introduce mid-sized cars
-            CUSTOMERS.set_weighting(2,1);
-        }
-    },
-    {
-        distance:       15000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Add a second flavour
-            CUSTOMERS.number_flavours = 2;
-        }
-    },
-    {
-        distance:       20000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Decrease interval between customers
-            CUSTOMERS.customer_interval = 1500;
-        }
-    },
-    {
-        distance:       30000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Add a third flavour
-            CUSTOMERS.number_flavours = 3;
-        }
-    },
-    {
-        distance:       40000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Add large cars
-            CUSTOMERS.set_weighting(3,1);
-        }
-    },
-    {
-        distance:       50000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Decrease interval between cars
-            CUSTOMERS.customer_interval = 1000;
-        }
-    },
-    {
-        distance:       60000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Remove smallest car
-            CUSTOMERS.set_weighting(0,0);
-        }
-    },
-    {
-        distance:       100000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Increase game speed
-            game.target_speed += 50;
-        }
-    },
-    {
-        distance:       110000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Increase game speed
-            game.target_speed += 50;
-        }
-    },
-    {
-        distance:       120000,
-        has_triggered:  false,
-        trigger:        function(){
-            // Increase game speed
-            game.target_speed += 50;
-        }
-    }
+    ]
 ];
 
 // /////////////////////////////////
@@ -364,8 +381,8 @@ var update = function (delta, elapsed) {
     game.distance += game.speed*delta; // v = s/t
 
     // Check distance triggers
-    for (var i = 0; i < distance_triggers.length; i++) {
-        var trigger = distance_triggers[i];
+    for (var i = 0; i < distance_triggers[game.mode].length; i++) {
+        var trigger = distance_triggers[game.mode][i];
         if(!trigger.has_triggered){
             if(game.distance > trigger.distance){
                 trigger.trigger();
@@ -420,12 +437,13 @@ display_scores = function(elapsed){
     ctx.fillText(`${efficiency}%` , 1050, 90); 
 
     ctx.drawImage(ASS_MANAGER.getAsset('ui/stats-road.png'),1090,40);
-    ctx.fillText(`${Math.round(game.distance / game.distance_scale)}m` , 1115, 90);  
- //   ctx.fillText(`${Math.round(game.distance)}` , 1115, 90);  
+    ctx.fillText(`${Math.round(game.distance / game.distance_scale)}m` , 1115, 90); 
 
     // Lives
-    for(let i=0; i<LIVES.length; i++){
-        LIVES[i].render(elapsed);
+    if(game.mode === 0){
+        for(let i=0; i<LIVES.length; i++){
+            LIVES[i].render(elapsed);
+        }
     }
     
     // Main score
@@ -472,32 +490,34 @@ var customer_not_fed = function(){
 
 var life_lost = function(){
 
-    score.lives--;
-    LIVES[score.lives].end();
-
-    if(score.lives <= 0){
-
-        // End game activity
-        game.is_playing = false;
-
-        generate_end_cones(); // Create the array of end cones we will show shortly
-
-        // Slow game to a stop
-        game.target_speed = 0;
-
-        // Stop background music, play end music
-        bg_music.pause();
-        bg_music_end.volume = bg_music_vol*bg_music_endgame_scaler;
-        bg_music_end.loop = false;
-        bg_music_end.play();
-
-        // Trigger cones to show and highscore table
-        setTimeout(function(){
-            game.is_over = true;
-        },3000);
-        setTimeout(function(){
-            show_highscore_table();
-        },8000);
+    if(game.mode === 0){
+        score.lives--;
+        LIVES[score.lives].end();
+    
+        if(score.lives <= 0){
+    
+            // End game activity
+            game.is_playing = false;
+    
+            generate_end_cones(); // Create the array of end cones we will show shortly
+    
+            // Slow game to a stop
+            game.target_speed = 0;
+    
+            // Stop background music, play end music
+            bg_music.pause();
+            bg_music_end.volume = bg_music_vol*bg_music_endgame_scaler;
+            bg_music_end.loop = false;
+            bg_music_end.play();
+    
+            // Trigger cones to show and highscore table
+            setTimeout(function(){
+                game.is_over = true;
+            },3000);
+            setTimeout(function(){
+                show_highscore_table();
+            },8000);
+        }
     }
 }
 
