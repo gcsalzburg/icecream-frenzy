@@ -31,6 +31,8 @@ const game = {
     game_over_time: 0
 }
 
+const CRAZY_MODE_DURATION = 60;
+
 const NUM_LANES = 4;
 const TRUCK_LANES = 3;
 
@@ -367,6 +369,13 @@ var update = function (delta, elapsed) {
 
     // TODO: Check sequencing of functions in this update() call
 
+    // Check if game is over
+    if(game.mode === 1){
+        if(performance.now()-game.start_time > (CRAZY_MODE_DURATION*1000)){
+            game_over();
+        }
+    }
+
     // Check keyboard
     check_keys();
 
@@ -451,13 +460,25 @@ display_scores = function(elapsed){
     ctx.textAlign = "left";
     var score_disp = `$${score.dollars}`;
     ctx.fillText(score_disp, 25,20);
-
+    
 
 	// FPS
 	ctx.font = "8px Helvetica";
 	ctx.textAlign = "right";
 	ctx.textBaseline = "top";
-    ctx.fillText(`FPS: ${fps.current}`, 1170, 10);    
+    ctx.fillText(`FPS: ${fps.current}`, 1170, 10); 
+
+    // Timer
+    if(game.mode === 1){
+        ctx.fillStyle = "rgb(12, 105, 182)";
+        let timer_left = CRAZY_MODE_DURATION-Math.round((performance.now()-game.start_time)/10)/100;
+        if(timer_left)
+        ctx.font = "35px VT323";
+        ctx.textAlign = "left";
+        var score_disp = `${timer_left.toFixed(2)}s`;
+        ctx.fillText(score_disp, 25,90);
+    }
+   
 }
 
 // /////////////////////////////////
@@ -496,27 +517,7 @@ var life_lost = function(){
     
         if(score.lives <= 0){
     
-            // End game activity
-            game.is_playing = false;
-    
-            generate_end_cones(); // Create the array of end cones we will show shortly
-    
-            // Slow game to a stop
-            game.target_speed = 0;
-    
-            // Stop background music, play end music
-            bg_music.pause();
-            bg_music_end.volume = bg_music_vol*bg_music_endgame_scaler;
-            bg_music_end.loop = false;
-            bg_music_end.play();
-    
-            // Trigger cones to show and highscore table
-            setTimeout(function(){
-                game.is_over = true;
-            },3000);
-            setTimeout(function(){
-                show_highscore_table();
-            },8000);
+           game_over();
         }
     }
 }
@@ -527,6 +528,30 @@ var life_lost = function(){
 // /////////////////////////////////
 
 let end_cones = []; // array to store end state cones in
+
+var game_over = function(){
+    // End game activity
+    game.is_playing = false;
+
+    generate_end_cones(); // Create the array of end cones we will show shortly
+
+    // Slow game to a stop
+    game.target_speed = 0;
+
+    // Stop background music, play end music
+    bg_music.pause();
+    bg_music_end.volume = bg_music_vol*bg_music_endgame_scaler;
+    bg_music_end.loop = false;
+    bg_music_end.play();
+
+    // Trigger cones to show and highscore table
+    setTimeout(function(){
+        game.is_over = true;
+    },3000);
+    setTimeout(function(){
+        show_highscore_table();
+    },8000);   
+}
 
 // Generator for random cone positions
 var generate_end_cones = function(){
