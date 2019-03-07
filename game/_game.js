@@ -31,7 +31,7 @@ const game = {
     game_over_time: 0
 }
 
-const CRAZY_MODE_DURATION = 8; // in seconds
+const CRAZY_MODE_DURATION = 60; // in seconds
 
 const NUM_LANES = 4;
 const TRUCK_LANES = 3;
