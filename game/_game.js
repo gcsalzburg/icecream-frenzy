@@ -31,7 +31,7 @@ const game = {
     game_over_time: 0
 }
 
-const CRAZY_MODE_DURATION = 60;
+const CRAZY_MODE_DURATION = 8; // in seconds
 
 const NUM_LANES = 4;
 const TRUCK_LANES = 3;
@@ -370,7 +370,7 @@ var update = function (delta, elapsed) {
     // TODO: Check sequencing of functions in this update() call
 
     // Check if game is over
-    if(game.mode === 1){
+    if((game.mode === 1)&&(game.is_playing)){
         if(performance.now()-game.start_time > (CRAZY_MODE_DURATION*1000)){
             game_over();
         }
@@ -470,10 +470,15 @@ display_scores = function(elapsed){
 
     // Timer
     if(game.mode === 1){
-        ctx.fillStyle = "rgb(12, 105, 182)";
         let timer_left = CRAZY_MODE_DURATION-Math.round((performance.now()-game.start_time)/10)/100;
-        if(timer_left)
+        ctx.fillStyle = "rgb(12, 105, 182)";
         ctx.font = "35px VT323";
+        if(timer_left < 5){
+            ctx.fillStyle = "rgb(227, 51, 68)";
+        }
+        if(timer_left < 0){
+            timer_left = 0;
+        }
         ctx.textAlign = "left";
         var score_disp = `${timer_left.toFixed(2)}s`;
         ctx.fillText(score_disp, 25,90);
