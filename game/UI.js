@@ -152,15 +152,25 @@ var send_score = function(){
 var fetch_highscores = function(){
     getCORS('https://scores.designedbycave.co.uk/f/iCPF6psu6iZULoMYKnZq/?mode='+game.mode+'&stats=icecream_served,icecream_wasted,distance', function(request){
         var data = request.currentTarget.response || request.target.responseText;
-        try{
+     //   try{
             var json = JSON.parse(data);
-            document.getElementById("score_table").innerHTML = '';
             json.scores.forEach(row => {
-                document.getElementById("score_table").innerHTML += `<div class="entry"><span class="name">${row.user}</span><span class="score">$${row.score}</span></div>`;
+                
+                let efficiency = Math.round(1000*(row.icecream_served / (row.icecream_served+row.icecream_wasted)))/10;
+                if(isNaN(efficiency)){
+                    efficiency = 100;
+                }
+                document.getElementById("score_table_tbl").getElementsByTagName('tbody')[0].innerHTML += `<tr>
+                    <td>${row.user}</td>
+                    <td>$${row.score}</td>
+                    <td>${row.icecream_served}</td>
+                    <td>${efficiency}%</td>
+                    <td>${Math.round(row.distance/game.distance_scale)}m</td>
+                </tr>`;
             });
-        }catch{
-            console.log("Highscore table parse error");
-        }
+      //  }catch{
+      //      console.log("Highscore table parse error");
+      //  }
     });
 }
 

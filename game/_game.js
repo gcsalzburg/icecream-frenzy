@@ -516,7 +516,7 @@ var customer_not_fed = function(){
 
 var life_lost = function(){
 
-    if(game.mode === 0){
+    if((game.mode === 0) && game.is_playing){
         score.lives--;
         LIVES[score.lives].end();
     
