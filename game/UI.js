@@ -122,7 +122,7 @@ var send_score = function(){
         orders_not_served: score.orders_not_served,
         icecream_served: score.icecream_served,
         icecream_wasted: score.icecream_wasted,
-        mode: 0,
+        mode: game.mode,
         distance: game.distance
     };
 
