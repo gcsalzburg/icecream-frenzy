@@ -549,6 +549,9 @@ var game_over = function(){
     bg_music_end.loop = false;
     bg_music_end.play();
 
+    // Fetch highscores now
+    fetch_highscores();
+
     // Trigger cones to show and highscore table
     setTimeout(function(){
         game.is_over = true;

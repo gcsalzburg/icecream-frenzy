@@ -106,7 +106,6 @@ check_keys = function(){
 var show_highscore_table = function(){
     document.getElementById("highscore_table").style.display = "block";
     document.getElementById("user_score").innerHTML = "$"+score.dollars;
-    fetch_highscores();
 
     document.getElementById("score_form").addEventListener("submit",function(e){
         e.preventDefault();
@@ -151,7 +150,7 @@ var send_score = function(){
 
 
 var fetch_highscores = function(){
-    getCORS('https://scores.designedbycave.co.uk/f/iCPF6psu6iZULoMYKnZq/', function(request){
+    getCORS('https://scores.designedbycave.co.uk/f/iCPF6psu6iZULoMYKnZq/?mode='+game.mode+'&stats=icecream_served,icecream_wasted,distance', function(request){
         var data = request.currentTarget.response || request.target.responseText;
         try{
             var json = JSON.parse(data);
