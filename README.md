@@ -2,7 +2,9 @@
 
 ## ICE CREAM FRENZY
 
-Play the game here: https://www.designedbycave.co.uk/icecream-frenzy/
+In a future filled with autonomous vehicles, we all still need our ice cream. Take control of a self-contained, autonomous, lane-splitting ice cream truck and serve creamy smooth soft-serve cones to the expectant commuters.
+
+### **PLAY HERE:** https://www.designedbycave.co.uk/icecream-frenzy/
 
 ![Screenshot](https://www.designedbycave.co.uk/icecream-frenzy/docs/screenshot.png)
 
@@ -12,6 +14,17 @@ Play the game here: https://www.designedbycave.co.uk/icecream-frenzy/
 | --- | --- |
 | ⬆️ | Shift lane up |
 | ⬇️ | Shift lane down |
-| 1️⃣ | Vanilla |
-| 2️⃣ | Chocolate |
-| 3️⃣ | Strawberry |
+| **V** | Vanilla |
+| **C** | Chocolate |
+| **S** | Strawberry |
+
+## Credits
+
+- George - programming and game design
+- Ben - graphics & concept
+- Jack - graphics & concept
+- Doug - sounds
+
+## Dependencies
+
+**NONE**
