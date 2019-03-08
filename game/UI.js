@@ -133,13 +133,12 @@ var send_score = function(){
             stats: JSON.stringify(stats)
         },
         function(data){
-            console.log(data);
             try{
                 var json = JSON.parse(data);
                 if(!json.error){
                     var form = document.getElementById('score_form');
                     form.parentNode.removeChild(form);
-                    fetch_highscores();
+                    fetch_highscores(parseInt(json.my_row));
                 }
             }catch{
                 console.log("Score response parse error");
@@ -149,7 +148,7 @@ var send_score = function(){
 }
 
 
-var fetch_highscores = function(){
+var fetch_highscores = function(my_row){
     getCORS('https://scores.designedbycave.co.uk/f/iCPF6psu6iZULoMYKnZq/?mode='+game.mode+'&stats=icecream_served,icecream_wasted,distance', function(request){
         var data = request.currentTarget.response || request.target.responseText;
         try{
@@ -163,7 +162,11 @@ var fetch_highscores = function(){
                 if(isNaN(efficiency)){
                     efficiency = 100;
                 }
-                document.getElementById("score_table_tbl").getElementsByTagName('tbody')[0].innerHTML += `<tr>
+                let classname = "";
+                if((my_row>0) && (my_row == parseInt(row.id))){
+                    classname = "my_row";
+                }
+                document.getElementById("score_table_tbl").getElementsByTagName('tbody')[0].innerHTML += `<tr class="${classname}">
                     <td>${row.user}</td>
                     <td>$${row.score}</td>
                     <td>${row.icecream_served}</td>
