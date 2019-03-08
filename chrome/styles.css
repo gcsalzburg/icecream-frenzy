@@ -210,21 +210,30 @@ canvas{
     height: 400px;
     overflow-y: scroll;
 }
-.score_table .entry{
+.score_table_tbl{
+    width: 98.5%;
+    font-size: 24px;
+    border-collapse: collapse;
+}
+.score_table_tbl thead{
+    background-color: #A9D7E3;
+}
+.score_table_tbl th{
+    font-weight: normal;
+    text-transform: uppercase;
+    padding: 0 15px;
+    text-align: left;
+}
+.score_table_tbl th:nth-of-type(n+2){
+    font-size: 40px;
+    text-align: center;
+}
+.score_table_tbl td{
     background-color: rgba(223,188,86,0.2);
     margin-bottom: 5px;
+    padding: 5px 15px;
+    text-align: left;
 }
-.score_table .name{
-    font-family: monospace;
-    font-size: 20px;
-    font-weight: bold;
-    width: 250px;
-    display: inline-block;
-    text-align: right;
-}
-.score_table .score{
-    font-size: 28px;
-    width: 250px;
-    display: inline-block;
-    margin: 3px 0 3px 15px;
+.score_table_tbl tr td:nth-of-type(n+2){
+    text-align: center;
 }
