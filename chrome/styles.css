@@ -176,6 +176,7 @@ canvas{
     align-items: center;
     display: flex;
     justify-content: center;
+    height: 48px;
 }
 .highscore_table .user_score{
     font-size: 2.9em;
@@ -202,6 +203,27 @@ canvas{
     padding: 0 12px;
     text-transform: uppercase;
     font-weight: bold;
+}
+.highscore_table .play_again{
+    font-family: 'VT323', monospace;
+    height: 48px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 32px;
+    display:none;
+}   
+.highscore_table .reset_button{
+    background-color: #ffca12;
+    font-size: 0.85em;
+    color: #474A4B;
+    font-family: 'VT323', monospace;
+    padding: 8px 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+}
+.highscore_table .reset_button:hover{
+    background-color: #ffffb1;
 }
 
 .score_table{
