@@ -49,12 +49,14 @@ check_keys = function(){
     // Handle key presses
     if(38 in keysDown){         // UP
         delete keysDown[38];
-        TRUCK.change_lane(-1);
-        new Sound(sounds.lane).play();
+        if(TRUCK.getLane() != TRUCK.change_lane(-1)){
+            new Sound(sounds.lane).play();
+        }
     }else if(40 in keysDown){   // DOWN
         delete keysDown[40];
-        TRUCK.change_lane(1);
-        new Sound(sounds.lane).play();
+        if(TRUCK.getLane() != TRUCK.change_lane(1)){
+            new Sound(sounds.lane).play();
+        }
     }
     if(86 in keysDown){ // LETTER V
         delete keysDown[86];

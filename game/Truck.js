@@ -73,7 +73,7 @@ class Truck{
         }else if(this._lane>=TRUCK_LANES){
             this._lane = TRUCK_LANES-1;
         }
-
+        return this._lane;
     }
 
     // Dispense an ice cream to the floor!
