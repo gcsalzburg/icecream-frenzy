@@ -133,7 +133,7 @@ var send_score = function(){
             stats: JSON.stringify(stats)
         },
         function(data){
-         //   try{
+            try{
                 var json = JSON.parse(data);
                 if(!json.error){
                     var form = document.getElementById('score_form');
@@ -141,9 +141,9 @@ var send_score = function(){
                     form.parentNode.removeChild(form);
                     fetch_highscores(parseInt(json.my_row));
                 }
-        //    }catch{
-        //        console.log("Score response parse error");
-        //    }
+            }catch{
+                console.log("Score response parse error");
+            }
         }
     );
 }
