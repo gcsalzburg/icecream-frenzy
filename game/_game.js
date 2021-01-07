@@ -255,6 +255,7 @@ ASS_MANAGER.queueDownloads(
     'sounds/new_order.mp3',
     'sounds/serve.mp3',
     'sounds/endgame.mp3',
+    'sounds/lost_life.mp3',
 
     'bg/road.png',
     'bg/cactus_1.png',
@@ -343,6 +344,7 @@ var assets_complete = function(){
     sounds.lane = ASS_MANAGER.getAsset('sounds/lane_change.mp3');
     sounds.new_order = ASS_MANAGER.getAsset('sounds/new_order.mp3');
     sounds.hurrah = ASS_MANAGER.getAsset('sounds/customer_served.mp3');
+    sounds.lost_life = ASS_MANAGER.getAsset('sounds/lost_life.mp3');
     bg_music_end = ASS_MANAGER.getAsset('sounds/endgame.mp3');
 
     // Can start game once assets are loaded
@@ -520,6 +522,7 @@ var life_lost = function(){
     if((game.mode === 0) && game.is_playing){
         score.lives--;
         LIVES[score.lives].end();
+		  new Sound(sounds.lost_life).play();
     
         if(score.lives <= 0){
     
