@@ -19,7 +19,7 @@ body{
     margin: 1em;
     position: absolute;
     right: 10px;
-    bottom: 90px;
+    top: 470px;
     z-index: 30;
     width: 240px;
 }
@@ -67,7 +67,7 @@ canvas{
     justify-content: center;
     flex-wrap: wrap;
     z-index:20;
-    padding: 200px 0 100px 800px;
+    padding: 140px 0 100px 800px;
 }
 .intro h1{
     font-size: 50px;
@@ -126,6 +126,15 @@ canvas{
     border: 3px solid #A9D7E4;
     box-sizing: border-box;
     width: 0%;
+}
+.intro p{
+	font-family: 'VT323', monospace;
+	color: #222;
+	font-size: 1.2em;
+	z-index: 20;
+	margin: 0em;
+	width: 310px;
+	line-height: 1;
 }
 
 .intro video{
@@ -262,3 +271,13 @@ canvas{
 .score_table_tbl tr.my_row td{
     background-color: #FFD664;
 }
+
+
+.credits{
+	color: white;
+	font-family:'Courier New', Courier, monospace;
+	font-size: 0.8em;
+	margin: 0.5em;
+	text-align: center;
+}
+.credits a{color: white}
