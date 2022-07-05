@@ -4,9 +4,9 @@
 
 In a future filled with autonomous vehicles, we all still need our ice cream. Take control of a self-contained, autonomous, lane-splitting ice cream truck and serve creamy smooth soft-serve cones to the expectant commuters.
 
-### **PLAY HERE:** https://www.designedbycave.co.uk/icecream-frenzy/
+### **PLAY HERE:** https://play.interactionmagic.com/icecream-frenzy/
 
-![Screenshot](https://www.designedbycave.co.uk/icecream-frenzy/docs/screenshot.png)
+![Screenshot](https://play.interactionmagic.com/icecream-frenzy/docs/screenshot.png)
 
 ## Keyboard buttons
 
